@@ -1,0 +1,12 @@
+<!-- translations/security.en.xlf -->
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="Invalid credentials.">
+                <source>Invalid credentials.</source>
+                <target>Le mot de passe que vous avez entré était invalide!</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
