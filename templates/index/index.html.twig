@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bootgrid.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <nav class="sidebar-navigation">
+        <ul>
+            <li>
+                <a href="#">
+                    <i class="fa fa-user-circle"></i>
+                    <span class="tooltip">{{ app.user.username }}</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="{{ url('index') }}">
+                    <i class="fa fa-list"></i>
+                    <span class="tooltip">Liste des participants</span>
+                 </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-user-plus"></i>
+                    <span class="tooltip">Ajout d'un participant</span>
+                 </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-address-book"></i>
+                    <span class="tooltip">Liste des utilisateurs</span>
+                 </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cog"></i>
+                    <span class="tooltip">Réglages</span>
+                 </a>
+            </li>
+            <li>
+                <a href="{{ url('logout') }}">
+                    <i class="fa fa-power-off"></i>
+                    <span class="tooltip">Déconnexion</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="navbar-wrapper">
+
+        <div class="container-fluid">
+
+            <div class="title-wrapper">
+                    Liste des participants
+            </div>
+
+            <div class="table-wrapper">
+                <table cellspacing="0" class="table table-condensed table-hover table-striped" id="data-grid">
+                    <thead>
+                        <tr>
+                            <th data-column-id="observ" data-formatter="observ" data-sortable="false" data-width="28px"></th>
+                            <th data-column-id="id" data-identifier="true" data-type="numeric" data-searchable="false" data-visible="false">Id</th>
+                            <th data-column-id="nom">Nom</th>
+                            <th data-column-id="prenom">Prénom</th>
+                            <th data-column-id="code">Code</th>
+                            <th data-column-id="numero">Numéro</th>
+                            <th data-column-id="status" data-searchable="false" data-visible="false">Status</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/bootgrid.min.js') }}"></script>
+
+    <script>
+        $('ul li').on('click', function() {
+            $('li').removeClass('active');
+            $(this).addClass('active');
+        });
+    </script>
+
+    <script>
+
+        var grid = $("#data-grid").bootgrid({
+            rowCount: [
+                -1, 10, 25, 50
+            ],
+            columnSelection: false,
+            ajax: true,
+            statusMapping: {
+                0: "in",
+                1: "out",
+            },
+            requestHandler: function (request) {
+                return request;
+            },
+            url: "{{ path('index') }}",
+            formatters: {
+                "observ": function(column, row) {
+                    if (row.observ)
+                        return "<div class=\"pastille\"></div>";
+                },
+            }
+        })
+
+    </script>
+{% endblock %}

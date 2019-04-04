@@ -1,11 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
         <title>{% block title %}Welcome!{% endblock %}</title>
+
+        <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}"/>
+
+        {# <link rel="stylesheet" href="{{ asset('css/reset.css') }}"> #}
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        
+        {# ======= flashbag ======= #}
+        <div class="row">
+            {% if app.request.hasPreviousSession %}
+                {% set top = 60 %}
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for message in messages %}
+                        <div class="row alert alert-{{ type }} text-center box-shadow" style="top:{{ top }}px;">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                            {{ message }}
+                        </div>
+                        {% set top = top + 72 %}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/script.js') }}"></script>
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

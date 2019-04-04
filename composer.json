@@ -26,9 +26,10 @@
         "symfony/yaml": "4.2.*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.1",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
-        "symfony/profiler-pack": "*",
+        "symfony/profiler-pack": "^1.0",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.2.*"
     },

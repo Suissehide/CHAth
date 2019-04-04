@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
@@ -120,27 +120,6 @@ class Utilisateur implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function isEqualTo(UserInterface $user)
-    {
-        if (!$user instanceof Utilisateurs) {
-            return false;
-        }
-
-        if ($this->password !== $user->getPassword()) {
-            return false;
-        }
-
-        if ($this->salt !== $user->getSalt()) {
-            return false;
-        }
-
-        if ($this->username !== $user->getUsername()) {
-            return false;
-        }
-
-        return true;
     }
 
     public function getPlainPassword(): ?string

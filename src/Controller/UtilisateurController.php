@@ -16,6 +16,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UtilisateurController extends AbstractController
 {
     /**
+     * @Route("/", name="default", methods="GET")
+     */
+    function default(): Response {
+        return $this->redirectToRoute('login');
+    }
+
+    /**
      * @Route("/login", name="login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response

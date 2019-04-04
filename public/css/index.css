@@ -1,0 +1,63 @@
+/*
+*
+*   INDEX
+*
+*/
+
+.actionBar .glyphicon-search, .actionBar .glyphicon-refresh {
+    -webkit-text-stroke: 0.75px black;
+}
+
+.btn-group .glyphicon-search {
+    -webkit-text-stroke: 0.75px white;
+}
+
+.title-wrapper {
+    font-family: Ubuntu-Bold;
+    font-size: 30px;
+    color: #1a535c;
+    line-height: 1.2;
+    text-transform: uppercase;
+    text-align: left;
+    width: 100%;
+    display: block;
+    padding-top: 50px;
+    padding-left: 20px;
+}
+
+/* ========= TABLE ========= */
+
+.bootgrid-table {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bootgrid-table th {
+    font-family: Ubuntu-Bold;
+    font-size: 18px;
+    line-height: 1.4;
+    background-color: #55d6be;
+}
+
+.bootgrid-table th:active, .bootgrid-table th:hover {
+    background: #3CBDA5;
+}
+
+.bootgrid-table th span {
+    color: #f4f9f7;
+}
+
+.bootgrid-table td {
+    font-family: Ubuntu;
+    font-size: 15px;
+    color: #808080;
+    line-height: 1.4;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #f8f6ff;
+}
+
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {
+    padding: 10px;
+}
