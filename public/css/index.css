@@ -21,34 +21,70 @@
     text-align: left;
     width: 100%;
     display: block;
-    padding-top: 50px;
+    padding-top: 60px;
     padding-left: 20px;
+}
+
+td .btn-default {
+    border-color: black;
+}
+
+.command-view {
+    background-color: #3CBDA5;
+}
+
+.command-view:hover {
+    background-color: #55d6be;
+}
+
+.command-edit {
+    background-color: #1a535c;
+}
+
+.command-edit:hover {
+    background-color: #35595f;
+}
+
+.command-delete {
+    background-color: #d63b53;
+}
+
+.command-delete:hover {
+    background-color: #da6375;
+}
+
+.command-edit .fa, .command-view .fa, .command-delete .fa {
+    color: #f4f9f7;
 }
 
 /* ========= TABLE ========= */
 
-.bootgrid-table {
-    border-radius: 5px;
-    overflow: hidden;
+.bootgrid-footer {
+    z-index: -1;
 }
 
-.bootgrid-table th {
+.table {
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.table th {
     font-family: Ubuntu-Bold;
     font-size: 18px;
     line-height: 1.4;
     background-color: #55d6be;
 }
 
-.bootgrid-table th:active, .bootgrid-table th:hover {
+.table th:active, .table th:hover {
     background: #3CBDA5;
 }
 
-.bootgrid-table th span {
+.table th span, .table th {
     color: #f4f9f7;
 }
 
 .bootgrid-table td {
-    font-family: Ubuntu;
+    font-family: Ubuntu-Regular;
     font-size: 15px;
     color: #808080;
     line-height: 1.4;
@@ -61,3 +97,37 @@
 .table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {
     padding: 10px;
 }
+
+/* ========= PAGINATION ========= */
+
+.pagination li a {
+    border: none;
+    border-radius: 50%;
+    margin: 0 1px;
+    color: #808080;
+    cursor: pointer;
+}
+
+.pagination li:hover a {
+    color: #3CBDA5;
+}
+
+.pagination li.active a {
+    color: #808080;
+    background-color: transparent;
+    border: 1px solid #55d6be;
+}
+
+.pagination li.active:hover a {
+    color: #f4f9f7;
+    background-color: #55d6be;
+    border-color: #3CBDA5;
+}
+
+.pagination li.last a, .pagination li.first a  {
+    border-radius: 50%;
+}
+
+/* .pagination li.disabled {
+    visibility: hidden;
+} */

@@ -65,10 +65,9 @@
                         <tr>
                             <th data-column-id="observ" data-formatter="observ" data-sortable="false" data-width="28px"></th>
                             <th data-column-id="id" data-identifier="true" data-type="numeric" data-searchable="false" data-visible="false">Id</th>
-                            <th data-column-id="nom">Nom</th>
-                            <th data-column-id="prenom">Prénom</th>
-                            <th data-column-id="code">Code</th>
-                            <th data-column-id="numero">Numéro</th>
+                            <th data-column-id="code" data-width="">Code</th>
+                            <th data-column-id="numero" data-width="">Numéro</th>
+                            {# <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">Actions</th> #}
                             <th data-column-id="status" data-searchable="false" data-visible="false">Status</th>
                         </tr>
                     </thead>
@@ -89,10 +88,9 @@
     </script>
 
     <script>
-
         var grid = $("#data-grid").bootgrid({
             rowCount: [
-                -1, 10, 25, 50
+                1, 2, 3, -1
             ],
             columnSelection: false,
             ajax: true,
@@ -109,8 +107,20 @@
                     if (row.observ)
                         return "<div class=\"pastille\"></div>";
                 },
+                "commands": function(column, row) {
+                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-view\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-eye\"></i></button> " +
+                        "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-pencil-alt\"></i></button> " + 
+                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-trash-alt\"></i></button>";
+                },
             }
-        })
-
+        }).on("loaded.rs.jquery.bootgrid", function() {
+            grid.find(".command-edit").on("click", function(e) {
+                // alert("You pressed edit on row: " + $(this).data("row-id"));
+            }).end().find(".command-delete").on("click", function(e) {
+                // alert("You pressed delete on row: " + $(this).data("row-id"));
+            }).end().find(".command-view").on("click", function(e) {
+                // alert("You pressed view on row: " + $(this).data("row-id"));
+            });
+        });
     </script>
 {% endblock %}

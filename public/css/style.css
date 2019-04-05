@@ -390,7 +390,7 @@ iframe {
 /* ========= CHECKBOX ========= */
 
 nav {
-    position: fixed;
+    position: absolute;
 }
 
 .sidebar-navigation {
@@ -438,7 +438,7 @@ nav {
     visibility: hidden;
     font-size: 13px;
     letter-spacing: 0.5px;
-    white-space: pre
+    white-space: pre;
 }
 
 .sidebar-navigation ul li a .tooltip:before {
