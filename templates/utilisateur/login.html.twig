@@ -39,7 +39,7 @@
 
                     <div>
                         <a class="txt1" href="#">
-                            Oublié ?
+                            Mot de passe oublié ?
                         </a>
                     </div>
                 </div>
@@ -48,6 +48,12 @@
                     <button class="login-form-btn" type="submit">
                         S'identifier
                     </button>
+                </div>
+
+                <div class="txt-register">
+                    <a class="txt1" href="{{ url('register') }}">
+                        S'enregistrer
+                    </a>
                 </div>
             </form>
         </div>
@@ -63,7 +69,7 @@
             width: window.innerWidth,
             x_colors: ['#2892d7', '#d63b53'],
             y_colors: ['#1a535c', '#f4f9f7'],
-            cell_size: Math.ceil(window.innerWidth / 8)
+            // cell_size: Math.ceil(window.innerWidth / 8)
         })
         var svg = pattern.svg()
         svg.id = 'trianglify-overlay'

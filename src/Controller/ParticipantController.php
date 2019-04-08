@@ -33,7 +33,7 @@ class ParticipantController extends AbstractController
         return $this->render('participant/index.html.twig', [
             'controller_name' => 'ParticipantController',
             'participant' => $participant,
-            'form' => $form->cretaeView(),
+            'form' => $form->createView(),
         ]);
     }
 }

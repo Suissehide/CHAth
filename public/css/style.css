@@ -39,7 +39,7 @@
 html {
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 body {
@@ -49,9 +49,12 @@ body {
     height: 100%;
     font-family: Ubuntu-Regular, sans-serif;
     font-size: 13px;
+    position: relative;
 }
 
-input:focus, a:focus, button:focus {
+input:focus,
+a:focus,
+button:focus {
     outline-style: none;
 }
 
@@ -89,7 +92,12 @@ a:hover {
 
 /*---------------------------------------------*/
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0px;
 }
 
@@ -101,7 +109,8 @@ p {
     margin: 0px;
 }
 
-ul, li {
+ul,
+li {
     padding: 0;
     margin: 0;
     list-style-type: none;
@@ -119,7 +128,8 @@ textarea {
     border: none;
 }
 
-textarea:focus, input:focus {
+textarea:focus,
+input:focus {
     border-color: transparent !important;
 }
 
@@ -181,6 +191,12 @@ iframe {
     font-size: 16px;
     color: #2892d7;
     line-height: 1.4;
+}
+
+.txt-register {
+    width: 100%;
+    padding-top: 50px;
+    text-align: center;
 }
 
 /* ========= LOGIN ========= */
@@ -358,8 +374,9 @@ iframe {
 
 .label-checkbox::before {
     content: "\f00c";
-    font-family: FontAwesome;
+    font-family: Font Awesome\ 5 Free;
     font-size: 13px;
+    font-weight: 900;
     color: transparent;
     display: -webkit-box;
     display: -webkit-flex;
@@ -390,7 +407,8 @@ iframe {
 /* ========= CHECKBOX ========= */
 
 nav {
-    position: absolute;
+    z-index: 1000;
+    position: fixed;
 }
 
 .sidebar-navigation {
@@ -471,5 +489,7 @@ nav {
 }
 
 .navbar-wrapper {
-    margin-left: 80px;
+    position: relative;
+    padding-left: 80px;
+    z-index: 0;
 }

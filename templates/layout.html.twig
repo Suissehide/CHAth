@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% block menu %}
+    <nav class="sidebar-navigation">
+        <ul>
+            <li>
+                <a href="#">
+                    <i class="fa fa-user-circle"></i>
+                    <span class="tooltip">{{ app.user.username }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('index') }}">
+                    <i class="fa fa-list"></i>
+                    <span class="tooltip">Liste des participants</span>
+                 </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-user-plus"></i>
+                    <span class="tooltip">Ajout d'un participant</span>
+                 </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-address-book"></i>
+                    <span class="tooltip">Liste des utilisateurs</span>
+                 </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-cog"></i>
+                    <span class="tooltip">Réglages</span>
+                 </a>
+            </li>
+            <li>
+                <a href="{{ url('logout') }}">
+                    <i class="fa fa-power-off"></i>
+                    <span class="tooltip">Déconnexion</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    {% endblock %}
+
+    <div class="navbar-wrapper">
+        {% block page_content %}
+
+        {% endblock %}
+    </div>
+
+{% endblock %}

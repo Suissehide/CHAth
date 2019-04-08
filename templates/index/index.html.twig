@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}Index
 {% endblock %}
@@ -8,71 +8,26 @@
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 {% endblock %}
 
-{% block body %}
+{% block page_content %}
+    <div class="container-fluid">
 
-    <nav class="sidebar-navigation">
-        <ul>
-            <li>
-                <a href="#">
-                    <i class="fa fa-user-circle"></i>
-                    <span class="tooltip">{{ app.user.username }}</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="{{ url('index') }}">
-                    <i class="fa fa-list"></i>
-                    <span class="tooltip">Liste des participants</span>
-                 </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-user-plus"></i>
-                    <span class="tooltip">Ajout d'un participant</span>
-                 </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-address-book"></i>
-                    <span class="tooltip">Liste des utilisateurs</span>
-                 </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-cog"></i>
-                    <span class="tooltip">Réglages</span>
-                 </a>
-            </li>
-            <li>
-                <a href="{{ url('logout') }}">
-                    <i class="fa fa-power-off"></i>
-                    <span class="tooltip">Déconnexion</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+        <div class="title-wrapper">
+            Liste des participants
+        </div>
 
-    <div class="navbar-wrapper">
-
-        <div class="container-fluid">
-
-            <div class="title-wrapper">
-                    Liste des participants
-            </div>
-
-            <div class="table-wrapper">
-                <table cellspacing="0" class="table table-condensed table-hover table-striped" id="data-grid">
-                    <thead>
-                        <tr>
-                            <th data-column-id="observ" data-formatter="observ" data-sortable="false" data-width="28px"></th>
-                            <th data-column-id="id" data-identifier="true" data-type="numeric" data-searchable="false" data-visible="false">Id</th>
-                            <th data-column-id="code" data-width="">Code</th>
-                            <th data-column-id="numero" data-width="">Numéro</th>
-                            {# <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">Actions</th> #}
-                            <th data-column-id="status" data-searchable="false" data-visible="false">Status</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+        <div class="table-wrapper">
+            <table cellspacing="0" class="table table-condensed table-hover table-striped" id="data-grid">
+                <thead>
+                    <tr>
+                        <th data-column-id="observ" data-formatter="observ" data-sortable="false" data-width="28px"></th>
+                        <th data-column-id="id" data-identifier="true" data-searchable="false" data-type="numeric" data-visible="false">Id</th>
+                        <th data-column-id="code">Code</th>
+                        <th data-column-id="numero">Numéro</th>
+                        {# <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">Actions</th> #}
+                        <th data-column-id="status" data-searchable="false" data-visible="false">Status</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
 {% endblock %}
@@ -81,6 +36,8 @@
     <script src="{{ asset('js/bootgrid.min.js') }}"></script>
 
     <script>
+        $('li:eq(1)').addClass('active');
+
         $('ul li').on('click', function() {
             $('li').removeClass('active');
             $(this).addClass('active');
@@ -90,7 +47,7 @@
     <script>
         var grid = $("#data-grid").bootgrid({
             rowCount: [
-                1, 2, 3, -1
+                5, 10, 20, -1
             ],
             columnSelection: false,
             ajax: true,
@@ -120,7 +77,20 @@
                 // alert("You pressed delete on row: " + $(this).data("row-id"));
             }).end().find(".command-view").on("click", function(e) {
                 // alert("You pressed view on row: " + $(this).data("row-id"));
+            }).end().find("tr").on("click", function(e) {
+                redirect($(this).data("row-id"));
             });
         });
+
+        function redirect(id) {
+            if (id == undefined)
+                return;
+            let pathArray = window.location.pathname.split("/");
+            let url = window.location.protocol + "//" + window.location.host;
+            for (let i = 0; i < pathArray.length - 1; i++)
+                url += pathArray[i] + "/";
+            window.location.assign(url + "participant/" + id);
+        };
+
     </script>
 {% endblock %}
