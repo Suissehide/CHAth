@@ -118,19 +118,14 @@ li {
 
 /*---------------------------------------------*/
 
-input {
-    outline: none;
-    border: none;
-}
-
-textarea {
+input, textarea, select {
     outline: none;
     border: none;
 }
 
 textarea:focus,
 input:focus {
-    border-color: transparent !important;
+    border-color: transparent;
 }
 
 input::-webkit-input-placeholder {

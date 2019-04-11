@@ -161,7 +161,6 @@ td .btn-default {
     align-items: center;
     height: 100vh;
     position: relative;
-    background: #f4f9f7;
     text-align: center;
     padding: 0 2em;
 }
@@ -183,7 +182,7 @@ td .btn-default {
     bottom: 0;
     width: 100%;
     height: 80px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     background: #fff;
     z-index: 10;
 }
@@ -202,6 +201,7 @@ td .btn-default {
     color: #000;
     letter-spacing: 0.1rem;
     transition: all 0.5s ease;
+    padding: 0 5px;
 }
 
 .hero-tab:hover {
@@ -221,4 +221,105 @@ td .btn-default {
     height: 6px;
     background: #1a535c;
     transition: left 0.3s ease;
+}
+
+.hero-text {
+    position: absolute;
+    color: #f4f9f7;
+}
+
+/* ========= Participant - create ========= */
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.form > ul {
+    font-size: 14px;
+    color: #f4f9f7;
+    background-color: #d63b53;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+}
+
+input[readonly], textarea[readonly]:focus, input[readonly]:focus {
+    border: 1px solid #d63b53;
+}
+
+.container-form {
+    width: 100%;
+    padding: 50px 0px 55px 0px;
+}
+
+.container-form .input {
+    height: 42px;
+    width: 100%;
+    position: relative;
+    background-color: #e6e6e6;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    padding: 0 20px;
+}
+
+.container-form .wrap-input {
+    background-color: transparent;
+    margin-bottom: 0px;
+}
+
+.container-form .focus-input {
+    height: calc(100% - 31px);
+    top: 16px;
+}
+
+.form-btn {
+    font-family: Ubuntu-Bold;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20px;
+    height: 42px;
+    background-color: #2892d7;
+    border-radius: 3px;
+    transition: all 0.4s;
+}
+
+.form-btn:disabled {
+    background-color: #1a535c;
+}
+
+.container-form-btn {
+    margin-top: 30px;
+}
+
+label {
+    font-family: Ubuntu-Regular;
+    color: #808080;
+    line-height: 1.2;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+
+.badge-danger {
+    position: relative;
+    background-color: #d63b53;
+    margin-right: 10px;
+    top: -1px;
+}
+
+.invalid-feedback {
+    top: 65px;
+    color: #d63b53;
+    position: absolute;
 }

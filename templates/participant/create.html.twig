@@ -1,0 +1,138 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Ajout d'un participant
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+{% endblock %}
+
+{% form_theme form _self %}
+
+{% block form_row %}
+    {% set widget_attr = {} %}
+    {% if help is not empty %}
+        {% set widget_attr = {attr: {'aria-describedby': id ~"_help"}} %}
+    {% endif %}
+    <div class="wrap-input" {% with {attr: row_attr|default({})} %}{{ block('attributes') }}{% endwith %}>
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form, widget_attr) }}
+        {{ form_help(form) }}
+        <span class="focus-input"></span>
+    </div>
+{% endblock form_row %}
+
+{% block page_content %}
+    <div class="container-fluid">
+
+        <div class="title-wrapper">
+            Ajouter un participant
+        </div>
+
+        <div class="container-form">
+            {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+            {{ form_errors(form) }}
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.nom, {'attr': {'autofocus' : true, 'class': 'input', 'autocomplete' : 'off'} }) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.prenom, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="wrap-input">
+                        <label for="participant_ligne">Sélectionnez un chiffre</label>
+                        <select id="participant_ligne" name="participant[ligne]" class="input">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <span class="focus-input"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.code, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+               </div>
+                <div class="col-md-6">
+                    {{ form_row(form.numero, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                </div>
+            </div>
+
+            <div class="container-form-btn">
+                {{ form_widget(form.validation, {'attr': {'class': 'form-btn'} }) }}
+            </div>
+
+            {{ form_row(form._token) }}
+            {{ form_end(form, {'render_rest' : false}) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('li:eq(2)').addClass('active');
+
+        $('ul li').on('click', function() {
+            $('li').removeClass('active');
+            $(this).addClass('active');
+        });
+
+        $('input[readonly]').next('span').remove();
+
+        function disableButton() {
+            if (!$("#participant_validation").is(":disabled")) {
+                $("#participant_validation").prop("disabled", true);
+                $("#participant_code").val('');
+                $('#participant_code').css({'border-color' : '#d63b53'})
+                var msg =   `<span class="invalid-feedback">
+                                <span class="initialism badge badge-danger">Error</span>
+                                <span class="form-error-message">Veuillez renseigner un nom et prénom (2 charactères minimum).</span>
+                            </span>`;
+                $("#participant_code").addClass('is-invalid').after(msg);
+            }
+        }
+        disableButton();
+
+        $(":input").on('input propertychange', function () {
+            var nom = $('#participant_nom').val();
+            var prenom = $('#participant_prenom').val();
+            var ligne = $('#participant_ligne').val();
+            if (!nom || !prenom || nom.length < 2 || prenom.length < 2)
+                return disableButton();
+            $.ajax({
+                url: "{{ path( 'participant_code_generate' ) }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "nom": nom,
+                    "prenom": prenom,
+                    "ligne": ligne,
+                },
+                success: function (resp) {
+                    if (resp == '')
+                        return disableButton();
+                    $('#participant_code').val(resp);
+                    $('#participant_code').css({'border-color' : 'forestgreen'})
+                    $("#participant_validation").prop("disabled", false);
+                    $('.invalid-feedback').remove();
+                }
+            });
+        });
+    </script>
+{% endblock %}

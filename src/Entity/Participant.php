@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,16 @@ class Participant
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $numero;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Utilisateur", inversedBy="participants")
+     */
+    private $utilisateurs;
+
+    public function __construct()
+    {
+        $this->utilisateurs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -85,6 +97,32 @@ class Participant
     public function setNumero(?string $numero): self
     {
         $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Utilisateur[]
+     */
+    public function getUtilisateurs(): Collection
+    {
+        return $this->utilisateurs;
+    }
+
+    public function addUtilisateur(Utilisateur $utilisateur): self
+    {
+        if (!$this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs[] = $utilisateur;
+        }
+
+        return $this;
+    }
+
+    public function removeUtilisateur(Utilisateur $utilisateur): self
+    {
+        if ($this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs->removeElement($utilisateur);
+        }
 
         return $this;
     }

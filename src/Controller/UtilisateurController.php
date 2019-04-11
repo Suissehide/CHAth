@@ -76,6 +76,26 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/utilisateur/list", name="utilisateur_list")
+     */
+    public function list()
+    {
+        return $this->render('utilisateur/list.html.twig', [
+            'controller_name' => 'ListController',
+        ]);
+    }
+
+    /**
+     * @Route("/guest", name="guest")
+     */
+    public function guest()
+    {
+        return $this->render('utilisateur/guest.html.twig', [
+            'controller_name' => 'GuestController',
+        ]);
+    }
+
     /*
     public function accountInfo()
     {
