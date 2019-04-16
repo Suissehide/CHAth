@@ -19,6 +19,37 @@ class UtilisateurRepository extends ServiceEntityRepository
         parent::__construct($registry, Utilisateur::class);
     }
 
+    public function compte()
+    {
+        return $this->createQueryBuilder('p')
+                    ->select('COUNT(p)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
+    }
+
+    public function findByFilter($sort, $searchPhrase)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        if ($searchPhrase != "") {
+            $qb->andWhere('
+                    p.nom LIKE :search
+                    OR p.prenom LIKE :search
+                    OR p.email LIKE :search
+                    OR p.roles LIKE :search
+                ')
+                ->setParameter('search', '%' . $searchPhrase . '%');
+        }
+        if ($sort) {
+            foreach ($sort as $key => $value) {
+                $qb->orderBy('p.' . $key, $value);
+            }
+        } else {
+            $qb->orderBy('p.nom', 'ASC');
+        }
+        return $qb;
+    }
+
     // /**
     //  * @return Utilisateur[] Returns an array of Utilisateur objects
     //  */

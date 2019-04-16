@@ -33,6 +33,57 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div id="modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">
+                        Modifier un utilisateur
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form class="container-form">
+                        <div class="wrap-input">
+                            <label for="utilisateur_email" class="required">Email</label>
+                            <input type="text" id="utilisateur_email" name="utilisateur[email]" required="required" readonly="readonly" class="input" autocomplete="off">
+                        </div>
+                        <div class="wrap-input">
+                            <label for="utilisateur_nom" class="required">Nom</label>
+                            <input type="text" id="utilisateur_nom" name="utilisateur[nom]" required="required" readonly="readonly" class="input" autocomplete="off">
+                        </div>
+                        <div class="wrap-input">
+                            <label for="utilisateur_prenom" class="required">Prénom</label>
+                            <input type="text" id="utilisateur_prenom" name="utilisateur[prenom]" required="required" readonly="readonly" class="input" autocomplete="off">
+                        </div>
+                        <div class="wrap-input">
+                            <label for="utilisateur_roles">Roles</label>
+                            <select id="utilisateur_roles" name="utilisateur[roles]" class="input">
+                                <option value="Invité">Invité</option>
+                                <option value="Utilisateur">Utilisateur</option>
+                                <option value="Administrateur">Administrateur</option>
+                            </select>
+                            <span class="focus-input"></span>
+                        </div>
+                        <div class="form-btn-container">
+                            <button class="form-btn btn-default" data-dismiss="modal">
+                                <span class="fa fa-times"></span>
+                                Annuler
+                            </button>
+                            <button id="edit" class="form-btn" data-dismiss="modal">
+                                <span class="fa fa-pencil-alt"></span>
+                                Modifier
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -47,6 +98,41 @@
     </script>
 
     <script>
+        alert_pos = 10;
+
+        function modal_event(row) {
+            let id = row.data("row-id");
+            if (id == undefined)
+                return;
+            $('#utilisateur_email').val(row.find('td').eq(0).text());
+            $('#utilisateur_nom').val(row.find('td').eq(1).text());
+            $('#utilisateur_prenom').val(row.find('td').eq(2).text());
+            $('#utilisateur_roles').val(row.find('td').eq(3).text());
+            $('#modal').appendTo("body").modal('show')
+        };
+
+        $("#edit").on('click', function (e) {
+            e.preventDefault();
+            var email = $('#utilisateur_email').val();
+            var roles = $('#utilisateur_roles').val();
+            $.ajax({
+                url: "{{ path( 'utilisateur_roles_edit' ) }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "email": email,
+                    "roles": roles,
+                },
+                success: function (resp) {
+                    $('body').prepend(
+                        '<div class="row alerte alert-success text-center box-shadow" style="top:' + alert_pos + 'px;"><span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>Modification effectuée !</div>'
+                    );
+                    alert_pos += 72;
+                    $("#data-grid").bootgrid('reload');
+                }
+            });
+        });
+
         var grid = $("#data-grid").bootgrid({
             rowCount: [
                 -1, 10, 20, 50
@@ -59,9 +145,22 @@
             url: "{{ path('utilisateur_list') }}",
             formatters: {
                 "roles": function(column, row) {
-                    return "<div class=\"pastille\"></div>";
+                    let ret = "<div>";
+                    $.each(row.roles, function(i, e) {
+                        if (e == "ROLE_GUEST")
+                            ret += "<div class='tag tag-yellow'>Invité</div>"
+                        if (e == "ROLE_USER")
+                            ret += "<div class='tag tag-green'>Utilisateur</div>"
+                        if (e == "ROLE_ADMIN")
+                            ret += "<div class='tag tag-red'>Administrateur</div>"
+                    })
+                    return ret + "</div>";
                 },
             }
-        })
+        }).on("loaded.rs.jquery.bootgrid", function() {
+            grid.find("tr").on("click", function(e) {
+                modal_event($(this), e);
+            });
+        });
     </script>
 {% endblock %}

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UtilisateurController extends AbstractController
 {
@@ -77,22 +78,98 @@ class UtilisateurController extends AbstractController
     }
 
     /**
-     * @Route("/utilisateur/list", name="utilisateur_list")
-     */
-    public function list()
-    {
-        return $this->render('utilisateur/list.html.twig', [
-            'controller_name' => 'ListController',
-        ]);
-    }
-
-    /**
      * @Route("/guest", name="guest")
      */
     public function guest()
     {
         return $this->render('utilisateur/guest.html.twig', [
             'controller_name' => 'GuestController',
+        ]);
+    }
+
+
+    /**
+     * @Route("/utilisateur/ajax", name="utilisateur_roles_edit")
+     */
+    public function roles_edit(UtilisateurRepository $utilisateurRepository, Request $request): JsonResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($request->isXmlHttpRequest()) {
+            $email = $request->request->get('email');
+            $roles = $request->request->get('roles');
+
+            $utilisateur = $utilisateurRepository->findOneBy(['email' => $email]);
+            if ($roles == "Invité")
+                $utilisateur->setRoles(["ROLE_GUEST"]);
+            else if ($roles == "Utilisateur")
+                $utilisateur->setRoles(["ROLE_USER"]);
+            else if ($roles == "Administrateur")
+                $utilisateur->setRoles(["ROLE_ADMIN"]);
+            $em->flush();
+            return new JsonResponse();
+        }
+    }
+
+    /**
+     * @Route("/utilisateur/list", name="utilisateur_list")
+     */
+    public function list(UtilisateurRepository $utilisateurRepository, Request $request): Response
+    {
+        if ($request->isXmlHttpRequest()) {
+            $current = $request->request->get('current');
+            $rowCount = $request->request->get('rowCount');
+            $searchPhrase = $request->request->get('searchPhrase');
+            $sort = $request->request->get('sort');
+
+            $utilisateurs = $utilisateurRepository->findByFilter($sort, $searchPhrase);
+            if ($searchPhrase != "") {
+                $count = count($utilisateurs->getQuery()->getResult());
+            } else {
+                $count = $utilisateurRepository->compte();
+            }
+            if ($rowCount != -1) {
+                $min = ($current - 1) * $rowCount;
+                $max = $rowCount;
+                $utilisateurs->setMaxResults($max)->setFirstResult($min);
+            }
+            $utilisateurs = $utilisateurs->getQuery()->getResult();
+            $rows = array();
+            foreach ($utilisateurs as $utilisateur) {
+                $row = array(
+                    "id" => $utilisateur->getId(),
+                    "nom" => $utilisateur->getNom(),
+                    "prenom" => $utilisateur->getPrenom(),
+                    "email" => $utilisateur->getEmail(),
+                    "roles" => $utilisateur->getRoles(),
+                );
+                array_push($rows, $row);
+            }
+
+            $data = array(
+                "current" => intval($current),
+                "rowCount" => intval($rowCount),
+                "rows" => $rows,
+                "total" => intval($count)
+            );
+            return new JsonResponse($data);
+        }
+
+        return $this->render('utilisateur/list.html.twig', [
+            'controller_name' => 'ListController',
+        ]);
+    }
+
+    /**
+     * @Route("/utilisateur/edit", name="utilisateur_edit")
+     */
+    public function edit(Request $request): Response
+    {
+        $user = $this->getUser();
+
+        return $this->render('utilisateur/edit.html.twig', [
+            'controller_name' => 'EditController',
+            'user' => $user,
         ]);
     }
 

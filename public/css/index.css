@@ -274,6 +274,12 @@ input[readonly], textarea[readonly]:focus, input[readonly]:focus {
     top: 16px;
 }
 
+.form-btn-container {
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .form-btn {
     font-family: Ubuntu-Bold;
     font-size: 16px;
@@ -288,6 +294,26 @@ input[readonly], textarea[readonly]:focus, input[readonly]:focus {
     background-color: #2892d7;
     border-radius: 3px;
     transition: all 0.4s;
+}
+
+.form-btn:hover {
+    background-color: #1d699c;
+}
+
+.form-btn.btn-default {
+    color: #808080;
+    background-color: #f4f9f7;
+    border: 1px solid #ccc;
+}
+
+.form-btn.btn-default:hover {
+    color: #333333;
+    background-color: #e6e6e6;
+    border-color: #808080;
+}
+
+.form-btn .fa {
+    margin-right: 10px;
 }
 
 .form-btn:disabled {
@@ -322,4 +348,72 @@ label {
     top: 65px;
     color: #d63b53;
     position: absolute;
+}
+
+
+/* ========= Utilisateur - list ========= */
+
+.tag {
+    background: #000;
+    color: #f4f9f7;
+    padding: 3px 15px;
+    margin: 0 5px;
+    border-radius: 20px;
+    display: inline;
+}
+
+.tag-yellow {
+    background: coral;
+}
+
+.tag-green {
+    background: #1a535c;
+}
+
+.tag-red {
+    background: #d63b53;
+}
+
+
+/* ========= Modal ========= */
+
+
+.modal-header, .modal h4, .modal .close {
+    background-color: #2892d7;
+    color: white !important;
+    text-align: center;
+    font-size: 30px;
+}
+
+.modal-header {
+    padding: 30px 35px;
+}
+
+.modal-lg {
+    width: 85%;
+}
+
+.modal-md {
+    width: 70%;
+}
+
+.modal-footer {
+    background-color: #f4f9f7;
+}
+
+.modal-footer, .modal-header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.modal .btn-block-md {
+    width: 49.5%;
+}
+
+.modal p {
+    font-size: 18px;
+}
+
+.modal .container-form {
+    padding: 20px 0;
 }

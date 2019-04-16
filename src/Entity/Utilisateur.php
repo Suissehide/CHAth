@@ -51,6 +51,16 @@ class Utilisateur implements UserInterface
      */
     private $participants;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $prenom;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -90,7 +100,8 @@ class Utilisateur implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        if (!$roles)
+            $roles[] = 'ROLE_GUEST';
 
         return array_unique($roles);
     }
@@ -170,6 +181,30 @@ class Utilisateur implements UserInterface
             $this->participants->removeElement($participant);
             $participant->removeUtilisateur($this);
         }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(?string $prenom): self
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }

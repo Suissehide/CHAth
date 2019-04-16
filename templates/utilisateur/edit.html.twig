@@ -1,0 +1,34 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Profil
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="container-fluid">
+
+        <div class="title-wrapper">
+            Profil
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $('li:eq(0)').addClass('active');
+
+        $('ul li').on('click', function() {
+            $('li').removeClass('active');
+            $(this).addClass('active');
+        });
+    </script>
+
+{% endblock %}

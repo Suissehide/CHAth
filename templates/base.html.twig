@@ -24,7 +24,7 @@
                 {% set top = 60 %}
                 {% for type, messages in app.session.flashbag.all() %}
                     {% for message in messages %}
-                        <div class="row alert alert-{{ type }} text-center box-shadow" style="top:{{ top }}px;">
+                        <div class="row alerte alert-{{ type }} text-center box-shadow" style="top:{{ top }}px;">
                             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                             {{ message }}
                         </div>
