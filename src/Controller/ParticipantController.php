@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Entity\Verification;
 use App\Entity\Qcm;
+use App\Entity\Pack;
 
 use App\Form\ParticipantType;
 use App\Form\VerificationType;
@@ -36,12 +37,58 @@ class ParticipantController extends AbstractController
                     $participant->setCode('ERROR');
 
                 $verification = new Verification();
+
+                $pack = new Pack();
+
                 $qcm = new Qcm();
-                $qcm->setQuestion("Patients (homme ou femme) âgés de plus de 80 ans ?");
-                $verification->addInclusion($qcm);
+                $qcm->setQuestion("Patients (homme ou femme) âgés de plus de 80 ans");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Absence de preuve pour une hémopathie maligne avérée (connue ou révélée sur les résultats de NFS)");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Sujet affilié ou bénéficiaire d’un régime de sécurité sociale");
+                $pack->addQcm($qcm);
+
+                $verification->setInclusion($pack);
+
+                $pack = new Pack();
+
+                $qcm = new Qcm();
+                $qcm->setQuestion("Patient ayant présenté un ECV d’origine non-athéromateuse (dissection, embolique, ...)");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Patient présentant un diabète mal équilibré (HbA1c > 10%)");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Patient ayant présenté un ou plusieurs ECV avant 80 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Patient présentant une hémopathie maligne manifeste (connue ou révélée sur les résultats de NFS)");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Patient présentant une maladie inflammatoire chronique (cancer, vascularite, rhumatismale, hépato-gastro-intestinales)");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Patient traité par anti-inflammatoire au long cours (Corticoïdes, Anti-inflammatoires non stéroïdiens, Aspirine > 325mg/jour, Inhibiteurs de la cyclo-oxygénase II)");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Personne placée sous sauvegarde de justice, tutelle ou curatelle");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Personne étant dans l’incapacité de donner son consentement");
+                $pack->addQcm($qcm);
+                $qcm = new Qcm();
+                $qcm->setQuestion("Personne étant dans l’incapacité de donner son consentement");
+                $pack->addQcm($qcm);
+
+                $verification->setNonInclusion($pack);
+
                 $em->persist($verification);
                 $em->flush();
-                // $participant->setVerification($em->getRepository(Verification::class)->findOneById($verification->getId()));
                 $participant->setVerification($verification);
 
                 $em->persist($participant);

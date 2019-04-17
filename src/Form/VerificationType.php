@@ -18,18 +18,19 @@ class VerificationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('inclusion', CollectionType::class, array(
-                'entry_type' => QcmType::class,
-                'entry_options' => array('label' => false),
-                'allow_add' => true,
-                'by_reference' => false,
+            // ->add('inclusion', CollectionType::class, array(
+            //     'entry_type' => QcmType::class,
+            //     'entry_options' => array('label' => false),
+            //     'allow_add' => true,
+            //     'by_reference' => false,
+            // ))
+
+            ->add('inclusion', PackType::class, array(
+                'label' => 'Inclusion'
             ))
 
-            ->add('non_inclusion', CollectionType::class, array(
-                'entry_type' => QcmType::class,
-                'entry_options' => array('label' => false),
-                'allow_add' => true,
-                'by_reference' => false,
+            ->add('non_inclusion', PackType::class, array(
+                'label' => 'Non inclusion'
             ))
 
             ->add('date', DateType::class, array(

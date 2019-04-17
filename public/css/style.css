@@ -119,7 +119,9 @@ li {
 
 /*---------------------------------------------*/
 
-input, textarea, select {
+input,
+textarea,
+select {
     outline: none;
     border: none;
 }
@@ -467,8 +469,7 @@ nav {
     z-index: 0;
 }
 
-/* Alert / Flashbag
-================= */
+/* ========= Alert flashbag ========= */
 
 .alerte {
     padding: 20px;
@@ -494,4 +495,72 @@ nav {
 
 .closebtn:hover {
     color: black;
+}
+
+/* ========= RADIO ========= */
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]+label {
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+input[type="radio"]+label span {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: -2px 0px 0 0;
+    vertical-align: middle;
+    cursor: pointer;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+}
+
+input[type="radio"]+label span {
+    background-color: #fff;
+}
+
+input[type="radio"]:checked+label {
+    color: #333;
+    font-weight: 700;
+}
+
+input[type="radio"]:checked+label span {
+    background-color: #2892d7;
+    border: 2px solid #ffffff;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, .1);
+}
+
+input[type="radio"]+label span,
+input[type="radio"]:checked+label span {
+    -webkit-transition: background-color 0.24s linear;
+    -o-transition: background-color 0.24s linear;
+    -moz-transition: background-color 0.24s linear;
+    transition: background-color 0.24s linear;
+}
+
+.radio-row {
+    display: flex;
+    position: relative;
+    flex-flow: row;
+}
+
+.radio-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.radio-container:last-child {
+    margin: 0;
+}
+
+.radio-container label {
+    margin: 0;
 }

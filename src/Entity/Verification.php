@@ -19,16 +19,6 @@ class Verification
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Qcm", mappedBy="verification", cascade={"persist"})
-     */
-    private $inclusion;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Qcm", mappedBy="verification", cascade={"persist"})
-     */
-    private $non_inclusion;
-
-    /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $date;
@@ -73,77 +63,24 @@ class Verification
      */
     private $diastolique;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Pack", inversedBy="verification", cascade={"persist", "remove"})
+     */
+    private $inclusion;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Pack", inversedBy="verification", cascade={"persist", "remove"})
+     */
+    private $non_inclusion;
+
     public function __construct()
     {
-        $this->inclusion = new ArrayCollection();
-        $this->non_inclusion = new ArrayCollection();
+
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection|Qcm[]
-     */
-    public function getInclusion(): Collection
-    {
-        return $this->inclusion;
-    }
-
-    public function addInclusion(Qcm $inclusion): self
-    {
-        if (!$this->inclusion->contains($inclusion)) {
-            $this->inclusion[] = $inclusion;
-            $inclusion->setVerification($this);
-        }
-
-        return $this;
-    }
-
-    public function removeInclusion(Qcm $inclusion): self
-    {
-        if ($this->inclusion->contains($inclusion)) {
-            $this->inclusion->removeElement($inclusion);
-            // set the owning side to null (unless already changed)
-            if ($inclusion->getVerification() === $this) {
-                $inclusion->setVerification(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Qcm[]
-     */
-    public function getNonInclusion(): Collection
-    {
-        return $this->non_inclusion;
-    }
-
-    public function addNonInclusion(Qcm $nonInclusion): self
-    {
-        if (!$this->non_inclusion->contains($nonInclusion)) {
-            $this->non_inclusion[] = $nonInclusion;
-            $nonInclusion->setVerification($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNonInclusion(Qcm $nonInclusion): self
-    {
-        if ($this->non_inclusion->contains($nonInclusion)) {
-            $this->non_inclusion->removeElement($nonInclusion);
-            // set the owning side to null (unless already changed)
-            if ($nonInclusion->getVerification() === $this) {
-                $nonInclusion->setVerification(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -250,6 +187,30 @@ class Verification
     public function setDiastolique(?float $diastolique): self
     {
         $this->diastolique = $diastolique;
+
+        return $this;
+    }
+
+    public function getInclusion(): ?Pack
+    {
+        return $this->inclusion;
+    }
+
+    public function setInclusion(?Pack $inclusion): self
+    {
+        $this->inclusion = $inclusion;
+
+        return $this;
+    }
+
+    public function getNonInclusion(): ?Pack
+    {
+        return $this->non_inclusion;
+    }
+
+    public function setNonInclusion(?Pack $non_inclusion): self
+    {
+        $this->non_inclusion = $non_inclusion;
 
         return $this;
     }

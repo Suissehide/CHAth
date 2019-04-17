@@ -50,7 +50,9 @@ class ParticipantType extends AbstractType
             //     'by_reference' => false,
             // ))
 
-            ->add('verification', VerificationType::class, array('label' => 'Verification'))
+            ->add('verification', VerificationType::class, array(
+                'label' => 'Verification'
+            ))
 
             ->add('validation', SubmitType::class, array('label' => 'Ajouter'))
         ;

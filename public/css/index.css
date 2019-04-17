@@ -151,83 +151,6 @@ td .btn-default {
     visibility: hidden;
 } */
 
-/* ========= Participant ========= */
-
-.hero-tabs,
-.slide {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    position: relative;
-    text-align: center;
-    padding: 0 2em;
-}
-
-.hero-tabs h1,
-.slide h1 {
-    margin: 0;
-}
-
-.hero-tabs h3,
-.slide h3 {
-    opacity: 0.6;
-}
-
-.hero-tabs-container {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 80px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    background: #fff;
-    z-index: 10;
-}
-
-.hero-tabs-container--top {
-    position: fixed;
-    top: 0;
-    width: calc(100% - 80px);
-}
-
-.hero-tab {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-    color: #000;
-    letter-spacing: 0.1rem;
-    transition: all 0.5s ease;
-    padding: 0 5px;
-}
-
-.hero-tab:hover {
-    color: white;
-    background: rgb(59, 189, 166, 0.8);
-    transition: all 0.5s ease;
-}
-
-.hero-tab, .hero-tab:visited, .hero-tab:focus {
-    text-decoration: none;
-}
-
-.hero-tab-slider {
-    position: absolute;
-    bottom: 0;
-    width: 0;
-    height: 6px;
-    background: #1a535c;
-    transition: left 0.3s ease;
-}
-
-.hero-text {
-    position: absolute;
-    color: #f4f9f7;
-}
-
 /* ========= Participant - create ========= */
 
 .form {
@@ -237,7 +160,7 @@ td .btn-default {
     justify-content: space-between;
 }
 
-.form > ul {
+.form>ul {
     font-size: 14px;
     color: #f4f9f7;
     background-color: #d63b53;
@@ -245,7 +168,9 @@ td .btn-default {
     margin-bottom: 10px;
 }
 
-input[readonly], textarea[readonly]:focus, input[readonly]:focus {
+input[readonly],
+textarea[readonly]:focus,
+input[readonly]:focus {
     border: 1px solid #d63b53;
 }
 
@@ -324,6 +249,10 @@ input[readonly], textarea[readonly]:focus, input[readonly]:focus {
     margin-top: 30px;
 }
 
+.form-space {
+    margin: 30px 0;
+}
+
 label {
     font-family: Ubuntu-Regular;
     color: #808080;
@@ -350,6 +279,153 @@ label {
     position: absolute;
 }
 
+/* ========= Participant ========= */
+
+.hero-tabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    text-align: center;
+    padding: 0 2em;
+}
+
+.slide {
+    min-height: 100vh;
+    position: relative;
+    padding: 50px 25px 0 25px;
+}
+
+.hero-tabs h1,
+.slide h1 {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.slide h1::before {
+    content: "";
+    position: absolute;
+    border: 0;
+    height: 5px;
+    background-color: #1d699c;
+    width: 66px;
+    bottom: -5px;
+}
+
+.hero-tabs h3,
+.slide h3 {
+    position: relative;
+    display: inline-block;
+    opacity: 0.6;
+    margin: 30px 0 0px 0;
+}
+
+/* 
+.slide h3::before {
+    content: "";
+    position: absolute;
+    border: 0;
+    height: 3px;
+    background-color: #808080;
+    width: 50%;
+    left: 25%;
+    bottom: -5px;
+}
+*/
+
+.hero-tabs-container {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    z-index: 10;
+}
+
+.hero-tabs-container--top {
+    position: fixed;
+    top: 0;
+    width: calc(100% - 80px);
+}
+
+.hero-tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    color: #000;
+    letter-spacing: 0.1rem;
+    transition: all 0.5s ease;
+    padding: 0 5px;
+}
+
+.hero-tab:hover {
+    color: white;
+    background: rgb(59, 189, 166, 0.8);
+    transition: all 0.5s ease;
+}
+
+.hero-tab,
+.hero-tab:visited,
+.hero-tab:focus {
+    text-decoration: none;
+}
+
+.hero-tab-slider {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 6px;
+    background: #1a535c;
+    transition: left 0.3s ease;
+}
+
+.hero-text {
+    position: absolute;
+    color: #f4f9f7;
+}
+
+.qcm-row {
+    /* margin-bottom: 15px; */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #1d699c;
+}
+
+.qcm-row .input {
+    height: 58px;
+    margin-bottom: 0;
+}
+
+.qcm-question {
+    width: 65%;
+}
+
+.qcm-question input[readonly],
+.qcm-question input[readonly]:focus,
+.qcm-question textarea[readonly],
+.qcm-question textarea[readonly]:focus {
+    border: none;
+    background: none;
+    resize: none;
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.qcm-response {
+    width: 30%;
+}
+
+.qcm-response .wrap-input {
+    margin: 0;
+    /* background: none; */
+}
 
 /* ========= Utilisateur - list ========= */
 
@@ -378,7 +454,9 @@ label {
 /* ========= Modal ========= */
 
 
-.modal-header, .modal h4, .modal .close {
+.modal-header,
+.modal h4,
+.modal .close {
     background-color: #2892d7;
     color: white !important;
     text-align: center;
@@ -401,7 +479,8 @@ label {
     background-color: #f4f9f7;
 }
 
-.modal-footer, .modal-header {
+.modal-footer,
+.modal-header {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }

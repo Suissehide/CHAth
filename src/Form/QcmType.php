@@ -7,16 +7,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class QcmType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('question', TextType::class, array(
+            ->add('question', TextareaType::class, array(
                 'label' => 'Question',
                 'empty_data' => '',
+                'attr' => array(
+                    'readonly' => true,
+                ),
             ))
             ->add('reponse', ChoiceType::class, array(
                 'label' => 'Réponse',
@@ -25,7 +28,7 @@ class QcmType extends AbstractType
                 'choices' => array(
                     'oui' => 'oui',
                     'non' => 'non',
-                    '' => '',
+                    'non précisé' => 'non précisé',
                 ),
             ))
         ;

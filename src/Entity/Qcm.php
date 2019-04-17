@@ -27,9 +27,9 @@ class Qcm
     private $reponse;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Verification", inversedBy="inclusion")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Pack", inversedBy="qcm")
      */
-    private $verification;
+    private $pack;
 
     public function getId(): ?int
     {
@@ -60,14 +60,14 @@ class Qcm
         return $this;
     }
 
-    public function getVerification(): ?Verification
+    public function getPack(): ?Pack
     {
-        return $this->verification;
+        return $this->pack;
     }
 
-    public function setVerification(?Verification $verification): self
+    public function setPack(?Pack $pack): self
     {
-        $this->verification = $verification;
+        $this->pack = $pack;
 
         return $this;
     }
