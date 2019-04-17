@@ -43,6 +43,11 @@ class Participant
      */
     private $utilisateurs;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Verification", cascade={"persist", "remove"})
+     */
+    private $verification;
+
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
@@ -123,6 +128,18 @@ class Participant
         if ($this->utilisateurs->contains($utilisateur)) {
             $this->utilisateurs->removeElement($utilisateur);
         }
+
+        return $this;
+    }
+
+    public function getVerification(): ?Verification
+    {
+        return $this->verification;
+    }
+
+    public function setVerification(?Verification $verification): self
+    {
+        $this->verification = $verification;
 
         return $this;
     }

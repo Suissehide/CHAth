@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Entity\Verification;
+use App\Entity\Qcm;
 
 use App\Form\ParticipantType;
 use App\Form\VerificationType;
+use App\Form\QcmType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +34,15 @@ class ParticipantController extends AbstractController
 
                 if ($participant->getCode() == '')
                     $participant->setCode('ERROR');
+
+                $verification = new Verification();
+                $qcm = new Qcm();
+                $qcm->setQuestion("Patients (homme ou femme) âgés de plus de 80 ans ?");
+                $verification->addInclusion($qcm);
+                $em->persist($verification);
+                $em->flush();
+                // $participant->setVerification($em->getRepository(Verification::class)->findOneById($verification->getId()));
+                $participant->setVerification($verification);
 
                 $em->persist($participant);
                 $em->flush();

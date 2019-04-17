@@ -9,6 +9,9 @@
 {% endblock %}
 
 {% block page_content %}
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
     <!-- Hero -->
     <section class="hero-tabs">
         <h1>PARTICIPANT</h1>
@@ -28,6 +31,14 @@
         <section class="slide" id="tab-verification">
             <h1>ES6</h1>
             <h3>something about es6</h3>
+
+                {% for qcm in form.verification.inclusion %}
+                    {{ form_row(qcm.question) }}
+                    {{ form_row(qcm.reponse) }}
+                {% endfor %}
+
+                {{ form_row(form.verification.age) }}
+
         </section>
         <section class="slide" id="tab-donnees">
             <h1>Flexbox</h1>
@@ -46,6 +57,9 @@
             <h3>something about other</h3>
         </section>
     </main>
+
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest' : false}) }}
 {% endblock %}
 
 {% block javascripts %}

@@ -19,12 +19,12 @@ class Verification
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Qcm", mappedBy="verification")
+     * @ORM\OneToMany(targetEntity="App\Entity\Qcm", mappedBy="verification", cascade={"persist"})
      */
     private $inclusion;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Qcm", mappedBy="verification")
+     * @ORM\OneToMany(targetEntity="App\Entity\Qcm", mappedBy="verification", cascade={"persist"})
      */
     private $non_inclusion;
 

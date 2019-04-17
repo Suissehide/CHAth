@@ -3,11 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Participant;
+use App\Form\VerificationType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Entity\Verification;
 
 class ParticipantType extends AbstractType
 {
@@ -33,6 +37,21 @@ class ParticipantType extends AbstractType
                 'label' => 'Numéro',
                 'required' => 'true',
             ))
+
+            // ->add('verification', EntityType::class, array(
+            //     'class' => Verification::class,
+            //     'choice_label' => 'date',
+            // ))
+
+            // ->add('verification', CollectionType::class, array(
+            //     'entry_type' => VerificationType::class,
+            //     'entry_options' => array('label' => false),
+            //     'allow_add' => true,
+            //     'by_reference' => false,
+            // ))
+
+            ->add('verification', VerificationType::class, array('label' => 'Verification'))
+
             ->add('validation', SubmitType::class, array('label' => 'Ajouter'))
         ;
     }
