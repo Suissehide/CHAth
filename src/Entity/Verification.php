@@ -64,12 +64,12 @@ class Verification
     private $diastolique;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", inversedBy="verification", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
      */
     private $inclusion;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", inversedBy="verification", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
      */
     private $non_inclusion;
 

@@ -176,4 +176,20 @@ class ParticipantController extends AbstractController
     {
         return strtr(utf8_decode($stripAccents), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
     }
+
+    /**
+     * @Route("/{id}", name="participant_delete", methods="DELETE")
+     */
+    public function delete(Request $request, Participant $participant) : Response
+    {
+        dump($this->isCsrfTokenValid('delete' . $participant->getId(), $request->request->get('_token')));
+        
+        if ($this->isCsrfTokenValid('delete' . $participant->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($participant);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('index');
+    }
 }

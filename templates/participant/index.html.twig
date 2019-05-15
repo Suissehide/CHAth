@@ -76,12 +76,21 @@
 {% block page_content %}
 
     <div class="container-form">
-        {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-        {{ form_errors(form) }}
         <!-- Hero -->
         <section class="hero-tabs">
-            <h1>PARTICIPANT</h1>
-            <h3>{{ participant.code }}</h3>
+
+            <div class="hero-header">
+
+                <h1>PARTICIPANT <span>{{ participant.code }}</span></h1>
+
+                <div class="button-block">
+                    <button class="form-btn btn-default">Retour</button>
+                    <button class="form-btn">Enregistrer les modifications</button>
+                    {{ include('participant/_delete_form.html.twig') }}
+                </div>
+
+            </div>
+
             <div class="hero-tabs-container">
                 <a class="hero-tab" href="#tab-verification">Vérification des critères d'éligibilité</a>
                 <a class="hero-tab" href="#tab-donnees">Données cardiovasculaires</a>
@@ -91,6 +100,9 @@
                 <span class="hero-tab-slider"></span>
             </div>
         </section>
+
+        {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+        {{ form_errors(form) }}
 
         <!-- Main -->
         <main class="main">

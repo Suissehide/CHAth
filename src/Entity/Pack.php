@@ -19,14 +19,9 @@ class Pack
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Qcm", mappedBy="pack", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Qcm", mappedBy="pack", cascade={"persist", "remove"})
      */
     private $qcm;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Verification", mappedBy="inclusion", cascade={"persist", "remove"})
-     */
-    private $verification;
 
     public function __construct()
     {
@@ -64,24 +59,6 @@ class Pack
             if ($qcm->getPack() === $this) {
                 $qcm->setPack(null);
             }
-        }
-
-        return $this;
-    }
-
-    public function getVerification(): ?Verification
-    {
-        return $this->verification;
-    }
-
-    public function setVerification(?Verification $verification): self
-    {
-        $this->verification = $verification;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newInclusion = $verification === null ? null : $this;
-        if ($newInclusion !== $verification->getInclusion()) {
-            $verification->setInclusion($newInclusion);
         }
 
         return $this;
