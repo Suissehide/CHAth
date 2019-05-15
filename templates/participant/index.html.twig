@@ -83,9 +83,17 @@
 
                 <h1>PARTICIPANT <span>{{ participant.code }}</span></h1>
 
+                <div>
+                    <h4>Modifications</h4>
+                    <em>triées par date</em>
+                    <ul>
+                        <li>Léo Couffinhal leo</li>
+                    </ul>
+                </div>
+
                 <div class="button-block">
-                    <button class="form-btn btn-default">Retour</button>
-                    <button class="form-btn">Enregistrer les modifications</button>
+                    <button class="form-btn btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i>Retour</button>
+                    <button class="form-btn"><i class="fa fa-save" aria-hidden="true"></i>Enregistrer les modifications</button>
                     {{ include('participant/_delete_form.html.twig') }}
                 </div>
 
