@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Participant;
 use App\Form\VerificationType;
+use App\Form\CardiovasculaireType;
+use App\Form\InformationType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use App\Entity\Verification;
+
 
 class ParticipantType extends AbstractType
 {
@@ -52,6 +55,14 @@ class ParticipantType extends AbstractType
 
             ->add('verification', VerificationType::class, array(
                 'label' => 'Verification'
+            ))
+
+            ->add('cardiovasculaire', CardiovasculaireType::class, array(
+                'label' => 'Cardiovasculaire'
+            ))
+
+            ->add('information', InformationType::class, array(
+                'label' => 'Information'
             ))
 
             ->add('validation', SubmitType::class, array('label' => 'Ajouter'))

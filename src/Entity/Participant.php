@@ -48,6 +48,16 @@ class Participant
      */
     private $verification;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", cascade={"persist", "remove"})
+     */
+    private $cardiovasculaire;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Information", cascade={"persist", "remove"})
+     */
+    private $information;
+
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
@@ -140,6 +150,30 @@ class Participant
     public function setVerification(?Verification $verification): self
     {
         $this->verification = $verification;
+
+        return $this;
+    }
+
+    public function getCardiovasculaire(): ?Cardiovasculaire
+    {
+        return $this->cardiovasculaire;
+    }
+
+    public function setCardiovasculaire(?Cardiovasculaire $cardiovasculaire): self
+    {
+        $this->cardiovasculaire = $cardiovasculaire;
+
+        return $this;
+    }
+
+    public function getInformation(): ?Information
+    {
+        return $this->information;
+    }
+
+    public function setInformation(?Information $information): self
+    {
+        $this->information = $information;
 
         return $this;
     }

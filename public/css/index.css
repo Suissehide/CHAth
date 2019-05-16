@@ -309,6 +309,55 @@ label {
     padding: 0 25px 50px;
 }
 
+.eligible {
+    margin-bottom: 50px;
+    display: flex;
+}
+
+.eligible span {
+    opacity: 0.6;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.modification {
+    padding-bottom: 50px;
+}
+
+.modification h4 {
+    opacity: 0.6;
+    font-size: 18px;
+}
+
+.modification em {
+    font-weight: bold;
+    color: #3CBDA5;
+}
+
+.modification ul {
+    width: fit-content;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.modification ul li {
+    padding: 5px 10px;
+    border-bottom: 1px solid #3CBDA5;
+}
+
+.modification ul li span {
+    color: white;
+    background-color: #3CBDA5;
+    padding: 3px 5px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.modification ul li i {
+    margin-left: 5px;
+    font-weight: normal;
+}
+
 .slide {
     min-height: 100vh;
     position: relative;
@@ -318,7 +367,7 @@ label {
 .hero-tabs h1,
 .slide h1 {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 .hero-tabs h1 span {
@@ -343,21 +392,25 @@ label {
     position: relative;
     display: inline-block;
     opacity: 0.6;
-    margin: 30px 0 10px 0;
+    margin: 0px 0 10px 0;
 }
 
-/* 
-.slide h3::before {
-    content: "";
-    position: absolute;
-    border: 0;
-    height: 3px;
-    background-color: #808080;
-    width: 50%;
-    left: 25%;
-    bottom: -5px;
+.hero-tabs h5,
+.slide h5 {
+    font-size: 16px;
+    margin: 10px 0;
 }
-*/
+
+.margin-space {
+    margin-bottom: 30px;
+}
+
+.separator-space {
+    width: 50px;
+    height: 1px;
+    margin: 10px 0 20px 0;
+    background-color: #3CBDA5;
+}
 
 .hero-tabs-container {
     display: flex;
@@ -413,6 +466,10 @@ label {
 .hero-text {
     position: absolute;
     color: #f4f9f7;
+}
+
+.qcm {
+    margin-bottom: 40px;
 }
 
 .qcm-row {

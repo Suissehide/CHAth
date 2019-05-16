@@ -6,10 +6,13 @@ use App\Entity\Participant;
 use App\Entity\Verification;
 use App\Entity\Qcm;
 use App\Entity\Pack;
+use App\Entity\Cardiovasculaire;
+use App\Entity\Information;
 
 use App\Form\ParticipantType;
 use App\Form\VerificationType;
-use App\Form\QcmType;
+use App\Form\CardiovasculaireType;
+use App\Form\InformationType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,60 +39,9 @@ class ParticipantController extends AbstractController
                 if ($participant->getCode() == '')
                     $participant->setCode('ERROR');
 
-                $verification = new Verification();
-
-                $pack = new Pack();
-
-                $qcm = new Qcm();
-                $qcm->setQuestion("Patients (homme ou femme) âgés de plus de 80 ans");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Absence de preuve pour une hémopathie maligne avérée (connue ou révélée sur les résultats de NFS)");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Sujet affilié ou bénéficiaire d’un régime de sécurité sociale");
-                $pack->addQcm($qcm);
-
-                $verification->setInclusion($pack);
-
-                $pack = new Pack();
-
-                $qcm = new Qcm();
-                $qcm->setQuestion("Patient ayant présenté un ECV d’origine non-athéromateuse (dissection, embolique, ...)");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Patient présentant un diabète mal équilibré (HbA1c > 10%)");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Patient ayant présenté un ou plusieurs ECV avant 80 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Patient présentant une hémopathie maligne manifeste (connue ou révélée sur les résultats de NFS)");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Patient présentant une maladie inflammatoire chronique (cancer, vascularite, rhumatismale, hépato-gastro-intestinales)");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Patient traité par anti-inflammatoire au long cours (Corticoïdes, Anti-inflammatoires non stéroïdiens, Aspirine > 325mg/jour, Inhibiteurs de la cyclo-oxygénase II)");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Personne placée sous sauvegarde de justice, tutelle ou curatelle");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Personne étant dans l’incapacité de donner son consentement");
-                $pack->addQcm($qcm);
-                $qcm = new Qcm();
-                $qcm->setQuestion("Personne étant dans l’incapacité de donner son consentement");
-                $pack->addQcm($qcm);
-
-                $verification->setNonInclusion($pack);
-
-                $em->persist($verification);
-                $em->flush();
-                $participant->setVerification($verification);
+                $this->verification_create($participant);
+                $this->cardiovasculaire_create($participant);
+                $this->information_create($participant);
 
                 $em->persist($participant);
                 $em->flush();
@@ -101,6 +53,179 @@ class ParticipantController extends AbstractController
             'controller_name' => 'ParticipantController',
             'form' => $form->createView(),
         ]);
+    }
+
+    private function verification_create(Participant $participant)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $verification = new Verification();
+
+        $pack = new Pack();
+
+        $qcm = new Qcm();
+        $qcm->setQuestion("Patients (homme ou femme) âgés de plus de 80 ans");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Absence de preuve pour une hémopathie maligne avérée (connue ou révélée sur les résultats de NFS)");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Sujet affilié ou bénéficiaire d’un régime de sécurité sociale");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Signature du consentement éclairé, Date ");
+        $pack->addQcm($qcm);
+
+        $verification->setInclusion($pack);
+
+        $pack = new Pack();
+
+        $qcm = new Qcm();
+        $qcm->setQuestion("Patient ayant présenté un ECV d’origine non-athéromateuse (dissection, embolique, ...)");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Patient présentant un diabète mal équilibré (HbA1c > 10%)");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Patient ayant présenté un ou plusieurs ECV avant 80 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Patient présentant une hémopathie maligne manifeste (connue ou révélée sur les résultats de NFS)");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Patient présentant une maladie inflammatoire chronique (cancer, vascularite, rhumatismale, hépato-gastro-intestinales)");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Patient traité par anti-inflammatoire au long cours (Corticoïdes, Anti-inflammatoires non stéroïdiens, Aspirine > 325mg/jour, Inhibiteurs de la cyclo-oxygénase II)");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Personne placée sous sauvegarde de justice, tutelle ou curatelle");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Personne étant dans l’incapacité de donner son consentement");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Sujet non coopérant");
+        $pack->addQcm($qcm);
+
+        $verification->setNonInclusion($pack);
+
+        $em->persist($verification);
+        $em->flush();
+        $participant->setVerification($verification);
+    }
+
+    private function cardiovasculaire_create(Participant $participant)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $cardiovasculaire = new Cardiovasculaire();
+
+        $pack = new Pack();
+
+        $qcm = new Qcm();
+        $qcm->setQuestion("Diabète");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Hypertension artérielle");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Dyslipidémie");
+        $pack->addQcm($qcm);
+
+        $cardiovasculaire->setFacteurs($pack);
+
+        $pack = new Pack();
+
+        $qcm = new Qcm();
+        $qcm->setQuestion("Hypocholestérolémiant");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Antihypertenseur");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Antidiabétique");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Antiagrégant");
+        $pack->addQcm($qcm);
+
+        $cardiovasculaire->setTraitement($pack);
+
+        $em->persist($cardiovasculaire);
+        $em->flush();
+        $participant->setCardiovasculaire($cardiovasculaire);
+    }
+
+    private function information_create(Participant $participant)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $information = new Information();
+
+        $pack = new Pack();
+
+        $qcm = new Qcm();
+        $qcm->setQuestion("Sus-décalage du segment ST");
+        $pack->addQcm($qcm);
+
+        $qcm = new Qcm();
+        $qcm->setQuestion("Antérieur");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Septo-apical");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Latéral");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Inférieur");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Sans territoire");
+        $pack->addQcm($qcm);
+    
+        $qcm = new Qcm();
+        $qcm->setQuestion("IVA");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("CD");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Cx");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Marginale");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Diagonale");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Pontage");
+        $pack->addQcm($qcm);
+
+        $information->setType($pack);
+
+        $pack = new Pack();
+
+        $qcm = new Qcm();
+        $qcm->setQuestion("Trouble du rythme ventriculaire");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Insuffisance cardiaque");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Péricardite");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Complication mécanique");
+        $pack->addQcm($qcm);
+
+        $information->setComplications($pack);
+
+        $em->persist($information);
+        $em->flush();
+        $participant->setInformation($information);
     }
 
     /**
