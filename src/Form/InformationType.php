@@ -22,6 +22,7 @@ class InformationType extends AbstractType
                 'attr' => [
                     'class' => 'datepicker',
                 ],
+                'required' => false,
             ))
 
             ->add('type', PackType::class, array(
@@ -51,6 +52,7 @@ class InformationType extends AbstractType
                     'min' => 0,
                     'max' => 100,
                 ),
+                'required' => false,
             ))
             ->add('hemoglobine', NumberType::class, array(
                 'label' => 'Hémoglobine (g/dL)',
@@ -59,6 +61,7 @@ class InformationType extends AbstractType
                     'min' => 0,
                     'max' => 100,
                 ),
+                'required' => false,
             ))
             ->add('leucocytes', NumberType::class, array(
                 'label' => 'Leucocytes (G/L)',
@@ -67,6 +70,7 @@ class InformationType extends AbstractType
                     'min' => 0,
                     'max' => 100,
                 ),
+                'required' => false,
             ))
             ->add('PNN', NumberType::class, array(
                 'label' => 'PNN (G/L)',
@@ -75,6 +79,7 @@ class InformationType extends AbstractType
                     'min' => 0,
                     'max' => 100,
                 ),
+                'required' => false,
             ))
             ->add('plaquettes', NumberType::class, array(
                 'label' => 'Plaquettes (G/L)',
@@ -83,6 +88,7 @@ class InformationType extends AbstractType
                     'min' => 0,
                     'max' => 100,
                 ),
+                'required' => false,
             ))
             ->add('cholesterol', NumberType::class, array(
                 'label' => 'Cholestérol total (g/L)',
@@ -91,6 +97,7 @@ class InformationType extends AbstractType
                     'min' => 0,
                     'max' => 100,
                 ),
+                'required' => false,
             ))
             ->add('LDL_c', NumberType::class, array(
                 'label' => 'LDL-c (g/L)',
@@ -99,6 +106,7 @@ class InformationType extends AbstractType
                     'min' => 0,
                     'max' => 100,
                 ),
+                'required' => false,
             ))
             ->add('HDL_c', NumberType::class, array(
                 'label' => 'HDL-c (g/L)',
@@ -107,6 +115,7 @@ class InformationType extends AbstractType
                     'min' => 0,
                     'max' => 100,
                 ),
+                'required' => false,
             ))
             ->add('HbA1c', NumberType::class, array(
                 'label' => 'HbA1c (%)',
@@ -115,6 +124,7 @@ class InformationType extends AbstractType
                     'min' => 0,
                     'max' => 100,
                 ),
+                'required' => false,
             ))
             ->add('creatininemie', NumberType::class, array(
                 'label' => 'Créatininémie (%)',
@@ -123,6 +133,7 @@ class InformationType extends AbstractType
                     'min' => 0,
                     'max' => 100,
                 ),
+                'required' => false,
             ))
         ;
     }

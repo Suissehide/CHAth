@@ -52,9 +52,7 @@ body {
     position: relative;
 }
 
-input:focus,
-a:focus,
-button:focus {
+input:focus, a:focus, button:focus {
     outline-style: none;
 }
 
@@ -93,12 +91,7 @@ a:hover {
 
 /*---------------------------------------------*/
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     margin: 0px;
 }
 
@@ -110,8 +103,7 @@ p {
     margin: 0px;
 }
 
-ul,
-li {
+ul, li {
     padding: 0;
     margin: 0;
     list-style-type: none;
@@ -119,15 +111,12 @@ li {
 
 /*---------------------------------------------*/
 
-input,
-textarea,
-select {
+input, textarea, select {
     outline: none;
     border: none;
 }
 
-textarea:focus,
-input:focus {
+textarea:focus, input:focus {
     border-color: transparent;
 }
 
@@ -195,6 +184,20 @@ iframe {
     width: 100%;
     padding-top: 50px;
     text-align: center;
+}
+
+.flex-row {
+    display: flex;
+    flex-flow: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-flow: column;
+}
+
+.space-between {
+    justify-content: space-between;
 }
 
 /* ========= LOGIN ========= */
@@ -464,7 +467,7 @@ nav {
 }
 
 .navbar-wrapper {
-    position: relative;
+    /* position: relative; */
     padding-left: 80px;
     z-index: 0;
 }
@@ -536,8 +539,7 @@ input[type="radio"]:checked+label span {
     box-shadow: 2px 2px 2px rgba(0, 0, 0, .1);
 }
 
-input[type="radio"]+label span,
-input[type="radio"]:checked+label span {
+input[type="radio"]+label span, input[type="radio"]:checked+label span {
     -webkit-transition: background-color 0.24s linear;
     -o-transition: background-color 0.24s linear;
     -moz-transition: background-color 0.24s linear;
@@ -565,7 +567,6 @@ input[type="radio"]:checked+label span {
     margin: 0;
 }
 
-
 /* Top scroll
 ================== */
 
@@ -575,26 +576,57 @@ input[type="radio"]:checked+label span {
     transition: opacity .3s 0s, visibility 0s .3s, background-color .3s 0s;
 }
 
-.btn-top {
+.cd-btn {
     z-index: 999;
-    display: inline-block;
-    height: 40px;
-    width: 40px;
+    position: relative;
+    display: flex;
+    height: 60px;
+    width: 60px;
     position: fixed;
-    bottom: 40px;
-    right: 10px;
-    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    /* image replacement properties */
     overflow: hidden;
     text-indent: 100%;
     white-space: nowrap;
-    background: #62CAB8cc url(../img/cd-top-arrow.svg) no-repeat center 50%;
+    color: white;
+    cursor: pointer;
 }
 
-.cd-top.cd-top--show,
-.cd-top.cd-top--fade-out,
-.cd-top:hover {
+.cd-btn .fa {
+    position: absolute;
+    left: -1px;
+    top: 18px;
+    font-size: 24px;
+}
+
+.cd-btn:hover .fa {
+    color: #333;
+}
+
+.btn-top {
+    bottom: 40px;
+    right: 10px;
+    background: #1a535ccc;
+}
+
+.btn-back {
+    bottom: 40px;
+    right: 190px;
+    background: #999999cc;
+}
+
+.btn-delete {
+    bottom: 40px;
+    right: 70px;
+    background: #d63b53cc;
+}
+
+.btn-save {
+    bottom: 40px;
+    right: 130px;
+    background: #3CBDA5cc;
+}
+
+.cd-top.cd-top--show, .cd-top.cd-top--fade-out, .cd-top:hover {
     -webkit-transition: opacity .3s 0s, visibility 0s 0s, background-color .3s 0s;
     transition: opacity .3s 0s, visibility 0s 0s, background-color .3s 0s;
 }
@@ -632,56 +664,33 @@ input[type="radio"]:checked+label span {
 /* Switch
 ================== */
 
-
 .tgl {
     display: none;
 }
 
-.tgl,
-.tgl:after,
-.tgl:before,
-.tgl *,
-.tgl *:after,
-.tgl *:before,
-.tgl+.tgl-btn {
+.tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl+.tgl-btn {
     box-sizing: border-box;
 }
 
-.tgl::-moz-selection,
-.tgl:after::-moz-selection,
-.tgl:before::-moz-selection,
-.tgl *::-moz-selection,
-.tgl *:after::-moz-selection,
-.tgl *:before::-moz-selection,
-.tgl+.tgl-btn::-moz-selection {
+.tgl::-moz-selection, .tgl:after::-moz-selection, .tgl:before::-moz-selection, .tgl *::-moz-selection, .tgl *:after::-moz-selection, .tgl *:before::-moz-selection, .tgl+.tgl-btn::-moz-selection {
     background: none;
 }
 
-.tgl::selection,
-.tgl:after::selection,
-.tgl:before::selection,
-.tgl *::selection,
-.tgl *:after::selection,
-.tgl *:before::selection,
-.tgl+.tgl-btn::selection {
+.tgl::selection, .tgl:after::selection, .tgl:before::selection, .tgl *::selection, .tgl *:after::selection, .tgl *:before::selection, .tgl+.tgl-btn::selection {
     background: none;
 }
 
 .tgl+.tgl-btn {
     outline: 0;
     display: block;
-    width: 4em;
-    height: 2em;
+    width: 60px;
+    height: 40px;
     position: relative;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 
-.tgl+.tgl-btn:after,
-.tgl+.tgl-btn:before {
+.tgl+.tgl-btn:after, .tgl+.tgl-btn:before {
     position: relative;
     display: block;
     content: "";
@@ -701,29 +710,25 @@ input[type="radio"]:checked+label span {
     left: 50%;
 }
 
-
 .tgl-skewed+.tgl-btn {
     overflow: hidden;
-    -webkit-transform: skew(-10deg);
     transform: skew(-10deg);
-    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transition: all .2s ease;
-    font-family: sans-serif;
+    /* font-family: Ubuntu-bold; */
     background: #d63b53;
 }
 
-.tgl-skewed+.tgl-btn:after,
-.tgl-skewed+.tgl-btn:before {
-    -webkit-transform: skew(10deg);
+.tgl-skewed+.tgl-btn:after, .tgl-skewed+.tgl-btn:before {
     transform: skew(10deg);
     display: inline-block;
     transition: all .2s ease;
     width: 100%;
     text-align: center;
     position: absolute;
-    line-height: 2em;
-    font-weight: bold;
+    line-height: 42px;
+    font-size: 18px;
+    /* font-weight: bold; */
     color: #fff;
     /* text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4); */
 }

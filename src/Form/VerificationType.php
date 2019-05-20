@@ -37,6 +37,7 @@ class VerificationType extends AbstractType
                 'label' => 'Date',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
+                'required' => false,
             ))
             ->add('age', IntegerType::class, array(
                 'label' => 'Âge',
@@ -44,20 +45,24 @@ class VerificationType extends AbstractType
                     'min' => 0,
                     'max' => 120,
                 ),
+                'required' => false,
             ))
             ->add('sexe', ChoiceType::class, array(
                 'label' => 'Sexe',
                 'expanded' => true,
                 'multiple' => false,
+                'placeholder' => false,
                 'choices' => array(
                     'masculin' => 'masculin',
                     'féminin' => 'féminin',
                 ),
+                'required' => false,
             ))
             ->add('date_naissance', DateType::class, array(
                 'label' => 'Date de naissance (mm/aaaa)',
                 'widget' => 'single_text',
                 'format' => 'MM/yyyy',
+                'required' => false,
             ))
             ->add('taille', IntegerType::class, array(
                 'label' => 'Taille (cm)',
@@ -65,6 +70,7 @@ class VerificationType extends AbstractType
                     'min' => 100,
                     'max' => 260,
                 ),
+                'required' => false,
             ))
             ->add('poids', IntegerType::class, array(
                 'label' => 'Poids (kg)',
@@ -72,6 +78,7 @@ class VerificationType extends AbstractType
                     'min' => 10,
                     'max' => 500,
                 ),
+                
             ))
             ->add('imc', NumberType::class, array(
                 'label' => 'IMC (kg/m²)',
@@ -80,6 +87,7 @@ class VerificationType extends AbstractType
                     'min' => 10,
                     'max' => 80,
                 ),
+                'required' => false,
             ))
             ->add('systolique', NumberType::class, array(
                 'label' => 'Tension artérielle systolique (mmHg)',
@@ -88,7 +96,7 @@ class VerificationType extends AbstractType
                     'min' => 1,
                     'max' => 30,
                 ),
-
+                'required' => false,
             ))
             ->add('diastolique', NumberType::class, array(
                 'label' => 'Tension artérielle diastolique (mmHg)',
@@ -97,7 +105,7 @@ class VerificationType extends AbstractType
                     'min' => 1,
                     'max' => 30,
                 ),
-
+                'required' => false,
             ))
         ;
     }

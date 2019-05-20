@@ -20,16 +20,19 @@ class QcmType extends AbstractType
                 'attr' => array(
                     'readonly' => true,
                 ),
+                'required' => false,
             ))
             ->add('reponse', ChoiceType::class, array(
                 'label' => 'Réponse',
                 'expanded' => true,
                 'multiple' => false,
+                'placeholder' => false,
                 'choices' => array(
                     'oui' => 'oui',
                     'non' => 'non',
                     'non précisé' => 'non précisé',
                 ),
+                'required' => false,
             ))
         ;
     }

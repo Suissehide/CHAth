@@ -230,7 +230,7 @@ input[readonly]:focus {
 }
 
 .btn-danger:hover {
-    background-color: #da6375;
+    background-color: #a02c3e;
 }
 
 .form-btn.btn-default {
@@ -263,6 +263,10 @@ input[readonly]:focus {
 
 .button-block > * {
     margin-right: 10px;
+}
+
+.button-block > *:last-child {
+    margin-right: 0px;
 }
 
 .form-space {
@@ -309,15 +313,20 @@ label {
     padding: 0 25px 50px;
 }
 
-.eligible {
+.hero-title {
     margin-bottom: 50px;
+}
+
+.eligible {
+    margin-left: 15px;
+    border-left: 1px solid #3CBDA5;
+    padding-left: 10px;
     display: flex;
 }
 
-.eligible span {
+.eligible h1 {
     opacity: 0.6;
-    font-size: 18px;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
 .modification {
@@ -364,7 +373,6 @@ label {
     padding: 50px 25px 0 25px;
 }
 
-.hero-tabs h1,
 .slide h1 {
     position: relative;
     margin-bottom: 50px;
@@ -397,7 +405,7 @@ label {
 
 .hero-tabs h5,
 .slide h5 {
-    font-size: 16px;
+    font-size: 18px;
     margin: 10px 0;
 }
 
@@ -536,6 +544,7 @@ label {
 /* ========= Modal ========= */
 
 
+
 .modal-header,
 .modal h4,
 .modal .close {
@@ -549,32 +558,39 @@ label {
     padding: 30px 35px;
 }
 
-.modal-lg {
-    width: 85%;
-}
-
-.modal-md {
-    width: 70%;
-}
-
 .modal-footer {
     background-color: #f4f9f7;
 }
 
-.modal-footer,
-.modal-header {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+.modal-body {
+    font-family: Ubuntu-regular;
+    padding: 20px;
 }
 
-.modal .btn-block-md {
-    width: 49.5%;
+.modal-body span {
+    font-family: Ubuntu-bold;
+    color: #07a8a0;
 }
 
-.modal p {
-    font-size: 18px;
+.modal-body p {
+    font-size: 16px;
+    /* border-bottom: 1px solid #2892d7; */
 }
 
-.modal .container-form {
+.modal-body .user-data {
+    font-size: 16px;
+    color: #666666;
     padding: 20px 0;
+}
+
+.user-data > .date {
+    flex: 1;
+}
+
+.user-data > .signature {
+    flex: 2;
+}
+
+.modal-header .close {
+    margin-top: -11px;
 }

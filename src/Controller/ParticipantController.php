@@ -242,7 +242,7 @@ class ParticipantController extends AbstractController
                 $participant = $form->getData();
                 $em->flush();
             }
-            return $this->redirectToRoute('index');
+            return $this->redirect($request->getUri());
         }
 
         $verification = new Verification();
@@ -253,6 +253,7 @@ class ParticipantController extends AbstractController
             'participant' => $participant,
             'form' => $form->createView(),
             'formVerification' => $formVerification->createView(),
+            'date' => date("d/m/Y"),
         ]);
     }
 

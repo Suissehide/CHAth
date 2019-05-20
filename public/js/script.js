@@ -46,10 +46,15 @@ jQuery(function ($) {
             }
         });
         //smooth scroll to top
-        backTop.addEventListener('click', function (event) {
+        var btnTop = document.getElementsByClassName('btn-top')[0]
+        btnTop.addEventListener('click', function (event) {
             event.preventDefault();
             (!window.requestAnimationFrame) ? window.scrollTo(0, 0) : scrollTop(scrollDuration);
         });
+
+        $(".btn-delete").on('click', function() {
+            $('#btn-delete').trigger('click');
+        })
     }
 
     function checkBackToTop() {
