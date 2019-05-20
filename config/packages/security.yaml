@@ -25,20 +25,19 @@ security:
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800
-                path: /
             pattern: ^/
             form_login:
                 login_path: login
                 check_path: login
                 username_parameter: _email
                 provider: user_provider
-                default_target_path: index
+                default_target_path: index_participant
                 always_use_default_target_path: true
                 csrf_token_generator: security.csrf.token_manager
             logout:
                 path: logout
                 target: login
-            anonymous: ~
+            anonymous: true
 
             # activate different ways to authenticate
 

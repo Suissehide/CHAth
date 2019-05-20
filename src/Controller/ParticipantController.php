@@ -316,6 +316,6 @@ class ParticipantController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('index_participant');
     }
 }

@@ -14,6 +14,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * @Route("/")
+ */
 class UtilisateurController extends AbstractController
 {
     /**

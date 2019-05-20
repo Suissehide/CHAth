@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/index", name="index")
+     * @Route("/index", name="index_participant")
      */
     public function index(ParticipantRepository $participantRepository, Request $request): Response
     {
