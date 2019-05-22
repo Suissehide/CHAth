@@ -4,8 +4,9 @@ security:
             algorithm: argon2i
     role_hierarchy:
         ROLE_GUEST: ROLE_GUEST
-        ROLE_USER: [ROLE_GUEST, ROLE_USER]
+        ROLE_USER: [ROLE_USER]
         ROLE_ADMIN: [ROLE_USER, ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_SUPER_ADMIN]
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -51,7 +52,10 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/, roles: ROLE_USER }
+        # - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
+
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/, role: IS_AUTHENTICATED_REMEMBERED}
+        - { path: ^/utilisateur/list, role: ROLE_ADMIN}
+        - { path: ^/guest, role: ROLE_GUEST}
+        - { path: ^/, role: ROLE_USER}
