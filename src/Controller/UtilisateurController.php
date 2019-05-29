@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/")
@@ -174,6 +175,20 @@ class UtilisateurController extends AbstractController
             'controller_name' => 'EditController',
             'user' => $user,
         ]);
+    }
+
+    public function onAuthenticationSuccess(Request $request, AuthorizationCheckerInterface $authChecker)
+    {
+
+        if (true === $authChecker->isGranted('ROLE_GUEST')) {
+            // c'est un aministrateur : on le rediriger vers l'espace admin
+            $redirection = new RedirectResponse($this->router->generate('guest'));
+        } else {
+            // c'est un utilisaeur lambda : on le rediriger vers l'accueil
+            $redirection = new RedirectResponse($this->router->generate('index_participant'));
+        }
+
+        return $redirection;
     }
 
     /*

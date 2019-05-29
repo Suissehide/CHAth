@@ -29,7 +29,7 @@ security:
             pattern: ^/
             form_login:
                 login_path: login
-                check_path: login
+                check_path: onAuthenticationSuccess
                 username_parameter: _email
                 provider: user_provider
                 default_target_path: index_participant
