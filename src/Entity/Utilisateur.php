@@ -24,7 +24,6 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank()
      */
     private $email;
 
@@ -40,7 +39,6 @@ class Utilisateur implements UserInterface
     private $password;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Length(min=6, max=128)
      * @Assert\Regex(pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/", message="Utilisez au minimum 1 lettre majuscule, 1 lettre minuscule et 1 chiffre.")
      */

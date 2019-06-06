@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Utilisateur;
 use App\Form\UtilisateurType;
+use App\Form\PasswordFormType;
 use App\Repository\UtilisateurRepository;
 
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +15,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @Route("/")
@@ -56,7 +59,7 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/register", name="register", methods="GET|POST")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, UtilisateurRepository $UtilisateurRepository): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $session = $request->getSession();
         $user = new Utilisateur();
@@ -167,25 +170,59 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/utilisateur/edit", name="utilisateur_edit")
      */
-    public function edit(Request $request): Response
+    public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+
         $user = $this->getUser();
+        $roles = $user->getRoles();
+        $form = $this->createForm(UtilisateurType::class, $user);
+        $psw = $this->createForm(PasswordFormType::class, $user);
+        $em = $this->getDoctrine()->getManager();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('save')->isClicked()) {
+                $user = $form->getData();
+                $user->setRoles($roles);
+                $em->persist($user);
+                $em->flush();
+            }
+            return $this->redirectToRoute('utilisateur_edit');
+        }
+
+        $psw->handleRequest($request);
+        if ($psw->isSubmitted() && $psw->isValid()) {
+            if ($psw->get('edit')->isClicked()) {
+                $user = $form->getData();
+                $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+                $user->setRoles($roles);
+                $em->persist($user);
+                $em->flush();
+            }
+            return $this->redirectToRoute('utilisateur_edit');
+        }
 
         return $this->render('utilisateur/edit.html.twig', [
             'controller_name' => 'EditController',
             'user' => $user,
+            'form' => $form->createView(),
+            'psw' => $psw->createView(),
         ]);
     }
 
-    public function onAuthenticationSuccess(Request $request, AuthorizationCheckerInterface $authChecker)
+    /**
+     * @Route("/onAuthenticationSuccess", name="onAuthenticationSuccess")
+     */
+    public function onAuthenticationSuccess(UrlGeneratorInterface $router, AuthorizationCheckerInterface $authChecker)
     {
 
         if (true === $authChecker->isGranted('ROLE_GUEST')) {
             // c'est un aministrateur : on le rediriger vers l'espace admin
-            $redirection = new RedirectResponse($this->router->generate('guest'));
+            $redirection = new RedirectResponse($router->generate('guest'));
         } else {
             // c'est un utilisaeur lambda : on le rediriger vers l'accueil
-            $redirection = new RedirectResponse($this->router->generate('index_participant'));
+            $redirection = new RedirectResponse($router->generate('index_participant'));
         }
 
         return $redirection;

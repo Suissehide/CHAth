@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 {% endblock %}
 
-
 {% form_theme form _self %}
 
 {% block form_label %}
@@ -75,25 +74,19 @@
 
 {% block page_content %}
 
-    <div
-        class="container-form">
+    <div class="container-form">
         <!-- Hero -->
         <section class="hero-tabs">
-
             <div class="hero-header">
-
                 <div class="flex-row hero-title">
-
-                    <h1>PARTICIPANT
+                    <h1 id="intro">PARTICIPANT
                         <span>{{ participant.code }}</span>
                     </h1>
-
                     <div class="eligible">
                         <h1>Éligibilité</h1>
-                        <input class="tgl tgl-skewed" id="cb0" type="checkbox"/>
+                        <input class="tgl tgl-skewed" id="cb0" type="checkbox" disabled/>
                         <label class="tgl-btn" data-tg-off="NON" data-tg-on="OUI" for="cb0"></label>
                     </div>
-
                 </div>
 
                 <div class="modification">
@@ -121,11 +114,12 @@
                 <div class="button-block">
                     <a href="{{ path('index_participant') }}" class="form-btn btn-default">
                         <i aria-hidden="true" class="fa fa-arrow-left"></i>Retour</a>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <button class="form-btn" data-target="#save-modal" data-toggle="modal" type="button">
-                        <i aria-hidden="true" class="fa fa-save"></i>Enregistrer les modifications</button>
+                        <i aria-hidden="true" class="fa fa-check"></i>Valider le participant</button>
+                    {% endif %}
                     {{ include('participant/_delete_form.html.twig') }}
                 </div>
-
             </div>
 
             <div class="hero-tabs-container">
@@ -138,15 +132,63 @@
             </div>
         </section>
 
-        {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-        {{ form_errors(form) }}
+
+        <!-- Toc -->
+        <nav class="toc">
+            <ul>
+                <li><a href="#intro">Participant {{ participant.code }}</a></li>
+                <li>
+                    <a href="#verification">Vérification des critères d'éligibilité</a>
+                    <ul>
+                        <li><a href="#inclusion">Critères d'inclusion</a></li>
+                        <li><a href="#non-inclusion">Critères de non inclusion</a></li>
+                        <li><a href="#info">Informations générales</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#cardiovasculaire">Données cardiovasculaires</a>
+                    <ul>
+                        <li><a href="#risque">Facteurs de risque cardiovasculaire</a></li>
+                        <li><a href="#traitement">Traitement au moment de l’évènement</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#information">Informations sur l’évènement cardiovasculaire</a>
+                    <ul>
+                        <li><a href="#type">Type d’infarctus du myocarde</a></li>
+                        <li><a href="#aigue">Traitement à la phase aiguë</a></li>
+                        <li><a href="#complication">Complications immédiates</a></li>
+                        <li><a href="#biologie1">Biologie</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#evenement">Données à 6 mois de l'événement</a>
+                    <ul>
+                        <li><a href="#recidive">Récidive</a></li>
+                        <li><a href="#clinique">Clinique</a></li>
+                        <li><a href="#facteur">Facteurs de risque cardiovasculaire</a></li>
+                        <li><a href="#place">Traitement mis en place suite à l'évènement cardiovasculaire</a></li>
+                        <li><a href="#biologie2">Biologie</a></li>
+                        <li><a href="#hematopoiese">Hématopoïèse Clonale</a></li>
+                        <li><a href="#evaluation">Evaluation cardiovasculaire</a></li>
+                    </ul>
+                </li>
+                <li><a href="#deces">Fiche Décès</a></li>
+            </ul>
+            <svg class="toc-marker" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="#444" stroke-width="3" fill="transparent" stroke-dasharray="0, 0, 0, 1000" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.5, -0.5)" />
+            </svg>
+        </nav>
 
         <!-- Main -->
         <main class="main">
-            <section class="slide" id="tab-verification">
-                <h1>Vérification des critères d'éligibilité</h1>
+            {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+            {{ form_errors(form) }}
 
-                <h3>Critères d'inclusion</h3>
+            <section class="slide" id="tab-verification">
+                <h1 id="verification">Vérification des critères d'éligibilité</h1>
+
+                <h3 id="inclusion">Critères d'inclusion</h3>
                 <div class="qcm">
                     {% for pack in form.verification.inclusion.qcm %}
                         <div class="qcm-row">
@@ -162,7 +204,7 @@
                     {% endfor %}
                 </div>
 
-                <h3>Critères de non inclusion</h3>
+                <h3 id="non-inclusion">Critères de non inclusion</h3>
                 <div class="qcm">
                     {% for qcm in form.verification.non_inclusion.qcm %}
                         <div class="qcm-row">
@@ -178,6 +220,7 @@
                     {% endfor %}
                 </div>
 
+                <h3 id="info">Informations générales</h3>
                 <div class="form-space">
                     {{ form_row(form.verification.age, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                     {{ form_row(form.verification.sexe, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
@@ -191,9 +234,9 @@
             </section>
 
             <section class="slide" id="tab-donnees">
-                <h1>Données cardiovasculaires</h1>
+                <h1 id="cardiovasculaire">Données cardiovasculaires</h1>
 
-                <h3>Facteurs de risque cardiovasculaire</h3>
+                <h3 id="risque">Facteurs de risque cardiovasculaire</h3>
                 {{ form_row(form.cardiovasculaire.tabac, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                 {{ form_row(form.cardiovasculaire.activite_physique, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                 {{ form_row(form.cardiovasculaire.alimentation, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
@@ -212,7 +255,7 @@
                     {% endfor %}
                 </div>
 
-                <h3>Traitement au moment de l’évènement</h3>
+                <h3 id="traitement">Traitement au moment de l’évènement</h3>
                 <div class="qcm">
                     {% for qcm in form.cardiovasculaire.traitement.qcm %}
                         <div class="qcm-row">
@@ -230,12 +273,12 @@
             </section>
 
             <section class="slide" id="tab-informations">
-                <h1>Informations sur l’évènement cardiovasculaire</h1>
+                <h1 id="information">Informations sur l’évènement cardiovasculaire</h1>
 
                 {{ form_row(form.information.date_survenue, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                 <div class="margin-space"></div>
 
-                <h3>Type d’infarctus du Myocarde</h3>
+                <h3 id="type">Type d’infarctus du Myocarde</h3>
                 <div class="qcm">
                     {% for qcm in form.information.type.qcm %}
                         {% set counter = ( counter | default(0) ) + 1 %}
@@ -260,11 +303,11 @@
                     {% endfor %}
                 </div>
 
-                <h3>Traitement à la phase aiguë</h3>
+                <h3 id="aigue">Traitement à la phase aiguë</h3>
                 {{ form_row(form.information.traitement, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                 <div class="margin-space"></div>
 
-                <h3>Complications immédiates</h3>
+                <h3 id="complication">Complications immédiates</h3>
                 <div class="qcm">
                     {% for qcm in form.information.complications.qcm %}
                         <div class="qcm-row">
@@ -280,7 +323,7 @@
                     {% endfor %}
                 </div>
 
-                <h3>Biologie</h3>
+                <h3 id="biologie1">Biologie</h3>
                 <h5>Inflammation</h5>
                 {{ form_row(form.information.CRP, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
 
@@ -299,167 +342,211 @@
                 {{ form_row(form.information.HbA1c, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                 {{ form_row(form.information.creatininemie, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
             </section>
-            <section class="slide" id="tab-evenement">
-                <h1>Données à 6 mois de l’evenement</h1>
 
-                <h3>Récidive</h3>
-                <h3>Clinique</h3>
-                <h3>Facteurs de risque cardiovasculaire</h3>
-                <h3>Traitement mis en place suite à l’évènement cardiovasculaire</h3>
-                <h3>Biologie</h3>
-                <h3>Hématopoïèse Clonale</h3>
-                <h3>Evaluation cardiovasculaire</h3>
+            <section class="slide" id="tab-evenement">
+                <h1 id="evenement">Données à 6 mois de l'événement</h1>
+
+                <h3 id="recidive">Récidive</h3>
+                <h3 id="clinique">Clinique</h3>
+                <h3 id="facteur">Facteurs de risque cardiovasculaire</h3>
+                <h3 id="place">Traitement mis en place suite à l'évènement cardiovasculaire</h3>
+                <h3 id="biologie2">Biologie</h3>
+                <h3 id="hematopoiese">Hématopoïèse Clonale</h3>
+                <h3 id="evaluation">Evaluation cardiovasculaire</h3>
             </section>
+
             <section class="slide" id="tab-deces">
-                <h1>Fiche Décès</h1>
+                <h1 id="deces">Fiche Décès</h1>
             </section>
+
+            {{ form_row(form._token) }}
+            {{ form_end(form, {'render_rest' : false}) }}
+
         </main>
 
-        <!-- Modal -->
-        <div aria-hidden="true" aria-labelledby="save" class="modal fade" id="save-modal" role="dialog" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h1 class="modal-title">Validation des données</h1>
-                    </div>
-                    <div class="modal-body">
-                        <p>&emsp;&emsp;Je, soussigné(e) Pr/Dr
-                            <span>{{ app.user.nom }}</span>, confirme que le suivi du participant a eu lieu sous ma responsabilité conformément au protocole d’étude clinique ; toutes les données contenues dans ce cahier d’observation sont complètes et exactes.</p>
-                        <div class="flex-row user-data">
-                            <div class="date">Date:</br>
-                            <span>{{ date }}</span>
-                        </div>
-                        <div class="signature">Signature:</br>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="button-block space-between">
-                    <button class="form-btn btn-default" data-dismiss="modal" type="button">
-                        <i aria-hidden="true" class="fa fa-times"></i>Fermer</button>
-                    <button class="form-btn" type="submit">
-                        <i aria-hidden="true" class="fa fa-check"></i>Valider</button>
-                </div>
-            </div>
+        <div class="cd-top js-cd-top">
+            <a href="{{ path('index_participant') }}" class="cd-btn btn-back">
+                <i aria-hidden="true" class="fa fa-arrow-left"></i>
+            </a>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <a class="cd-btn btn-check" data-target="#save-modal" data-toggle="modal">
+                    <i aria-hidden="true" class="fa fa-check"></i>
+                </a>
+            {% endif %}
+            <a class="cd-btn btn-delete">
+                <i aria-hidden="true" class="fa fa-trash"></i>
+            </a>
+            <a class="cd-btn btn-top" href="#0">
+                <i aria-hidden="true" class="fa fa-chevron-up"></i>
+            </a>
         </div>
+
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <!-- Modal -->
+            <div aria-hidden="true" aria-labelledby="save" class="modal fade" id="save-modal" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h1 class="modal-title">Validation des données</h1>
+                        </div>
+                        <div class="modal-body">
+                            <p>&emsp;&emsp;Je, soussigné(e) Pr/Dr
+                                <span>{{ app.user.nom }}</span>, confirme que le suivi du participant a eu lieu sous ma responsabilité conformément au protocole d’étude clinique ; toutes les données contenues dans ce cahier d’observation sont complètes et exactes.</p>
+                            <div class="flex-row user-data">
+                                <div class="date">Date:</br>
+                                <span>{{ date }}</span>
+                            </div>
+                            <div class="signature">Signature:</br>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="button-block space-between">
+                        <button class="form-btn btn-default" data-dismiss="modal" type="button">
+                            <i aria-hidden="true" class="fa fa-times"></i>Fermer</button>
+                        <button class="form-btn" type="submit">
+                            <i aria-hidden="true" class="fa fa-check"></i>Valider</button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
     </div>
-</div>
 
-{{ form_row(form._token) }}
-{{ form_end(form, {'render_rest' : false}) }}</div><div class="cd-top js-cd-top">
-<a href="{{ path('index_participant') }}" class="cd-btn btn-back">
-    <i aria-hidden="true" class="fa fa-arrow-left"></i>
-</a>
-<a class="cd-btn btn-save" data-target="#save-modal" data-toggle="modal">
-    <i aria-hidden="true" class="fa fa-save"></i>
-</a>
-<a class="cd-btn btn-delete ">
-    <i aria-hidden="true" class="fa fa-trash"></i>
-</a>
-<a class="cd-btn btn-top" href="#0">
-    <i aria-hidden="true" class="fa fa-chevron-up"></i>
-</a></div>{% endblock %}{% block javascripts %}<script>
-$('ul li').on('click', function () {
-    $('li').removeClass('active');
-    $(this).addClass('active');
-});</script><script>
-
-function isValid() {
-    $('#cb0').prop('checked', true);
-    $('#tab-verification .qcm-row').each(function (e) {
-        var radioValue = $(this).find('input:checked').val();
-        if (radioValue != "oui") {
-            $('#cb0').prop('checked', false);
-            return;
-        }
-    });
-}
-isValid();
-$('#tab-verification .qcm-row input').change(function () {
-    isValid();
-});</script><script>
-class StickyNavigation {
-
-    constructor() {
-        this.currentId = null;
-        this.currentTab = null;
-        this.tabContainerHeight = 70;
-        this.navbar = 80;
-        let self = this;
-        $('.hero-tab').click(function () {
-            self.onTabClick(event, $(this));
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/toc.js') }}"></script>
+    <script>
+        $('ul li').on('click', function () {
+            $('li').removeClass('active');
+            $(this).addClass('active');
         });
-        $(window).scroll(() => {
-            this.onScroll();
+    </script>
+
+    <script>
+        /* Smooth scroll */
+        $('.toc a').on('click', function () {
+            var page = $(this).attr('href');
+            var speed = 550;
+            $('html, body').animate({ scrollTop: $(page).offset().top - 90 }, speed);
+            return false;
         });
-        $(window).resize(() => {
-            this.onResize();
-        });
-    }
 
-    onTabClick(event, element) {
-        event.preventDefault();
-        let scrollTop = $(element.attr('href')).offset().top - this.tabContainerHeight + 1;
-        $('html, body').animate({
-            scrollTop: scrollTop
-        }, 600);
-    }
-
-    onScroll() {
-        this.checkTabContainerPosition();
-        this.findCurrentTabSelector();
-    }
-
-    onResize() {
-        if (this.currentId) {
-            this.setSliderCss();
-        }
-    }
-
-    checkTabContainerPosition() {
-        let offset = $('.hero-tabs').offset().top + $('.hero-tabs').height() - this.tabContainerHeight;
-        if ($(window).scrollTop() > offset) 
-            $('.hero-tabs-container').addClass('hero-tabs-container--top');
-         else 
-            $('.hero-tabs-container').removeClass('hero-tabs-container--top');
-        
-
-    }
-
-    findCurrentTabSelector(element) {
-        let newCurrentId;
-        let newCurrentTab;
-        let self = this;
-        $('.hero-tab').each(function () {
-            let id = $(this).attr('href');
-            let offsetTop = $(id).offset().top - self.tabContainerHeight;
-            let offsetBottom = $(id).offset().top + $(id).height() - self.tabContainerHeight;
-            if ($(window).scrollTop() > offsetTop && $(window).scrollTop() < offsetBottom) {
-                newCurrentId = id;
-                newCurrentTab = $(this);
+        /* eligibilite */
+        function isValid() {
+            let inclusion = 1;
+            let non_inclusion = 1;
+            $('#cb0').prop('checked', true);
+            $('#inclusion .qcm-row').each(function (e) {
+                var radioValue = $(this).find('input:checked').val();
+                if (radioValue != "oui") {
+                    inclusion = 0;
+                    return;
+                }
+            });
+            $('#non-inclusion .qcm-row').each(function (e) {
+                var radioValue = $(this).find('input:checked').val();
+                if (radioValue != "non") {
+                    non_inclusion = 0;
+                    return;
+                }
+            });
+            if (!inclusion || !non_inclusion) {
+                $('#cb0').prop('checked', false);
             }
+        }
+        isValid();
+        $('main .qcm-row input').change(function () {
+            isValid();
         });
-        if (this.currentId != newCurrentId || this.currentId === null) {
-            this.currentId = newCurrentId;
-            this.currentTab = newCurrentTab;
-            this.setSliderCss();
+    </script>
+    <script>
+        class StickyNavigation {
+
+            constructor() {
+                this.currentId = null;
+                this.currentTab = null;
+                this.tabContainerHeight = 70;
+                this.navbar = 80;
+                let self = this;
+                $('.hero-tab').click(function () {
+                    self.onTabClick(event, $(this));
+                });
+                $(window).scroll(() => {
+                    this.onScroll();
+                });
+                $(window).resize(() => {
+                    this.onResize();
+                });
+            }
+
+            onTabClick(event, element) {
+                event.preventDefault();
+                let scrollTop = $(element.attr('href')).offset().top - this.tabContainerHeight + 1;
+                $('html, body').animate({
+                    scrollTop: scrollTop
+                }, 600);
+            }
+
+            onScroll() {
+                this.checkTabContainerPosition();
+                this.findCurrentTabSelector();
+            }
+
+            onResize() {
+                if (this.currentId) {
+                    this.setSliderCss();
+                }
+            }
+
+            checkTabContainerPosition() {
+                let offset = $('.hero-tabs').offset().top + $('.hero-tabs').height() - this.tabContainerHeight;
+                if ($(window).scrollTop() > offset) {
+                    $('.hero-tabs-container').addClass('hero-tabs-container--top');
+                    $('.toc').addClass('toc--top');
+                }
+                else {
+                    $('.hero-tabs-container').removeClass('hero-tabs-container--top');
+                    $('.toc').removeClass('toc--top');
+                }
+            }
+
+            findCurrentTabSelector(element) {
+                let newCurrentId;
+                let newCurrentTab;
+                let self = this;
+                $('.hero-tab').each(function () {
+                    let id = $(this).attr('href');
+                    let offsetTop = $(id).offset().top - self.tabContainerHeight;
+                    let offsetBottom = $(id).offset().top + $(id).height() - self.tabContainerHeight;
+                    if ($(window).scrollTop() > offsetTop && $(window).scrollTop() < offsetBottom) {
+                        newCurrentId = id;
+                        newCurrentTab = $(this);
+                    }
+                });
+                if (this.currentId != newCurrentId || this.currentId === null) {
+                    this.currentId = newCurrentId;
+                    this.currentTab = newCurrentTab;
+                    this.setSliderCss();
+                }
+            }
+
+            setSliderCss() {
+                let width = 0;
+                let left = 0;
+                if (this.currentTab) {
+                    width = this.currentTab.css('width');
+                    left = this.currentTab.offset().left - this.navbar;
+                }
+                $('.hero-tab-slider').css('width', width);
+                $('.hero-tab-slider').css('left', left);
+            }
+
         }
-    }
 
-    setSliderCss() {
-        let width = 0;
-        let left = 0;
-        if (this.currentTab) {
-            width = this.currentTab.css('width');
-            left = this.currentTab.offset().left - this.navbar;
-        }
-        $('.hero-tab-slider').css('width', width);
-        $('.hero-tab-slider').css('left', left);
-    }
-
-}
-
-new StickyNavigation();</script>{% endblock %}
+        new StickyNavigation();
+    </script>
+{% endblock %}

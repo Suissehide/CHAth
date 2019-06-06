@@ -29,10 +29,11 @@ security:
             pattern: ^/
             form_login:
                 login_path: login
-                check_path: onAuthenticationSuccess
+                check_path: login
+                default_target_path: onAuthenticationSuccess
                 username_parameter: _email
                 provider: user_provider
-                default_target_path: index_participant
+                # default_target_path: index_participant
                 always_use_default_target_path: true
                 csrf_token_generator: security.csrf.token_manager
             logout:
@@ -56,6 +57,8 @@ security:
 
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/onAuthenticationSuccess, role: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/utilisateur/edit, role: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: ^/utilisateur/list, role: ROLE_ADMIN}
         - { path: ^/guest, role: ROLE_GUEST}
         - { path: ^/, role: ROLE_USER}

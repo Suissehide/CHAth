@@ -6,6 +6,13 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <style>
+        .slide {
+            min-height: auto;
+            position: relative;
+            padding: 0;
+        }
+    </style>
 {% endblock %}
 
 {% form_theme form _self %}
@@ -15,7 +22,7 @@
     {% if help is not empty %}
         {% set widget_attr = {attr: {'aria-describedby': id ~"_help"}} %}
     {% endif %}
-    <div class="wrap-input" {% with {attr: row_attr|default({})} %}{{ block('attributes') }}{% endwith %}>
+    <div class="wrap-input" {% with {attr: row_attr|default({} )} %} {{ block('attributes') }} {% endwith %}>
         {{ form_label(form) }}
         {{ form_errors(form) }}
         {{ form_widget(form, widget_attr) }}
@@ -32,54 +39,582 @@
         </div>
 
         <div class="container-form">
-            {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-            {{ form_errors(form) }}
 
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.nom, {'attr': {'autofocus' : true, 'class': 'input', 'autocomplete' : 'off'} }) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_row(form.prenom, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                </div>
-            </div>
+            <main class="slide">
+                <h1>Vérification des critères d'éligibilité</h1>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="wrap-input">
-                        <label for="participant_ligne">Sélectionnez un chiffre</label>
-                        <select id="participant_ligne" name="participant[ligne]" class="input">
-                            <option value="1" selected>1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                        <span class="focus-input"></span>
+                <h3>Critères d'inclusion</h3>
+                <div id="inclusion" class="qcm">
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_inclusion_qcm_0_question" name="participant[verification][inclusion][qcm][0][question]" readonly="readonly">Patients (homme ou femme) âgés de plus de 80 ans</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_inclusion_qcm_0_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_0_reponse_0" name="participant[verification][inclusion][qcm][0][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_inclusion_qcm_0_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_0_reponse_1" name="participant[verification][inclusion][qcm][0][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_inclusion_qcm_0_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_0_reponse_2" name="participant[verification][inclusion][qcm][0][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_inclusion_qcm_0_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_inclusion_qcm_1_question" name="participant[verification][inclusion][qcm][1][question]" readonly="readonly">Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_inclusion_qcm_1_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_1_reponse_0" name="participant[verification][inclusion][qcm][1][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_inclusion_qcm_1_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_1_reponse_1" name="participant[verification][inclusion][qcm][1][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_inclusion_qcm_1_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_1_reponse_2" name="participant[verification][inclusion][qcm][1][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_inclusion_qcm_1_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_inclusion_qcm_2_question" name="participant[verification][inclusion][qcm][2][question]" readonly="readonly">Absence de preuve pour une hémopathie maligne avérée (connue ou révélée sur les résultats de NFS)</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_inclusion_qcm_2_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_2_reponse_0" name="participant[verification][inclusion][qcm][2][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_inclusion_qcm_2_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_2_reponse_1" name="participant[verification][inclusion][qcm][2][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_inclusion_qcm_2_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_2_reponse_2" name="participant[verification][inclusion][qcm][2][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_inclusion_qcm_2_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_inclusion_qcm_3_question" name="participant[verification][inclusion][qcm][3][question]" readonly="readonly">Sujet affilié ou bénéficiaire d’un régime de sécurité sociale</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_inclusion_qcm_3_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_3_reponse_0" name="participant[verification][inclusion][qcm][3][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_inclusion_qcm_3_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_3_reponse_1" name="participant[verification][inclusion][qcm][3][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_inclusion_qcm_3_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_3_reponse_2" name="participant[verification][inclusion][qcm][3][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_inclusion_qcm_3_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_inclusion_qcm_4_question" name="participant[verification][inclusion][qcm][4][question]" readonly="readonly">Signature du consentement éclairé, Date
+                            </textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_inclusion_qcm_4_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_4_reponse_0" name="participant[verification][inclusion][qcm][4][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_inclusion_qcm_4_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_4_reponse_1" name="participant[verification][inclusion][qcm][4][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_inclusion_qcm_4_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_inclusion_qcm_4_reponse_2" name="participant[verification][inclusion][qcm][4][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_inclusion_qcm_4_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.code, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-               </div>
-                <div class="col-md-6">
-                    {{ form_row(form.numero, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                <h3>Critères de non inclusion</h3>
+                <div id="non-inclusion" class="qcm">
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_non_inclusion_qcm_0_question" name="participant[verification][non_inclusion][qcm][0][question]" readonly="readonly">Patient ayant présenté un ECV d’origine non-athéromateuse (dissection, embolique, ...)</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_non_inclusion_qcm_0_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_0_reponse_0" name="participant[verification][non_inclusion][qcm][0][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_non_inclusion_qcm_0_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_0_reponse_1" name="participant[verification][non_inclusion][qcm][0][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_non_inclusion_qcm_0_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_0_reponse_2" name="participant[verification][non_inclusion][qcm][0][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_non_inclusion_qcm_0_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_non_inclusion_qcm_1_question" name="participant[verification][non_inclusion][qcm][1][question]" readonly="readonly">Patient présentant un diabète mal équilibré (HbA1c &gt; 10%)</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_non_inclusion_qcm_1_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_1_reponse_0" name="participant[verification][non_inclusion][qcm][1][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_non_inclusion_qcm_1_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_1_reponse_1" name="participant[verification][non_inclusion][qcm][1][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_non_inclusion_qcm_1_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_1_reponse_2" name="participant[verification][non_inclusion][qcm][1][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_non_inclusion_qcm_1_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_non_inclusion_qcm_2_question" name="participant[verification][non_inclusion][qcm][2][question]" readonly="readonly">Patient ayant présenté un ou plusieurs ECV avant 80 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_non_inclusion_qcm_2_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_2_reponse_0" name="participant[verification][non_inclusion][qcm][2][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_non_inclusion_qcm_2_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_2_reponse_1" name="participant[verification][non_inclusion][qcm][2][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_non_inclusion_qcm_2_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_2_reponse_2" name="participant[verification][non_inclusion][qcm][2][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_non_inclusion_qcm_2_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_non_inclusion_qcm_3_question" name="participant[verification][non_inclusion][qcm][3][question]" readonly="readonly">Patient présentant une hémopathie maligne manifeste (connue ou révélée sur les résultats de NFS)</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_non_inclusion_qcm_3_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_3_reponse_0" name="participant[verification][non_inclusion][qcm][3][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_non_inclusion_qcm_3_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_3_reponse_1" name="participant[verification][non_inclusion][qcm][3][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_non_inclusion_qcm_3_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_3_reponse_2" name="participant[verification][non_inclusion][qcm][3][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_non_inclusion_qcm_3_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_non_inclusion_qcm_4_question" name="participant[verification][non_inclusion][qcm][4][question]" readonly="readonly">Patient présentant une maladie inflammatoire chronique (cancer, vascularite, rhumatismale, hépato-gastro-intestinales)</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_non_inclusion_qcm_4_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_4_reponse_0" name="participant[verification][non_inclusion][qcm][4][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_non_inclusion_qcm_4_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_4_reponse_1" name="participant[verification][non_inclusion][qcm][4][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_non_inclusion_qcm_4_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_4_reponse_2" name="participant[verification][non_inclusion][qcm][4][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_non_inclusion_qcm_4_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_non_inclusion_qcm_5_question" name="participant[verification][non_inclusion][qcm][5][question]" readonly="readonly">Patient traité par anti-inflammatoire au long cours (Corticoïdes, Anti-inflammatoires non stéroïdiens, Aspirine &gt; 325mg/jour, Inhibiteurs de la cyclo-oxygénase II)</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_non_inclusion_qcm_5_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_5_reponse_0" name="participant[verification][non_inclusion][qcm][5][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_non_inclusion_qcm_5_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_5_reponse_1" name="participant[verification][non_inclusion][qcm][5][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_non_inclusion_qcm_5_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_5_reponse_2" name="participant[verification][non_inclusion][qcm][5][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_non_inclusion_qcm_5_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_non_inclusion_qcm_6_question" name="participant[verification][non_inclusion][qcm][6][question]" readonly="readonly">Personne placée sous sauvegarde de justice, tutelle ou curatelle</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_non_inclusion_qcm_6_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_6_reponse_0" name="participant[verification][non_inclusion][qcm][6][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_non_inclusion_qcm_6_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_6_reponse_1" name="participant[verification][non_inclusion][qcm][6][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_non_inclusion_qcm_6_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_6_reponse_2" name="participant[verification][non_inclusion][qcm][6][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_non_inclusion_qcm_6_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_non_inclusion_qcm_7_question" name="participant[verification][non_inclusion][qcm][7][question]" readonly="readonly">Personne étant dans l’incapacité de donner son consentement</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_non_inclusion_qcm_7_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_7_reponse_0" name="participant[verification][non_inclusion][qcm][7][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_non_inclusion_qcm_7_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_7_reponse_1" name="participant[verification][non_inclusion][qcm][7][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_non_inclusion_qcm_7_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_7_reponse_2" name="participant[verification][non_inclusion][qcm][7][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_non_inclusion_qcm_7_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qcm-row">
+                        <div class="qcm-question">
+                            <textarea class="input" id="participant_verification_non_inclusion_qcm_8_question" name="participant[verification][non_inclusion][qcm][8][question]" readonly="readonly">Sujet non coopérant</textarea>
+                        </div>
+                        <div class="qcm-response">
+                            <div class="wrap-input">
+                                <div class="input radio-row" id="participant_verification_non_inclusion_qcm_8_reponse">
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_8_reponse_0" name="participant[verification][non_inclusion][qcm][8][reponse]" type="radio" value="oui">
+                                        <label for="participant_verification_non_inclusion_qcm_8_reponse_0">
+                                            <span></span>
+                                            oui
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_8_reponse_1" name="participant[verification][non_inclusion][qcm][8][reponse]" type="radio" value="non">
+                                        <label for="participant_verification_non_inclusion_qcm_8_reponse_1">
+                                            <span></span>
+                                            non
+                                        </label>
+
+                                    </div>
+                                    <div class="radio-container">
+                                        <input id="participant_verification_non_inclusion_qcm_8_reponse_2" name="participant[verification][non_inclusion][qcm][8][reponse]" type="radio" value="non précisé">
+                                        <label for="participant_verification_non_inclusion_qcm_8_reponse_2">
+                                            <span></span>
+                                            non précisé
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="container-form-btn">
-                {{ form_widget(form.validation, {'attr': {'class': 'form-btn'} }) }}
-            </div>
+                <div class="flex-block">
+                    <h3>Éligibilité</h3>
+                    <input class="tgl tgl-skewed" id="cb0" type="checkbox" disabled/>
+                    <label class="tgl-btn" data-tg-off="NON" data-tg-on="OUI" for="cb0"></label>
+                </div>
+            </main>
 
-            {{ form_row(form._token) }}
-            {{ form_end(form, {'render_rest' : false}) }}
+            <section class="slide">
+                <h1>Informations générales</h1>
+
+                {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+                {{ form_errors(form) }}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.prenom, {'attr': {'autofocus' : true, 'class': 'input', 'autocomplete' : 'off'} }) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.nom, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="wrap-input">
+                            <label for="participant_ligne">Sélectionnez un chiffre</label>
+                            <select class="input" id="participant_ligne" name="participant[ligne]">
+                                <option selected value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            <span class="focus-input"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.code, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.numero, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                    </div>
+                </div>
+
+                <div class="container-form-btn">
+                    {{ form_widget(form.validation, {'attr': {'class': 'form-btn'} }) }}
+                </div>
+
+                {{ form_row(form._token) }}
+                {{ form_end(form, {'render_rest' : false}) }}
+            </section
         </div>
     </div>
 {% endblock %}
@@ -88,7 +623,7 @@
     <script>
         $('li:eq(2)').addClass('active');
 
-        $('ul li').on('click', function() {
+        $('ul li').on('click', function () {
             $('li').removeClass('active');
             $(this).addClass('active');
         });
@@ -99,8 +634,8 @@
             if (!$("#participant_validation").is(":disabled")) {
                 $("#participant_validation").prop("disabled", true);
                 $("#participant_code").val('');
-                $('#participant_code').css({'border-color' : '#d63b53'})
-                var msg =   `<span class="invalid-feedback">
+                $('#participant_code').css({'border-color': '#d63b53'})
+                var msg = `<span class="invalid-feedback">
                                 <span class="initialism badge badge-danger">Error</span>
                                 <span class="form-error-message">Veuillez renseigner un nom et prénom (2 charactères minimum).</span>
                             </span>`;
@@ -113,8 +648,9 @@
             var nom = $('#participant_nom').val();
             var prenom = $('#participant_prenom').val();
             var ligne = $('#participant_ligne').val();
-            if (!nom || !prenom || nom.length < 2 || prenom.length < 2)
+            if (! nom || ! prenom || nom.length < 2 || prenom.length < 2) 
                 return disableButton();
+            
             $.ajax({
                 url: "{{ path( 'participant_code_generate' ) }}",
                 type: "POST",
@@ -122,17 +658,49 @@
                 data: {
                     "nom": nom,
                     "prenom": prenom,
-                    "ligne": ligne,
+                    "ligne": ligne
                 },
                 success: function (resp) {
-                    if (resp == '')
+                    if (resp == '') 
                         return disableButton();
+                    
                     $('#participant_code').val(resp);
-                    $('#participant_code').css({'border-color' : 'forestgreen'})
+                    $('#participant_code').css({'border-color': 'forestgreen'})
                     $("#participant_validation").prop("disabled", false);
                     $('.invalid-feedback').remove();
                 }
             });
+        });
+    </script>
+
+    <script>
+        function isValid() {
+            let inclusion = 1;
+            let non_inclusion = 1;
+            $('#cb0').prop('checked', true);
+            $('section').css({'display': 'block'});
+            $('#inclusion .qcm-row').each(function (e) {
+                var radioValue = $(this).find('input:checked').val();
+                if (radioValue != "oui") {
+                    inclusion = 0;
+                    return;
+                }
+            });
+            $('#non-inclusion .qcm-row').each(function (e) {
+                var radioValue = $(this).find('input:checked').val();
+                if (radioValue != "non") {
+                    non_inclusion = 0;
+                    return;
+                }
+            });
+            if (!inclusion || !non_inclusion) {
+                $('#cb0').prop('checked', false);
+                $('section').css({'display': 'none'});
+            }
+        }
+        isValid();
+        $('main .qcm-row input').change(function () {
+            isValid();
         });
     </script>
 {% endblock %}

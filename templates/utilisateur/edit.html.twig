@@ -8,14 +8,88 @@
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 {% endblock %}
 
-{% block page_content %}
+{% form_theme form _self %}
 
+{% block form_row %}
+    {% set widget_attr = {} %}
+    {% if help is not empty %}
+        {% set widget_attr = {attr: {'aria-describedby': id ~"_help"}} %}
+    {% endif %}
+    <div class="wrap-input" {% with {attr: row_attr|default({} )} %} {{ block('attributes') }} {% endwith %}>
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form, widget_attr) }}
+        {{ form_help(form) }}
+        <span class="focus-input"></span>
+    </div>
+{% endblock form_row %}
+
+{% block page_content %}
     <div class="container-fluid">
 
         <div class="title-wrapper">
             Profil
         </div>
 
+        <div class="container-form">
+
+            <main class="flex-row">
+                <section class="flex-2">
+                    <h3>Informations générales</h3>
+                    {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+                    {{ form_errors(form) }}
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            {{ form_row(form.email, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            {{ form_row(form.prenom, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            {{ form_row(form.nom, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <button id="utilisateur_save" name="utilisateur[save]" class="form-btn" type="submit">
+                                <i aria-hidden="true" class="fa fa-save"></i>Enregistrer</button>
+                        </div>
+                    </div>
+                    {{ form_row(form._token) }}
+                    {{ form_end(form, {'render_rest' : false}) }}
+                </section>
+
+                <section class="flex-2">
+                    <h3>Mot de passe</h3>
+                    {{ form_start(psw, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+                    {{ form_errors(psw) }}
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            {{ form_row(psw.plainPassword.first, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            {{ form_row(psw.plainPassword.second, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <button id="password_form_edit" name="password_form[edit]" class="form-btn" type="submit">
+                                <i aria-hidden="true" class="fa fa-pen"></i>Modifier le mot de passe</button>
+                        </div>
+                    </div>
+                    {{ form_row(psw._token) }}
+                    {{ form_end(psw, {'render_rest' : false}) }}
+                </section>
+            </main>
+        </div>
     </div>
 
 {% endblock %}
@@ -25,7 +99,7 @@
     <script>
         $('li:eq(0)').addClass('active');
 
-        $('ul li').on('click', function() {
+        $('ul li').on('click', function () {
             $('li').removeClass('active');
             $(this).addClass('active');
         });

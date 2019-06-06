@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UtilisateurType extends AbstractType
 {
@@ -49,7 +50,22 @@ class UtilisateurType extends AbstractType
                     'class' => 'basic-single'
                 )
             ))
-            ->add('validation', SubmitType::class, array('label' => 'Créer un compte'))
+            ->add('nom', TextType::class, array(
+                'label' => "Nom",
+                'attr' => array(
+                    'placeholder' => 'Nom'
+                ),
+                'required' => false,
+            ))
+            ->add('prenom', TextType::class, array(
+                'label' => "Prénom",
+                'attr' => array(
+                    'placeholder' => 'Prénom'
+                ),
+                'required' => false,
+            ))
+            ->add('save', SubmitType::class, array('label' => 'Enregistrer'))
+
         ;
     }
 
