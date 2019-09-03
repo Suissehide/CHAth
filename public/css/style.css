@@ -652,12 +652,16 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 }
 
 .btn-check {
-    background: #3CBDA5cc;
+    background: #55d6becc;
 }
 
 .btn-check:hover {
-    background: #3CBDA5;
+    background: #55d6be;
     color: white;
+}
+
+.btn-bar {
+    display: flex;
 }
 
 .cd-top.cd-top--show, .cd-top.cd-top--fade-out, .cd-top:hover {
@@ -781,7 +785,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 }
 
 .tgl-skewed:checked+.tgl-btn {
-    background: #3CBDA5;
+    background: #55d6be;
 }
 
 .tgl-skewed:checked+.tgl-btn:before {

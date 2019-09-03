@@ -15,19 +15,93 @@
             Liste des participants
         </div>
 
-        <div class="table-wrapper">
-            <table cellspacing="0" class="table table-condensed table-hover table-striped" id="data-grid">
-                <thead>
-                    <tr>
-                        <th data-column-id="observ" data-formatter="observ" data-sortable="false" data-width="28px"></th>
-                        <th data-column-id="id" data-identifier="true" data-searchable="false" data-type="numeric" data-visible="false">Id</th>
-                        <th data-column-id="code">Code</th>
-                        <th data-column-id="numero">Numéro</th>
-                        {# <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">Actions</th> #}
-                        <th data-column-id="status" data-searchable="false" data-visible="false">Status</th>
-                    </tr>
-                </thead>
-            </table>
+        <div class="container-form">
+            <div class="btn-bar">
+                <a href="#" class="form-btn btn-check">
+                    <i aria-hidden="true" class="fa fa-file-download"></i>Exporter</a>
+                <a href="{{ path('participant_add') }}" class="form-btn btn-check">
+                    <i aria-hidden="true" class="fa fa-plus"></i>Ajouter un participant</a>
+            </div>
+            <div class="flex-row">
+                <div class="table-wrapper">
+                    <table cellspacing="0" class="table table-condensed table-hover table-striped" id="data-grid">
+                        <thead>
+                            <tr>
+                                <th data-column-id="observ" data-formatter="observ" data-sortable="false" data-width="28px"></th>
+                                <th data-column-id="id" data-identifier="true" data-searchable="false" data-type="numeric" data-visible="false">Id</th>
+                                <th data-column-id="code">Code</th>
+                                <th data-column-id="numero">Numéro</th>
+                                {# <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">Actions</th> #}
+                                <th data-column-id="status" data-searchable="false" data-visible="false">Status</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div>
+                    <div class='swanky_wrapper'>
+                        <input id='Dashboard' name='radio' type='radio'>
+                        <label for='Dashboard'>
+                            <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/dash.png'>
+                            <span>Dashboard</span>
+                            <div class='lil_arrow'></div>
+                            <div class='bar'></div>
+                            <div class='swanky_wrapper__content'>
+                                <ul>
+                                    <li>Tools</li>
+                                    <li>Reports</li>
+                                    <li>Analytics</li>
+                                    <li>Code Blocks</li>
+                                </ul>
+                            </div>
+                        </label>
+                        <input id='Sales' name='radio' type='radio'>
+                        <label for='Sales'>
+                            <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/del.png'>
+                            <span>Sales</span>
+                            <div class='lil_arrow'></div>
+                            <div class='bar'></div>
+                            <div class='swanky_wrapper__content'>
+                                <ul>
+                                    <li>New Sales</li>
+                                    <li>Expired Sales</li>
+                                    <li>Sales Reports</li>
+                                    <li>Deliveries</li>
+                                </ul>
+                            </div>
+                        </label>
+                        <input id='Messages' name='radio' type='radio'>
+                        <label for='Messages'>
+                            <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/mess.png'>
+                            <span>Messages</span>
+                            <div class='lil_arrow'></div>
+                            <div class='bar'></div>
+                            <div class='swanky_wrapper__content'>
+                                <ul>
+                                    <li>Inbox</li>
+                                    <li>Outbox</li>
+                                    <li>Sent</li>
+                                    <li>Archived</li>
+                                </ul>
+                            </div>
+                        </label>
+                        <input id='Users' name='radio' type='radio'>
+                        <label for='Users'>
+                            <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/users.png'>
+                            <span>Users</span>
+                            <div class='lil_arrow'></div>
+                            <div class='bar'></div>
+                            <div class='swanky_wrapper__content'>
+                                <ul>
+                                    <li>New User</li>
+                                    <li>User Groups</li>
+                                    <li>Permissions</li>
+                                    <li>Passwords</li>
+                                </ul>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            <div>
         </div>
     </div>
 {% endblock %}
@@ -38,7 +112,7 @@
     <script>
         $('li:eq(1)').addClass('active');
 
-        $('ul li').on('click', function() {
+        $('ul li').on('click', function () {
             $('li').removeClass('active');
             $(this).addClass('active');
         });
@@ -53,44 +127,44 @@
             ajax: true,
             statusMapping: {
                 0: "in",
-                1: "out",
+                1: "out"
             },
             requestHandler: function (request) {
                 return request;
             },
             url: "{{ path('index_participant') }}",
             formatters: {
-                "observ": function(column, row) {
-                    if (row.observ)
+                "observ": function (column, row) {
+                    if (row.observ) 
                         return "<div class=\"pastille\"></div>";
+                    
+
                 },
-                "commands": function(column, row) {
-                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-view\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-eye\"></i></button> " +
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-pencil-alt\"></i></button> " + 
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-trash-alt\"></i></button>";
-                },
+                "commands": function (column, row) {
+                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-view\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-eye\"></i></button> " + "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-pencil-alt\"></i></button> " + "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-trash-alt\"></i></button>";
+                }
             }
-        }).on("loaded.rs.jquery.bootgrid", function() {
-            grid.find(".command-edit").on("click", function(e) {
-                // alert("You pressed edit on row: " + $(this).data("row-id"));
-            }).end().find(".command-delete").on("click", function(e) {
-                // alert("You pressed delete on row: " + $(this).data("row-id"));
-            }).end().find(".command-view").on("click", function(e) {
-                // alert("You pressed view on row: " + $(this).data("row-id"));
-            }).end().find("tr").on("click", function(e) {
+        }).on("loaded.rs.jquery.bootgrid", function () {
+            grid.find(".command-edit").on("click", function (e) { // alert("You pressed edit on row: " + $(this).data("row-id"));
+            }).end().find(".command-delete").on("click", function (e) { // alert("You pressed delete on row: " + $(this).data("row-id"));
+            }).end().find(".command-view").on("click", function (e) { // alert("You pressed view on row: " + $(this).data("row-id"));
+            }).end().find("tr").on("click", function (e) {
                 redirect($(this).data("row-id"));
             });
         });
 
         function redirect(id) {
-            if (id == undefined)
+            if (id == undefined) 
                 return;
+            
+
             let pathArray = window.location.pathname.split("/");
             let url = window.location.protocol + "//" + window.location.host;
-            for (let i = 0; i < pathArray.length - 1; i++)
+            for (let i = 0; i < pathArray.length - 1; i++) 
                 url += pathArray[i] + "/";
+            
+
             window.location.assign(url + "participant/" + id);
         };
-
     </script>
 {% endblock %}
