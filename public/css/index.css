@@ -591,10 +591,6 @@ main h3 {
     padding: 0;
 }
 
-.toc ul li {
-    /* Sub Menu */
-}
-
 .toc ul li a {
     display: block;
     background: #1d699c;
