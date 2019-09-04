@@ -89,28 +89,6 @@
                     </div>
                 </div>
 
-                <div class="modification">
-                    <h4>Historique des modifications</h4>
-                    <em>triées par date</em>
-                    <ul>
-                        <li>
-                            <span>16/05/2019</span>
-                            Léo Couffinhal
-                            <i>leo.couffinhal@qwetle.fr</i>
-                        </li>
-                        <li>
-                            <span>22/04/2019</span>
-                            Léo Couffinhal
-                            <i>leo.couffinhal@qwetle.fr</i>
-                        </li>
-                        <li>
-                            <span>12/03/2019</span>
-                            Léo Couffinhal
-                            <i>leo.couffinhal@qwetle.fr</i>
-                        </li>
-                    </ul>
-                </div>
-
                 <div class="button-block">
                     <a href="{{ path('index_participant') }}" class="form-btn btn-default">
                         <i aria-hidden="true" class="fa fa-arrow-left"></i>Retour</a>
@@ -122,66 +100,94 @@
                 </div>
             </div>
 
-            <div class="hero-tabs-container">
-                <a class="hero-tab" href="#tab-verification">Vérification des critères d'éligibilité</a>
-                <a class="hero-tab" href="#tab-donnees">Données cardiovasculaires</a>
-                <a class="hero-tab" href="#tab-informations">Information sur l'évênement cardiovasculaire</a>
-                <a class="hero-tab" href="#tab-evenement">Données à 6 mois de l'évênement</a>
-                <a class="hero-tab" href="#tab-deces">Fiche décès</a>
-                <span class="hero-tab-slider"></span>
-            </div>
         </section>
-
-
-        <!-- Toc -->
-        <nav class="toc">
-            <ul>
-                <li><a href="#intro">Participant {{ participant.code }}</a></li>
-                <li>
-                    <a href="#verification">Vérification des critères d'éligibilité</a>
-                    <ul>
-                        <li><a href="#inclusion">Critères d'inclusion</a></li>
-                        <li><a href="#non-inclusion">Critères de non inclusion</a></li>
-                        <li><a href="#info">Informations générales</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#cardiovasculaire">Données cardiovasculaires</a>
-                    <ul>
-                        <li><a href="#risque">Facteurs de risque cardiovasculaire</a></li>
-                        <li><a href="#traitement">Traitement au moment de l’évènement</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#information">Informations sur l’évènement cardiovasculaire</a>
-                    <ul>
-                        <li><a href="#type">Type d’infarctus du myocarde</a></li>
-                        <li><a href="#aigue">Traitement à la phase aiguë</a></li>
-                        <li><a href="#complication">Complications immédiates</a></li>
-                        <li><a href="#biologie1">Biologie</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#evenement">Données à 6 mois de l'événement</a>
-                    <ul>
-                        <li><a href="#recidive">Récidive</a></li>
-                        <li><a href="#clinique">Clinique</a></li>
-                        <li><a href="#facteur">Facteurs de risque cardiovasculaire</a></li>
-                        <li><a href="#place">Traitement mis en place suite à l'évènement cardiovasculaire</a></li>
-                        <li><a href="#biologie2">Biologie</a></li>
-                        <li><a href="#hematopoiese">Hématopoïèse Clonale</a></li>
-                        <li><a href="#evaluation">Evaluation cardiovasculaire</a></li>
-                    </ul>
-                </li>
-                <li><a href="#deces">Fiche Décès</a></li>
-            </ul>
-            <svg class="toc-marker" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-                <path stroke="#444" stroke-width="3" fill="transparent" stroke-dasharray="0, 0, 0, 1000" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.5, -0.5)" />
-            </svg>
-        </nav>
 
         <!-- Main -->
         <main class="main">
+
+            <!-- Toc -->
+            <nav class='toc animated bounceInDown'>
+                <ul>
+                    <li>
+                    <a href='#profile'>
+                        <div class='fa fa-user'></div>
+                        Profile
+                    </a>
+                    </li>
+                    <li>
+                    <a href='#message'>
+                        <div class='fa fa-envelope'></div>
+                        Messages
+                        <span class='badge right'>12</span>
+                    </a>
+                    </li>
+                    <li class='sub-menu'>
+                    <a href='#settings'>
+                        <div class='fa fa-gear'></div>
+                        Settings
+                        <div class='fa fa-caret-down right'></div>
+                    </a>
+                    <ul>
+                        <li>
+                        <a href='#settings'>
+                            Account
+                        </a>
+                        </li>
+                        <li>
+                        <a href='#settings'>
+                            Profile
+                        </a>
+                        </li>
+                        <li>
+                        <a href='#settings'>
+                            Secruity &amp; Privacy
+                        </a>
+                        </li>
+                        <li>
+                        <a href='#settings'>
+                            Password
+                        </a>
+                        </li>
+                        <li>
+                        <a href='#settings'>
+                            Notification
+                        </a>
+                        </li>
+                    </ul>
+                    </li>
+                    <li class='sub-menu'>
+                    <a href='#message'>
+                        <div class='fa fa-question-circle'></div>
+                        Help
+                        <div class='fa fa-caret-down right'></div>
+                    </a>
+                    <ul>
+                        <li>
+                        <a href='#settings'>
+                            FAQ's
+                        </a>
+                        </li>
+                        <li>
+                        <a href='#settings'>
+                            Submit a Ticket
+                        </a>
+                        </li>
+                        <li>
+                        <a href='#settings'>
+                            Network Status
+                        </a>
+                        </li>
+                    </ul>
+                    </li>
+                    <li>
+                    <a href='#message'>
+                        <div class='fa fa-sign-out'></div>
+                        Logout
+                    </a>
+                    </li>
+                </ul>
+            </nav>
+
             {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
             {{ form_errors(form) }}
 
@@ -418,7 +424,6 @@
 
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('js/toc.js') }}"></script>
     <script>
         $('ul li').on('click', function () {
             $('li').removeClass('active');
@@ -428,12 +433,12 @@
 
     <script>
         /* Smooth scroll */
-        $('.toc a').on('click', function () {
+        {# $('.toc a').on('click', function () {
             var page = $(this).attr('href');
             var speed = 550;
             $('html, body').animate({ scrollTop: $(page).offset().top - 90 }, speed);
             return false;
-        });
+        }); #}
 
         /* eligibilite */
         function isValid() {
@@ -463,90 +468,28 @@
             isValid();
         });
     </script>
+
     <script>
-        class StickyNavigation {
+        /* TOC */
+        $('.sub-menu ul').hide();
+        $(".sub-menu a").click(function () {
+            $(this).parent(".sub-menu").children("ul").slideToggle("100");
+            $(this).find(".right").toggleClass("fa-caret-up fa-caret-down");
+        });
 
-            constructor() {
-                this.currentId = null;
-                this.currentTab = null;
-                this.tabContainerHeight = 70;
-                this.navbar = 80;
-                let self = this;
-                $('.hero-tab').click(function () {
-                    self.onTabClick(event, $(this));
-                });
-                $(window).scroll(() => {
-                    this.onScroll();
-                });
-                $(window).resize(() => {
-                    this.onResize();
-                });
-            }
-
-            onTabClick(event, element) {
-                event.preventDefault();
-                let scrollTop = $(element.attr('href')).offset().top - this.tabContainerHeight + 1;
-                $('html, body').animate({
-                    scrollTop: scrollTop
-                }, 600);
-            }
-
-            onScroll() {
-                this.checkTabContainerPosition();
-                this.findCurrentTabSelector();
-            }
-
-            onResize() {
-                if (this.currentId) {
-                    this.setSliderCss();
-                }
-            }
-
-            checkTabContainerPosition() {
-                let offset = $('.hero-tabs').offset().top + $('.hero-tabs').height() - this.tabContainerHeight;
-                if ($(window).scrollTop() > offset) {
-                    $('.hero-tabs-container').addClass('hero-tabs-container--top');
-                    $('.toc').addClass('toc--top');
-                }
-                else {
-                    $('.hero-tabs-container').removeClass('hero-tabs-container--top');
-                    $('.toc').removeClass('toc--top');
-                }
-            }
-
-            findCurrentTabSelector(element) {
-                let newCurrentId;
-                let newCurrentTab;
-                let self = this;
-                $('.hero-tab').each(function () {
-                    let id = $(this).attr('href');
-                    let offsetTop = $(id).offset().top - self.tabContainerHeight;
-                    let offsetBottom = $(id).offset().top + $(id).height() - self.tabContainerHeight;
-                    if ($(window).scrollTop() > offsetTop && $(window).scrollTop() < offsetBottom) {
-                        newCurrentId = id;
-                        newCurrentTab = $(this);
-                    }
-                });
-                if (this.currentId != newCurrentId || this.currentId === null) {
-                    this.currentId = newCurrentId;
-                    this.currentTab = newCurrentTab;
-                    this.setSliderCss();
-                }
-            }
-
-            setSliderCss() {
-                let width = 0;
-                let left = 0;
-                if (this.currentTab) {
-                    width = this.currentTab.css('width');
-                    left = this.currentTab.offset().left - this.navbar;
-                }
-                $('.hero-tab-slider').css('width', width);
-                $('.hero-tab-slider').css('left', left);
-            }
-
-        }
-
-        new StickyNavigation();
+        /* Close */
+        $('.toc').on('click', '.toc-close', function () {
+            $('.toc-open, .toc-close').toggle('fast');
+            $('.toc ul').animate({ width: "toggle", }, { duration: 500, }).promise().then(function() {
+                $('main').addClass('main-close');
+            });
+        })
+        /* Open */
+        $('.toc').on('click', '.toc-open', function () {
+            $('.toc-open, .toc-close').toggle('fast');
+            $('main').removeClass('main-close');
+            $('.toc ul').animate({ width: "toggle", }, { duration: 500, });
+        })
     </script>
+
 {% endblock %}

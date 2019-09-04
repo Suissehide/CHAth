@@ -67,7 +67,7 @@ class UtilisateurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('validation')->isClicked()) {
+            if ($form->get('save')->isClicked()) {
                 $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
                 $em = $this->getDoctrine()->getManager();
