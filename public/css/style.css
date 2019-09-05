@@ -203,7 +203,7 @@ iframe {
     margin-bottom: 30px;
 }
 
-.flex-block > * {
+.flex-block>* {
     margin: 0 0 0 10px !important;
 }
 
@@ -606,7 +606,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
     text-indent: 100%;
     white-space: nowrap;
     color: white;
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 .cd-btn .fa {
@@ -625,11 +625,11 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 }
 
 .btn-top {
-    background: #1a535ccc;
+    background: #1D1D2Ccc;
 }
 
 .btn-top:hover {
-    background: #1a535c;
+    background: #1D1D2C;
     color: white;
 }
 
@@ -643,25 +643,29 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 }
 
 .btn-delete {
-    background: #d63b53cc;
+    background: #E40C2Bcc;
 }
 
 .btn-delete:hover {
-    background: #d63b53;
+    background: #E40C2B;
     color: white;
 }
 
-.btn-check {
-    background: #55d6becc;
+.btn-save {
+    background: #438945cc;
 }
 
-.btn-check:hover {
-    background: #55d6be;
+.btn-save:hover {
+    background: #438945;
     color: white;
 }
 
 .btn-bar {
     display: flex;
+}
+
+.btn-bar a, .btn-bar button {
+    margin-right: 20px;
 }
 
 .cd-top.cd-top--show, .cd-top.cd-top--fade-out, .cd-top:hover {
@@ -684,14 +688,14 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 @media only screen and (min-width: 768px) {
     .cd-top {
         right: 20px;
-        bottom: 40px;
+        bottom: 30px;
     }
 }
 
 @media only screen and (min-width: 1024px) {
     .cd-top {
-        right: 30px;
-        bottom: 80px;
+        right: 35px;
+        bottom: 35px;
     }
 }
 

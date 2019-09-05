@@ -276,7 +276,9 @@ input[readonly]:focus {
     margin: 30px 0;
 }
 
-label {
+label,
+.col-label,
+.row-label {
     font-family: Ubuntu-Regular;
     color: #808080;
     line-height: 1.2;
@@ -287,6 +289,19 @@ label {
     line-height: 1;
     text-transform: uppercase;
     letter-spacing: .1em;
+}
+
+.col-label {
+    display: flex;
+    align-items: center;
+    height: 42px;
+}
+
+.row-label {
+    text-align: center;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #3CBCC3;
 }
 
 .badge-danger {
@@ -486,9 +501,9 @@ main h3 {
     padding: 10px 0;
 }
 
-.qcm-response {
+/* .qcm-response {
     width: 30%;
-}
+} */
 
 .qcm-response .wrap-input {
     margin: 0;
@@ -573,6 +588,7 @@ main h3 {
 /* ========= TOC ========= */
 
 .toc {
+    z-index: 100;
     position: absolute;
     left: 0px;
     top: 50px;
@@ -582,7 +598,7 @@ main h3 {
 .toc--top {
     position: fixed;
     left: 80px;
-    top: 80px;
+    top: 0px;
 }
 
 .toc ul {

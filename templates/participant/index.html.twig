@@ -9,68 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 {% endblock %}
 
-{% form_theme form _self %}
-
-{% block form_label %}
-    {% if label is not same as(false) %}
-        {% if not compound %}
-            {% set label_attr = label_attr|merge({'for': id}) %}
-        {% endif %}
-        {% if required %}
-            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-        {% endif %}
-        {% if label is empty %}
-            {% if label_format is not empty %}
-                {% set label = label_format|replace({
-                    '%name%': name,
-                    '%id%': id,
-                }) %}
-            {% else %}
-                {% set label = name|humanize %}
-            {% endif %}
-        {% endif %}
-        <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
-            <span></span>
-            {{ label }}
-        </{{ element|default('label') }}>
-    {% endif %}
-{% endblock form_label %}
-
-{% block choice_widget_expanded %}
-    <div {{ block('widget_container_attributes') }}>
-        {% for child in form %}
-            <div class="radio-container">
-                {{ form_widget(child) }}
-                {{ form_label(child, null, {translation_domain: choice_translation_domain}) }}
-            </div>
-        {% endfor %}
-    </div>
-{% endblock choice_widget_expanded %}
-
-{% block _qcm_question_widget -%}
-    <div class="wrap-input">
-        {% if compound %}
-            {{ block('form_widget_compound') }}
-        {% else %}
-            {{ block('form_widget_simple') }}
-        {% endif %}
-        <span class="focus-input"></span>
-    </div>
-{% endblock _qcm_question_widget %}
-
-{% block form_row %}
-    {% set widget_attr = {} %}
-    {% if help is not empty %}
-        {% set widget_attr = {attr: {'aria-describedby': id ~"_help"}} %}
-    {% endif %}
-    <div class="wrap-input" {% with {attr: row_attr|default({} )} %} {{ block('attributes') }} {% endwith %}>
-        {{ form_label(form) }}
-        {{ form_errors(form) }}
-        {{ form_widget(form, widget_attr) }}
-        {{ form_help(form) }}
-        <span class="focus-input"></span>
-    </div>
-{% endblock form_row %}
+{% form_theme form 'form-theme.html.twig' %}
 
 {% block page_content %}
 
@@ -93,8 +32,8 @@
                     <a href="{{ path('index_participant') }}" class="form-btn btn-default">
                         <i aria-hidden="true" class="fa fa-arrow-left"></i>Retour</a>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <button class="form-btn" data-target="#save-modal" data-toggle="modal" type="button">
-                        <i aria-hidden="true" class="fa fa-check"></i>Valider le participant</button>
+                        <button class="form-btn" data-target="#save-modal" data-toggle="modal" type="button">
+                            <i aria-hidden="true" class="fa fa-check"></i>Valider le participant</button>
                     {% endif %}
                     {{ include('participant/_delete_form.html.twig') }}
                 </div>
@@ -109,81 +48,49 @@
             <nav class='toc animated bounceInDown'>
                 <ul>
                     <li>
-                    <a href='#profile'>
-                        <div class='fa fa-user'></div>
-                        Profile
-                    </a>
-                    </li>
-                    <li>
-                    <a href='#message'>
-                        <div class='fa fa-envelope'></div>
-                        Messages
-                        <span class='badge right'>12</span>
-                    </a>
-                    </li>
-                    <li class='sub-menu'>
-                    <a href='#settings'>
-                        <div class='fa fa-gear'></div>
-                        Settings
-                        <div class='fa fa-caret-down right'></div>
-                    </a>
-                    <ul>
-                        <li>
-                        <a href='#settings'>
-                            Account
-                        </a>
-                        </li>
-                        <li>
-                        <a href='#settings'>
+                        <a href='#profile'>
+                            <div class='fa fa-user'></div>
                             Profile
                         </a>
-                        </li>
-                        <li>
-                        <a href='#settings'>
-                            Secruity &amp; Privacy
-                        </a>
-                        </li>
-                        <li>
-                        <a href='#settings'>
-                            Password
-                        </a>
-                        </li>
-                        <li>
-                        <a href='#settings'>
-                            Notification
-                        </a>
-                        </li>
-                    </ul>
-                    </li>
-                    <li class='sub-menu'>
-                    <a href='#message'>
-                        <div class='fa fa-question-circle'></div>
-                        Help
-                        <div class='fa fa-caret-down right'></div>
-                    </a>
-                    <ul>
-                        <li>
-                        <a href='#settings'>
-                            FAQ's
-                        </a>
-                        </li>
-                        <li>
-                        <a href='#settings'>
-                            Submit a Ticket
-                        </a>
-                        </li>
-                        <li>
-                        <a href='#settings'>
-                            Network Status
-                        </a>
-                        </li>
-                    </ul>
                     </li>
                     <li>
-                    <a href='#message'>
-                        <div class='fa fa-sign-out'></div>
-                        Logout
-                    </a>
+                        <a href='#message'>
+                            <div class='fa fa-envelope'></div>
+                            Messages
+                            <span class='badge right'>12</span>
+                        </a>
+                    </li>
+                    <li class='sub-menu'>
+                        <a href='#settings'>
+                            <div class='fa fa-gear'></div>
+                            Settings
+                            <div class='fa fa-caret-down right'></div>
+                        </a>
+                        <ul>
+                            <li><a href='#settings'>Account</a></li>
+                            <li><a href='#settings'>Profile</a></li>
+                            <li><a href='#settings'>Secruity &amp; Privacy</a></li>
+                            <li><a href='#settings'>Password</a></li>
+                            <li><a href='#settings'>Notification</a></li>
+                        </ul>
+                    </li>
+                    <li class='sub-menu'>
+                        <a href='#message'>
+                            <div class='fa fa-question-circle'></div>
+                            Help
+                            <div class='fa fa-caret-down right'></div>
+                        </a>
+                        <ul>
+                            <li><a href='#settings'>FAQ's</a></li>
+                            <li><a href='#settings'>Submit a Ticket</a></li>
+                            <li><a href='#settings'>Network Status</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href='#message'>
+                            <div class='fa fa-sign-out'></div>
+                            Logout
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -216,7 +123,7 @@
                         <div class="qcm-row">
                             <div class="qcm-question">
                                 {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
-                            </div>
+                            </div>F
                             <div class="qcm-response">
                                 <div class="wrap-input">
                                     {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
@@ -423,6 +330,7 @@
     </div>
 
 {% endblock %}
+
 {% block javascripts %}
     <script>
         $('ul li').on('click', function () {
@@ -433,12 +341,16 @@
 
     <script>
         /* Smooth scroll */
-        {# $('.toc a').on('click', function () {
+        /*
+        $('.toc a').on('click', function () {
             var page = $(this).attr('href');
             var speed = 550;
-            $('html, body').animate({ scrollTop: $(page).offset().top - 90 }, speed);
+            $('html, body').animate({
+                scrollTop: $(page).offset().top - 90
+            }, speed);
             return false;
-        }); #}
+        });
+        */
 
         /* eligibilite */
         function isValid() {
@@ -459,7 +371,7 @@
                     return;
                 }
             });
-            if (!inclusion || !non_inclusion) {
+            if (! inclusion || ! non_inclusion) {
                 $('#cb0').prop('checked', false);
             }
         }
@@ -477,10 +389,27 @@
             $(this).find(".right").toggleClass("fa-caret-up fa-caret-down");
         });
 
+        $(window).scroll(() => {
+            onScroll();
+        });
+
+        function onScroll() {
+            let offset = $('.hero-tabs').offset().top + $('.hero-tabs').height() + 50;
+            if ($(window).scrollTop() > offset) {
+                $('.hero-tabs-container').addClass('hero-tabs-container--top');
+                $('.toc').addClass('toc--top');
+            } else {
+                $('.hero-tabs-container').removeClass('hero-tabs-container--top');
+                $('.toc').removeClass('toc--top');
+            }
+        }
+
         /* Close */
         $('.toc').on('click', '.toc-close', function () {
             $('.toc-open, .toc-close').toggle('fast');
-            $('.toc ul').animate({ width: "toggle", }, { duration: 500, }).promise().then(function() {
+            $('.toc ul').animate({
+                width: "toggle"
+            }, {duration: 500}).promise().then(function () {
                 $('main').addClass('main-close');
             });
         })
@@ -488,7 +417,9 @@
         $('.toc').on('click', '.toc-open', function () {
             $('.toc-open, .toc-close').toggle('fast');
             $('main').removeClass('main-close');
-            $('.toc ul').animate({ width: "toggle", }, { duration: 500, });
+            $('.toc ul').animate({
+                width: "toggle"
+            }, {duration: 500});
         })
     </script>
 
