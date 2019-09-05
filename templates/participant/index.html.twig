@@ -13,7 +13,8 @@
 
 {% block page_content %}
 
-    <div class="container-form">
+    <div
+        class="container-form">
         <!-- Hero -->
         <section class="hero-tabs">
             <div class="hero-header">
@@ -42,7 +43,8 @@
         </section>
 
         <!-- Main -->
-        <main class="main">
+        <main
+            class="main">
 
             <!-- Toc -->
             <nav class='toc animated bounceInDown'>
@@ -50,46 +52,73 @@
                     <li>
                         <a href='#profile'>
                             <div class='fa fa-user'></div>
-                            Profile
+                            Participant
+                            {{ participant.code }}
                         </a>
                     </li>
-                    <li>
+                    {# <li>
                         <a href='#message'>
                             <div class='fa fa-envelope'></div>
                             Messages
                             <span class='badge right'>12</span>
                         </a>
-                    </li>
+                    </li> #}
                     <li class='sub-menu'>
-                        <a href='#settings'>
-                            <div class='fa fa-gear'></div>
-                            Settings
+                        <a href='#verification'>
+                            <div class='fa fa-feather-alt'></div>
+                            Vérification des critères d'éligibilité
                             <div class='fa fa-caret-down right'></div>
                         </a>
                         <ul>
-                            <li><a href='#settings'>Account</a></li>
-                            <li><a href='#settings'>Profile</a></li>
-                            <li><a href='#settings'>Secruity &amp; Privacy</a></li>
-                            <li><a href='#settings'>Password</a></li>
-                            <li><a href='#settings'>Notification</a></li>
+                            <li><a href='#inclusion'>Critères d'inclusion</a></li>
+                            <li><a href='#non-inclusion'>Critères de non inclusion</a></li>
+                            <li><a href='#info'>Informations générales</a></li>
                         </ul>
                     </li>
                     <li class='sub-menu'>
-                        <a href='#message'>
-                            <div class='fa fa-question-circle'></div>
-                            Help
+                        <a href='#cardiovasculaire'>
+                            <div class='fa fa-heartbeat'></div>
+                            Données cardiovasculaires
                             <div class='fa fa-caret-down right'></div>
                         </a>
                         <ul>
-                            <li><a href='#settings'>FAQ's</a></li>
-                            <li><a href='#settings'>Submit a Ticket</a></li>
-                            <li><a href='#settings'>Network Status</a></li>
+                            <li><a href='#risque'>Facteurs de risque cardiovasculaire</a></li>
+                            <li><a href='#traitement'>Traitement au moment de l’évènement</a></li>
+                        </ul>
+                    </li>
+                    <li class='sub-menu'>
+                        <a href='#information'>
+                            <div class='fa fa-procedures'></div>
+                            Informations sur l’évènement cardiovasculaire
+                            <div class='fa fa-caret-down right'></div>
+                        </a>
+                        <ul>
+                            <li><a href='#settings'>Type d’infarctus du Myocarde</a></li>
+                            <li><a href='#settings'>Traitement à la phase aiguë</a></li>
+                            <li><a href='#settings'>Complications immédiates</a></li>
+                            <li><a href='#biologie1'>Biologie</a></li>
+                        </ul>
+                    </li>
+                    <li class='sub-menu'>
+                        <a href='#evenement'>
+                            <div class='fa fa-notes-medical'></div>
+                            Données à 6 mois de l'événement
+                            <div class='fa fa-caret-down right'></div>
+                        </a>
+                        <ul>
+                            <li><a href='#settings'>Récidive</a></li>
+                            <li><a href='#settings'>Clinique</a></li>
+                            <li><a href='#settings'>Facteurs de risque cardiovasculaire</a></li>
+                            <li><a href='#settings'>Traitement mis en place suite à l'évènement cardiovasculaire</a></li>
+                            <li><a href='#biologie2'>Biologie</a></li>
+                            <li><a href='#settings'>Hématopoïèse clonale</a></li>
+                            <li><a href='#settings'>Evaluation cardiovasculaire</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href='#message'>
-                            <div class='fa fa-sign-out'></div>
-                            Logout
+                        <a href='#deces'>
+                            <div class='fa fa-skull-crossbones'></div>
+                            Décès
                         </a>
                     </li>
                 </ul>
@@ -102,7 +131,7 @@
                 <h1 id="verification">Vérification des critères d'éligibilité</h1>
 
                 <h3 id="inclusion">Critères d'inclusion</h3>
-                <div class="qcm">
+                <div id="inclusion-qcm" class="qcm">
                     {% for pack in form.verification.inclusion.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
@@ -118,12 +147,12 @@
                 </div>
 
                 <h3 id="non-inclusion">Critères de non inclusion</h3>
-                <div class="qcm">
+                <div id="non-inclusion-qcm" class="qcm">
                     {% for qcm in form.verification.non_inclusion.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
                                 {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
-                            </div>F
+                            </div>
                             <div class="qcm-response">
                                 <div class="wrap-input">
                                     {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
@@ -135,14 +164,38 @@
 
                 <h3 id="info">Informations générales</h3>
                 <div class="form-space">
-                    {{ form_row(form.verification.age, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                    {{ form_row(form.verification.age, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
                     {{ form_row(form.verification.sexe, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
                     {{ form_row(form.verification.date_naissance, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(form.verification.taille, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(form.verification.poids, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(form.verification.imc, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(form.verification.systolique, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(form.verification.diastolique, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                    {{ form_row(form.verification.taille, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+                    {{ form_row(form.verification.poids, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+                    {{ form_row(form.verification.imc, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+                    {{ form_row(form.verification.systolique, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+                    {{ form_row(form.verification.diastolique, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
                 </div>
             </section>
 
@@ -264,7 +317,7 @@
                 <h3 id="facteur">Facteurs de risque cardiovasculaire</h3>
                 <h3 id="place">Traitement mis en place suite à l'évènement cardiovasculaire</h3>
                 <h3 id="biologie2">Biologie</h3>
-                <h3 id="hematopoiese">Hématopoïèse Clonale</h3>
+                <h3 id="hematopoiese">Hématopoïèse clonale</h3>
                 <h3 id="evaluation">Evaluation cardiovasculaire</h3>
             </section>
 
@@ -333,7 +386,7 @@
 
 {% block javascripts %}
     <script>
-        $('ul li').on('click', function () {
+        $('.sidebar-navigation ul li').on('click', function () {
             $('li').removeClass('active');
             $(this).addClass('active');
         });
@@ -341,30 +394,29 @@
 
     <script>
         /* Smooth scroll */
-        /*
-        $('.toc a').on('click', function () {
+        $('.toc li a').on('click', function () {
             var page = $(this).attr('href');
             var speed = 550;
             $('html, body').animate({
-                scrollTop: $(page).offset().top - 90
+                scrollTop: $(page).offset().top - 30
             }, speed);
             return false;
         });
-        */
 
         /* eligibilite */
         function isValid() {
             let inclusion = 1;
             let non_inclusion = 1;
             $('#cb0').prop('checked', true);
-            $('#inclusion .qcm-row').each(function (e) {
+            $('#inclusion-qcm .qcm-row').each(function (e) {
                 var radioValue = $(this).find('input:checked').val();
+                console.log(radioValue);
                 if (radioValue != "oui") {
                     inclusion = 0;
                     return;
                 }
             });
-            $('#non-inclusion .qcm-row').each(function (e) {
+            $('#non-inclusion-qcm .qcm-row').each(function (e) {
                 var radioValue = $(this).find('input:checked').val();
                 if (radioValue != "non") {
                     non_inclusion = 0;
@@ -383,11 +435,24 @@
 
     <script>
         /* TOC */
-        $('.sub-menu ul').hide();
-        $(".sub-menu a").click(function () {
-            $(this).parent(".sub-menu").children("ul").slideToggle("100");
-            $(this).find(".right").toggleClass("fa-caret-up fa-caret-down");
+        $('.sub-menu > ul').hide();
+        $(".sub-menu > a").click(function () {
+            if (!$(this).hasClass('js-active')) {
+                $('.sub-menu > a').each(function (i) {
+                    if ($(this).hasClass('js-active')) 
+                        toggleMenu($(this));
+                    
+                    $(this).removeClass('js-active');
+                });
+            }
+            $(this).addClass('js-active');
+            toggleMenu($(this));
         });
+
+        function toggleMenu(e) {
+            $(e).find(".right").toggleClass("fa-caret-up fa-caret-down");
+            $(e).parent(".sub-menu").children("ul").slideToggle("100");
+        }
 
         $(window).scroll(() => {
             onScroll();

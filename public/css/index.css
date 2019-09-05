@@ -188,13 +188,13 @@ input[readonly]:focus {
     position: relative;
     background-color: #e6e6e6;
     border-radius: 3px;
-    margin-bottom: 16px;
+    /* margin-bottom: 16px; */
     padding: 0 20px;
 }
 
 .container-form .wrap-input {
     background-color: transparent;
-    margin-bottom: 0px;
+    /* margin-bottom: 0px; */
 }
 
 .container-form .focus-input {
@@ -273,7 +273,7 @@ input[readonly]:focus {
 }
 
 .form-space {
-    margin: 30px 0;
+    margin-bottom: 30px;
 }
 
 label,
@@ -321,7 +321,8 @@ label,
 
 .main {
     position: relative;
-    padding: 0 15px 0 350px;
+    padding-right: 15px;
+    padding-left: calc(30% + 15px);
 }
 
 .hero-tabs {
@@ -359,9 +360,9 @@ label,
 }
 
 .slide {
-    min-height: 100vh;
+    /* min-height: 100vh; */
     position: relative;
-    padding: 50px 0px 0 0px;
+    padding-top: 50px;
 }
 
 .slide h1 {
@@ -398,8 +399,21 @@ main h3 {
 
 .hero-tabs h5,
 .slide h5 {
+    position: relative;
+    width: fit-content;
     font-size: 18px;
     margin: 10px 0;
+}
+
+.slide h5::after {
+    content: "";
+    position: absolute;
+    border: 0;
+    height: 8px;
+    background-color: rgb(85, 214, 190, 0.5);
+    width: 30px;
+    bottom: -2px;
+    left: -2px;
 }
 
 .margin-space {
@@ -409,7 +423,7 @@ main h3 {
 .separator-space {
     width: 50px;
     height: 1px;
-    margin: 10px 0 20px 0;
+    margin: 10px 0 12px 0;
     background-color: #55d6be;
 }
 
@@ -592,13 +606,16 @@ main h3 {
     position: absolute;
     left: 0px;
     top: 50px;
-    width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 30%;
 }
 
 .toc--top {
     position: fixed;
     left: 80px;
     top: 0px;
+    width: calc(30% - 24px);
 }
 
 .toc ul {
@@ -642,6 +659,9 @@ main h3 {
     background: #e6e6e6;
     border-left: 4px solid transparent;
     padding: 10px 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .toc ul li ul li a:hover {

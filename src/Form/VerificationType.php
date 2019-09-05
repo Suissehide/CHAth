@@ -42,8 +42,9 @@ class VerificationType extends AbstractType
             ->add('age', IntegerType::class, array(
                 'label' => 'Âge',
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 120,
+                    'unity' => '',
+                    'data-min' => 0,
+                    'data-max' => 120,
                 ),
                 'required' => false,
             ))
@@ -65,45 +66,50 @@ class VerificationType extends AbstractType
                 'required' => false,
             ))
             ->add('taille', IntegerType::class, array(
-                'label' => 'Taille (cm)',
+                'label' => 'Taille',
                 'attr' => array(
-                    'min' => 100,
-                    'max' => 260,
+                    'unity' => 'cm',
+                    'data-min' => '100',
+                    'data-max' => '260',
                 ),
                 'required' => false,
             ))
             ->add('poids', IntegerType::class, array(
-                'label' => 'Poids (kg)',
+                'label' => 'Poids',
                 'attr' => array(
-                    'min' => 10,
-                    'max' => 500,
+                    'unity' => 'kg',
+                    'data-min' => 10,
+                    'data-max' => 500,
                 ),
                 
             ))
             ->add('imc', NumberType::class, array(
-                'label' => 'IMC (kg/m²)',
+                'label' => 'IMC',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 10,
-                    'max' => 80,
+                    'unity' => 'kg/m²',
+                    'data-min' => 10,
+                    'data-max' => 80,
                 ),
                 'required' => false,
             ))
             ->add('systolique', NumberType::class, array(
-                'label' => 'Tension artérielle systolique (mmHg)',
+                'label' => 'Tension artérielle systolique',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 1,
-                    'max' => 30,
+                    'unity' => 'mmHg',
+                    'data-min' => 1,
+                    'data-max' => 30,
                 ),
                 'required' => false,
             ))
             ->add('diastolique', NumberType::class, array(
-                'label' => 'Tension artérielle diastolique (mmHg)',
+                'label' => 'Tension artérielle diastolique',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 1,
-                    'max' => 30,
+                    'unity' => 'mmHg',
+                    'data-min' => 1,
+                    'data-max' => 30,
                 ),
                 'required' => false,
             ))
