@@ -7,7 +7,6 @@ use App\Form\QcmType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -37,6 +36,10 @@ class VerificationType extends AbstractType
                 'label' => 'Date',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
+                'attr' => [
+                    'placeholder' => 'dd/mm/yyyy',
+                    'class' => 'datepicker',
+                ],
                 'required' => false,
             ))
             ->add('age', IntegerType::class, array(
@@ -60,9 +63,13 @@ class VerificationType extends AbstractType
                 'required' => false,
             ))
             ->add('date_naissance', DateType::class, array(
-                'label' => 'Date de naissance (mm/aaaa)',
+                'label' => 'Date de naissance',
                 'widget' => 'single_text',
                 'format' => 'MM/yyyy',
+                'attr' => [
+                    'placeholder' => 'dd/mm/yyyy',
+                    'class' => 'datepicker',
+                ],
                 'required' => false,
             ))
             ->add('taille', IntegerType::class, array(

@@ -198,8 +198,13 @@ input[readonly]:focus {
 }
 
 .container-form .focus-input {
-    height: calc(100% - 31px);
+    height: calc(100% - 16px);
     top: 16px;
+}
+
+.container-form select .focus-input {
+    height: calc(100% - 4px);
+    top: 4px;
 }
 
 .form-btn-container {
@@ -712,4 +717,14 @@ main h3 {
 .contents h2,
 .contents h3 {
     padding-top: 1em;
+}
+
+.def {
+    padding: 5px;
+    border-left: 2px solid #1d699c;
+    font-size: 16px;
+}
+
+.def span {
+    font-weight: bold;
 }

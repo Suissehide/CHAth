@@ -20,6 +20,7 @@ class InformationType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'attr' => [
+                    'placeholder' => 'dd/mm/yyyy',
                     'class' => 'datepicker',
                 ],
                 'required' => false,
@@ -30,7 +31,7 @@ class InformationType extends AbstractType
             ))
             
             ->add('traitement', ChoiceType::class, array(
-                'label' => 'Activité physique',
+                'label' => ' ',
                 'placeholder' => '',
                 'choices' => array(
                     'Angioplastie seule' => 'Angioplastie seule',
@@ -46,92 +47,102 @@ class InformationType extends AbstractType
             ))
 
             ->add('CRP', NumberType::class, array(
-                'label' => 'CRP ultra-sensible (mg/L)',
+                'label' => 'CRP ultra-sensible',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 100,
+                    'unity' => 'mg/L',
+                    'data-min' => 0,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
             ->add('hemoglobine', NumberType::class, array(
-                'label' => 'Hémoglobine (g/dL)',
+                'label' => 'Hémoglobine',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 100,
+                    'unity' => 'g/dL',
+                    'data-min' => 0,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
             ->add('leucocytes', NumberType::class, array(
-                'label' => 'Leucocytes (G/L)',
+                'label' => 'Leucocytes',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 100,
+                    'unity' => 'G/L',
+                    'data-min' => 0,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
             ->add('PNN', NumberType::class, array(
-                'label' => 'PNN (G/L)',
+                'label' => 'PNN',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 100,
+                    'unity' => 'G/L',
+                    'data-min' => 0,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
             ->add('plaquettes', NumberType::class, array(
-                'label' => 'Plaquettes (G/L)',
+                'label' => 'Plaquettes',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 100,
+                    'unity' => 'G/L',
+                    'data-min' => 0,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
             ->add('cholesterol', NumberType::class, array(
-                'label' => 'Cholestérol total (g/L)',
+                'label' => 'Cholestérol total',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 100,
+                    'unity' => 'g/L',
+                    'data-min' => 0,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
             ->add('LDL_c', NumberType::class, array(
-                'label' => 'LDL-c (g/L)',
+                'label' => 'LDL-c',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 100,
+                    'unity' => 'g/L',
+                    'data-min' => 0,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
             ->add('HDL_c', NumberType::class, array(
-                'label' => 'HDL-c (g/L)',
+                'label' => 'HDL-c',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 100,
+                    'unity' => 'g/L',
+                    'data-min' => 0,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
             ->add('HbA1c', NumberType::class, array(
-                'label' => 'HbA1c (%)',
+                'label' => 'HbA1c',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 100,
+                    'unity' => '%',
+                    'data-min' => 0,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
             ->add('creatininemie', NumberType::class, array(
-                'label' => 'Créatininémie (%)',
+                'label' => 'Créatininémie',
                 'scale' => 2,
                 'attr' => array(
-                    'min' => 0,
-                    'max' => 100,
+                    'unity' => '%',
+                    'data-min' => 0,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))

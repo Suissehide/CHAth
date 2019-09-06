@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use App\Form\VerificationType;
 use App\Form\CardiovasculaireType;
 use App\Form\InformationType;
+use App\Form\DecesType;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,22 +22,22 @@ class ParticipantType extends AbstractType
         $builder
             ->add('nom', TextType::class, array(
                 'label' => 'Nom',
-                'required' => 'true',
+                'required' => true,
             ))
             ->add('prenom', TextType::class, array(
                 'label' => 'Prénom',
-                'required' => 'true',
+                'required' => true,
             ))
             ->add('code', TextType::class, array(
                 'label' => 'Code',
-                'required' => 'true',
+                'required' => true,
                 'attr' => array(
                     'readonly' => true,
                 ),
             ))
             ->add('numero', TextType::class, array(
                 'label' => 'Numéro',
-                'required' => 'true',
+                'required' => true,
             ))
 
             // ->add('verification', EntityType::class, array(
@@ -52,7 +53,7 @@ class ParticipantType extends AbstractType
             // ))
 
             ->add('verification', VerificationType::class, array(
-                'label' => 'Verification'
+                'label' => 'Vérification'
             ))
 
             ->add('cardiovasculaire', CardiovasculaireType::class, array(
@@ -61,6 +62,10 @@ class ParticipantType extends AbstractType
 
             ->add('information', InformationType::class, array(
                 'label' => 'Information'
+            ))
+
+            ->add('deces', DecesType::class, array(
+                'label' => 'Décès'
             ))
 
             ->add('validation', SubmitType::class, array('label' => 'Ajouter'))

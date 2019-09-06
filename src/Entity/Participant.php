@@ -58,6 +58,11 @@ class Participant
      */
     private $information;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Deces", cascade={"persist", "remove"})
+     */
+    private $deces;
+
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
@@ -174,6 +179,18 @@ class Participant
     public function setInformation(?Information $information): self
     {
         $this->information = $information;
+
+        return $this;
+    }
+
+    public function getDeces(): ?Deces
+    {
+        return $this->deces;
+    }
+
+    public function setDeces(?Deces $deces): self
+    {
+        $this->deces = $deces;
 
         return $this;
     }

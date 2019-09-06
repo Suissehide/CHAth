@@ -291,22 +291,61 @@
 
                 <h3 id="biologie1">Biologie</h3>
                 <h5>Inflammation</h5>
-                {{ form_row(form.information.CRP, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-
+                {{ form_row(form.information.CRP, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
                 <h5>NFS</h5>
-                {{ form_row(form.information.hemoglobine, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                {{ form_row(form.information.leucocytes, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                {{ form_row(form.information.PNN, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                {{ form_row(form.information.plaquettes, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_row(form.information.hemoglobine, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
+                {{ form_row(form.information.leucocytes, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
+                {{ form_row(form.information.PNN, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
+                {{ form_row(form.information.plaquettes, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
 
                 <h5>Bilan lipidique</h5>
-                {{ form_row(form.information.cholesterol, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                {{ form_row(form.information.LDL_c, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                {{ form_row(form.information.HDL_c, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_row(form.information.cholesterol, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
+                {{ form_row(form.information.LDL_c, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
+                {{ form_row(form.information.HDL_c, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
 
                 <div class="separator-space"></div>
-                {{ form_row(form.information.HbA1c, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                {{ form_row(form.information.creatininemie, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_row(form.information.HbA1c, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
+                {{ form_row(form.information.creatininemie, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
             </section>
 
             <section class="slide" id="tab-evenement">
@@ -323,6 +362,18 @@
 
             <section class="slide" id="tab-deces">
                 <h1 id="deces">Fiche Décès</h1>
+
+                {{ form_row(form.deces.date, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+
+                <div class="def"><span>Définition de la cause initiale du décès : </span>maladie ou traumatisme étant à l’origine de la séquence des événements morbides ayant entraîné la mort.</div>
+
+                <h5>Cause principale de décès</h5>
+                {{ form_row(form.deces.causePrincipale, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+                {{ form_row(form.deces.codagePrincipal, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+
+                <h5>Cause secondaire ayant contribué au décès</h5>
+                {{ form_row(form.deces.causeSecondaire, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+                {{ form_row(form.deces.codageSecondaire, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
             </section>
 
             {{ form_row(form._token) }}
