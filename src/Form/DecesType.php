@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DecesType extends AbstractType
 {
@@ -43,6 +44,8 @@ class DecesType extends AbstractType
                 'label' => 'Codage prévu en MedDRA',
                 'required' => false,
             ))
+
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder'))
         ;
     }
 

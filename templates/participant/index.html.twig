@@ -9,17 +9,15 @@
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 {% endblock %}
 
-{% form_theme form 'form-theme.html.twig' %}
-
 {% block page_content %}
 
     <div
         class="container-form">
         <!-- Hero -->
-        <section class="hero-tabs">
+        <section id="tab-profile" class="hero-tabs">
             <div class="hero-header">
                 <div class="flex-row hero-title">
-                    <h1 id="intro">PARTICIPANT
+                    <h1 id="profile">PARTICIPANT
                         <span>{{ participant.code }}</span>
                     </h1>
                     <div class="eligible">
@@ -124,15 +122,19 @@
                 </ul>
             </nav>
 
-            {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-            {{ form_errors(form) }}
+            {# VERIFICATION #}
+
+            {{ form_start(formVerification, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+            {{ form_errors(formVerification) }}
+
+            {% form_theme formVerification 'form-theme.html.twig' %}
 
             <section class="slide" id="tab-verification">
                 <h1 id="verification">Vérification des critères d'éligibilité</h1>
 
                 <h3 id="inclusion">Critères d'inclusion</h3>
                 <div id="inclusion-qcm" class="qcm">
-                    {% for pack in form.verification.inclusion.qcm %}
+                    {% for pack in formVerification.inclusion.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
                                 {{ form_widget(pack.question, {'attr': {'class': 'input'} }) }}
@@ -148,7 +150,7 @@
 
                 <h3 id="non-inclusion">Critères de non inclusion</h3>
                 <div id="non-inclusion-qcm" class="qcm">
-                    {% for qcm in form.verification.non_inclusion.qcm %}
+                    {% for qcm in formVerification.non_inclusion.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
                                 {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
@@ -164,50 +166,63 @@
 
                 <h3 id="info">Informations générales</h3>
                 <div class="form-space">
-                    {{ form_row(form.verification.age, {
+                    {{ form_row(formVerification.age, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(form.verification.sexe, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(form.verification.date_naissance, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(form.verification.taille, {
+                    {{ form_row(formVerification.sexe, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
+                    {{ form_row(formVerification.date_naissance, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+                    {{ form_row(formVerification.taille, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(form.verification.poids, {
+                    {{ form_row(formVerification.poids, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(form.verification.imc, {
+                    {{ form_row(formVerification.imc, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(form.verification.systolique, {
+                    {{ form_row(formVerification.systolique, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(form.verification.diastolique, {
+                    {{ form_row(formVerification.diastolique, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
                 </div>
+
+                {{ form_row(formVerification.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+
             </section>
 
-            <section class="slide" id="tab-donnees">
+            {{ form_row(formVerification._token) }}
+            {{ form_end(formVerification, {'render_rest' : false}) }}
+
+            {# CARDIOVASCULAIRE #}
+
+            {{ form_start(formCardiovasculaire, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+            {{ form_errors(formCardiovasculaire) }}
+
+            {% form_theme formCardiovasculaire 'form-theme.html.twig' %}
+
+            <section class="slide" id="tab-cardiovasculaire">
                 <h1 id="cardiovasculaire">Données cardiovasculaires</h1>
 
                 <h3 id="risque">Facteurs de risque cardiovasculaire</h3>
-                {{ form_row(form.cardiovasculaire.tabac, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                {{ form_row(form.cardiovasculaire.activite_physique, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                {{ form_row(form.cardiovasculaire.alimentation, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_row(formCardiovasculaire.tabac, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_row(formCardiovasculaire.activite_physique, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_row(formCardiovasculaire.alimentation, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                 <div class="qcm">
-                    {% for qcm in form.cardiovasculaire.facteurs.qcm %}
+                    {% for qcm in formCardiovasculaire.facteurs.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
                                 {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
@@ -223,7 +238,7 @@
 
                 <h3 id="traitement">Traitement au moment de l’évènement</h3>
                 <div class="qcm">
-                    {% for qcm in form.cardiovasculaire.traitement.qcm %}
+                    {% for qcm in formCardiovasculaire.traitement.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
                                 {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
@@ -236,17 +251,30 @@
                         </div>
                     {% endfor %}
                 </div>
+
+                {{ form_row(formCardiovasculaire.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+
             </section>
 
-            <section class="slide" id="tab-informations">
+            {{ form_row(formCardiovasculaire._token) }}
+            {{ form_end(formCardiovasculaire, {'render_rest' : false}) }}
+
+            {# INFORMATIONS #}
+
+            {{ form_start(formInformation, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+            {{ form_errors(formInformation) }}
+
+            {% form_theme formInformation 'form-theme.html.twig' %}
+
+            <section class="slide" id="tab-information">
                 <h1 id="information">Informations sur l’évènement cardiovasculaire</h1>
 
-                {{ form_row(form.information.date_survenue, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_row(formInformation.date_survenue, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                 <div class="margin-space"></div>
 
                 <h3 id="type">Type d’infarctus du Myocarde</h3>
                 <div class="qcm">
-                    {% for qcm in form.information.type.qcm %}
+                    {% for qcm in formInformation.type.qcm %}
                         {% set counter = ( counter | default(0) ) + 1 %}
                         {% if counter == 2 %}
                             <div class="margin-space"></div>
@@ -270,12 +298,12 @@
                 </div>
 
                 <h3 id="aigue">Traitement à la phase aiguë</h3>
-                {{ form_row(form.information.traitement, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_row(formInformation.traitement, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                 <div class="margin-space"></div>
 
                 <h3 id="complication">Complications immédiates</h3>
                 <div class="qcm">
-                    {% for qcm in form.information.complications.qcm %}
+                    {% for qcm in formInformation.complications.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
                                 {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
@@ -291,62 +319,75 @@
 
                 <h3 id="biologie1">Biologie</h3>
                 <h5>Inflammation</h5>
-                {{ form_row(form.information.CRP, {
+                {{ form_row(formInformation.CRP, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
                 <h5>NFS</h5>
-                {{ form_row(form.information.hemoglobine, {
+                {{ form_row(formInformation.hemoglobine, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                {{ form_row(form.information.leucocytes, {
+                {{ form_row(formInformation.leucocytes, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                {{ form_row(form.information.PNN, {
+                {{ form_row(formInformation.PNN, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                {{ form_row(form.information.plaquettes, {
+                {{ form_row(formInformation.plaquettes, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
 
                 <h5>Bilan lipidique</h5>
-                {{ form_row(form.information.cholesterol, {
+                {{ form_row(formInformation.cholesterol, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                {{ form_row(form.information.LDL_c, {
+                {{ form_row(formInformation.LDL_c, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                {{ form_row(form.information.HDL_c, {
+                {{ form_row(formInformation.HDL_c, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
 
                 <div class="separator-space"></div>
-                {{ form_row(form.information.HbA1c, {
+                {{ form_row(formInformation.HbA1c, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                {{ form_row(form.information.creatininemie, {
+                {{ form_row(formInformation.creatininemie, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
+
+                {{ form_row(formInformation.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+
             </section>
+
+            {{ form_row(formInformation._token) }}
+            {{ form_end(formInformation, {'render_rest' : false}) }}
+
+            {# DONNEES #}
+
+            {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+            {{ form_errors(form) }}
+
+            {% form_theme form 'form-theme.html.twig' %}
 
             <section class="slide" id="tab-evenement">
                 <h1 id="evenement">Données à 6 mois de l'événement</h1>
@@ -358,26 +399,42 @@
                 <h3 id="biologie2">Biologie</h3>
                 <h3 id="hematopoiese">Hématopoïèse clonale</h3>
                 <h3 id="evaluation">Evaluation cardiovasculaire</h3>
-            </section>
 
-            <section class="slide" id="tab-deces">
-                <h1 id="deces">Fiche Décès</h1>
+                {# {{ form_row(form.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }} #}
 
-                {{ form_row(form.deces.date, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
-
-                <div class="def"><span>Définition de la cause initiale du décès : </span>maladie ou traumatisme étant à l’origine de la séquence des événements morbides ayant entraîné la mort.</div>
-
-                <h5>Cause principale de décès</h5>
-                {{ form_row(form.deces.causePrincipale, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
-                {{ form_row(form.deces.codagePrincipal, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
-
-                <h5>Cause secondaire ayant contribué au décès</h5>
-                {{ form_row(form.deces.causeSecondaire, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
-                {{ form_row(form.deces.codageSecondaire, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
             </section>
 
             {{ form_row(form._token) }}
             {{ form_end(form, {'render_rest' : false}) }}
+
+            {# DECES #}
+
+            {{ form_start(formDeces, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+            {{ form_errors(formDeces) }}
+
+            {% form_theme formDeces 'form-theme.html.twig' %}
+
+            <section class="slide" id="tab-deces">
+                <h1 id="deces">Fiche Décès</h1>
+
+                {{ form_row(formDeces.date, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+
+                <div class="def"><span>Définition de la cause initiale du décès : </span>maladie ou traumatisme étant à l’origine de la séquence des événements morbides ayant entraîné la mort.</div>
+
+                <h5>Cause principale de décès</h5>
+                {{ form_row(formDeces.causePrincipale, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+                {{ form_row(formDeces.codagePrincipal, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+
+                <h5>Cause secondaire ayant contribué au décès</h5>
+                {{ form_row(formDeces.causeSecondaire, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+                {{ form_row(formDeces.codageSecondaire, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+
+                {{ form_row(formDeces.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+
+            </section>
+
+            {{ form_row(formDeces._token) }}
+            {{ form_end(formDeces, {'render_rest' : false}) }}
 
         </main>
 
@@ -448,6 +505,12 @@
         $('.toc li a').on('click', function () {
             var page = $(this).attr('href');
             var speed = 550;
+            $('.slide').each(function(i, e) {
+                let id = 'tab-' + page.substring(1);
+                $(this).hide();
+                if ($(this).attr('id') == id)
+                    $(this).show();
+            })
             $('html, body').animate({
                 scrollTop: $(page).offset().top - 30
             }, speed);
@@ -461,7 +524,6 @@
             $('#cb0').prop('checked', true);
             $('#inclusion-qcm .qcm-row').each(function (e) {
                 var radioValue = $(this).find('input:checked').val();
-                console.log(radioValue);
                 if (radioValue != "oui") {
                     inclusion = 0;
                     return;
@@ -486,17 +548,15 @@
 
     <script>
         /* TOC */
-        $('.sub-menu > ul').hide();
-        $(".sub-menu > a").click(function () {
+        $(".toc > ul > li > a").click(function () {
             if (!$(this).hasClass('js-active')) {
-                $('.sub-menu > a').each(function (i) {
+                $('.toc > ul > li > a').each(function (i) {
                     if ($(this).hasClass('js-active')) 
                         toggleMenu($(this));
-                    
                     $(this).removeClass('js-active');
                 });
             }
-            $(this).addClass('js-active');
+            $(this).toggleClass('js-active');
             toggleMenu($(this));
         });
 

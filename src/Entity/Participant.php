@@ -44,24 +44,25 @@ class Participant
     private $utilisateurs;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Verification", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Verification", inversedBy="participant", cascade={"persist", "remove"})
      */
     private $verification;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", inversedBy="participant", cascade={"persist", "remove"})
      */
     private $cardiovasculaire;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Information", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Information", inversedBy="participant", cascade={"persist", "remove"})
      */
     private $information;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Deces", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Deces", inversedBy="participant", cascade={"persist", "remove"})
      */
     private $deces;
+
 
     public function __construct()
     {

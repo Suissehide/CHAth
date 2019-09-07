@@ -12,6 +12,7 @@ use App\Entity\Information;
 use App\Form\ParticipantType;
 use App\Form\VerificationType;
 use App\Form\CardiovasculaireType;
+use App\Form\DecesType;
 use App\Form\InformationType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -249,9 +250,9 @@ class ParticipantController extends AbstractController
     public function index(Participant $participant, Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
+
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('validation')->isClicked()) {
                 $participant = $form->getData();
@@ -260,14 +261,58 @@ class ParticipantController extends AbstractController
             return $this->redirect($request->getUri());
         }
 
-        $verification = new Verification();
+        $verification = $participant->getVerification();
         $formVerification = $this->createForm(VerificationType::class, $verification);
+        $formVerification->handleRequest($request);
+        if ($formVerification->isSubmitted() && $formVerification->isValid()) {
+            if ($formVerification->get('save')->isClicked()) {
+                $participant = $formVerification->getData();
+                $em->flush();
+            }
+            return $this->redirect($request->getUri());
+        }
+
+        $cardiovasculaire = $participant->getCardiovasculaire();
+        $formCardiovasculaire = $this->createForm(CardiovasculaireType::class, $cardiovasculaire);
+        $formCardiovasculaire->handleRequest($request);
+        if ($formCardiovasculaire->isSubmitted() && $formCardiovasculaire->isValid()) {
+            if ($formCardiovasculaire->get('save')->isClicked()) {
+                $participant = $formCardiovasculaire->getData();
+                $em->flush();
+            }
+            return $this->redirect($request->getUri());
+        }
+
+        $information = $participant->getInformation();
+        $formInformation = $this->createForm(InformationType::class, $information);
+        $formInformation->handleRequest($request);
+        if ($formInformation->isSubmitted() && $formInformation->isValid()) {
+            if ($formInformation->get('save')->isClicked()) {
+                $participant = $formInformation->getData();
+                $em->flush();
+            }
+            return $this->redirect($request->getUri());
+        }
+
+        $deces = $participant->getDeces();
+        $formDeces = $this->createForm(DecesType::class, $deces);
+        $formDeces->handleRequest($request);
+        if ($formDeces->isSubmitted() && $formDeces->isValid()) {
+            if ($formDeces->get('save')->isClicked()) {
+                $participant = $formDeces->getData();
+                $em->flush();
+            }
+            return $this->redirect($request->getUri());
+        }
 
         return $this->render('participant/index.html.twig', [
             'controller_name' => 'ParticipantController',
             'participant' => $participant,
             'form' => $form->createView(),
             'formVerification' => $formVerification->createView(),
+            'formCardiovasculaire' => $formCardiovasculaire->createView(),
+            'formInformation' => $formInformation->createView(),
+            'formDeces' => $formDeces->createView(),
             'date' => date("d/m/Y"),
         ]);
     }

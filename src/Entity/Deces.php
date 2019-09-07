@@ -41,6 +41,11 @@ class Deces
      */
     private $codageSecondaire;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Participant", mappedBy="deces", cascade={"persist", "remove"})
+     */
+    private $participant;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,24 @@ class Deces
     public function setCodageSecondaire(?int $codageSecondaire): self
     {
         $this->codageSecondaire = $codageSecondaire;
+
+        return $this;
+    }
+
+    public function getParticipant(): ?Participant
+    {
+        return $this->participant;
+    }
+
+    public function setParticipant(?Participant $participant): self
+    {
+        $this->participant = $participant;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newDeces = $participant === null ? null : $this;
+        if ($newDeces !== $participant->getDeces()) {
+            $participant->setDeces($newDeces);
+        }
 
         return $this;
     }

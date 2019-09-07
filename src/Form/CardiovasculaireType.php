@@ -7,8 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CardiovasculaireType extends AbstractType
 {
@@ -56,6 +55,8 @@ class CardiovasculaireType extends AbstractType
             ->add('traitement', PackType::class, array(
                 'label' => 'Traitement au moment de l\'évènement'
             ))
+
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder'))
         ;
     }
 

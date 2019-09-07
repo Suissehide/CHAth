@@ -367,6 +367,7 @@ label,
 .slide {
     /* min-height: 100vh; */
     position: relative;
+    display: none;
     padding-top: 50px;
 }
 
@@ -610,7 +611,7 @@ main h3 {
     z-index: 100;
     position: absolute;
     left: 0px;
-    top: 50px;
+    top: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 30%;
@@ -621,6 +622,10 @@ main h3 {
     left: 80px;
     top: 0px;
     width: calc(30% - 24px);
+}
+
+.toc .sub-menu > ul {
+    display: none;
 }
 
 .toc ul {

@@ -41,6 +41,11 @@ class Cardiovasculaire
      */
     private $traitement;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Participant", mappedBy="cardiovasculaire", cascade={"persist", "remove"})
+     */
+    private $participant;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,24 @@ class Cardiovasculaire
     public function setTraitement(?Pack $traitement): self
     {
         $this->traitement = $traitement;
+
+        return $this;
+    }
+
+    public function getParticipant(): ?Participant
+    {
+        return $this->participant;
+    }
+
+    public function setParticipant(?Participant $participant): self
+    {
+        $this->participant = $participant;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newCardiovasculaire = $participant === null ? null : $this;
+        if ($newCardiovasculaire !== $participant->getCardiovasculaire()) {
+            $participant->setCardiovasculaire($newCardiovasculaire);
+        }
 
         return $this;
     }

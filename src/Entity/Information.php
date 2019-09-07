@@ -86,6 +86,11 @@ class Information
      */
     private $creatininemie;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Participant", mappedBy="information", cascade={"persist", "remove"})
+     */
+    private $participant;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -255,6 +260,24 @@ class Information
     public function setCreatininemie(?float $creatininemie): self
     {
         $this->creatininemie = $creatininemie;
+
+        return $this;
+    }
+
+    public function getParticipant(): ?Participant
+    {
+        return $this->participant;
+    }
+
+    public function setParticipant(?Participant $participant): self
+    {
+        $this->participant = $participant;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newInformation = $participant === null ? null : $this;
+        if ($newInformation !== $participant->getInformation()) {
+            $participant->setInformation($newInformation);
+        }
 
         return $this;
     }

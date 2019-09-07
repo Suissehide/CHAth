@@ -64,7 +64,7 @@ class UtilisateurType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('save', SubmitType::class, array('label' => 'Enregistrer'))
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder'))
 
         ;
     }

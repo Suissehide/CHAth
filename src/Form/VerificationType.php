@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class VerificationType extends AbstractType
 {
@@ -88,7 +89,7 @@ class VerificationType extends AbstractType
                     'data-min' => 10,
                     'data-max' => 500,
                 ),
-                
+                'required' => false,
             ))
             ->add('imc', NumberType::class, array(
                 'label' => 'IMC',
@@ -120,6 +121,8 @@ class VerificationType extends AbstractType
                 ),
                 'required' => false,
             ))
+
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder'))
         ;
     }
 
