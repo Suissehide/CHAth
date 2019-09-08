@@ -59,9 +59,15 @@ class Utilisateur implements UserInterface
      */
     private $prenom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Erreur", mappedBy="utilisateur")
+     */
+    private $erreurs;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
+        $this->erreurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,6 +209,37 @@ class Utilisateur implements UserInterface
     public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Erreur[]
+     */
+    public function getErreurs(): Collection
+    {
+        return $this->erreurs;
+    }
+
+    public function addErreur(Erreur $erreur): self
+    {
+        if (!$this->erreurs->contains($erreur)) {
+            $this->erreurs[] = $erreur;
+            $erreur->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeErreur(Erreur $erreur): self
+    {
+        if ($this->erreurs->contains($erreur)) {
+            $this->erreurs->removeElement($erreur);
+            // set the owning side to null (unless already changed)
+            if ($erreur->getUtilisateur() === $this) {
+                $erreur->setUtilisateur(null);
+            }
+        }
 
         return $this;
     }

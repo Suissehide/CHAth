@@ -91,9 +91,9 @@
                             <div class='fa fa-caret-down right'></div>
                         </a>
                         <ul>
-                            <li><a href='#settings'>Type d’infarctus du Myocarde</a></li>
-                            <li><a href='#settings'>Traitement à la phase aiguë</a></li>
-                            <li><a href='#settings'>Complications immédiates</a></li>
+                            <li><a href='#type'>Type d’infarctus du Myocarde</a></li>
+                            <li><a href='#aigue'>Traitement à la phase aiguë</a></li>
+                            <li><a href='#complication'>Complications immédiates</a></li>
                             <li><a href='#biologie1'>Biologie</a></li>
                         </ul>
                     </li>
@@ -104,13 +104,13 @@
                             <div class='fa fa-caret-down right'></div>
                         </a>
                         <ul>
-                            <li><a href='#settings'>Récidive</a></li>
-                            <li><a href='#settings'>Clinique</a></li>
-                            <li><a href='#settings'>Facteurs de risque cardiovasculaire</a></li>
-                            <li><a href='#settings'>Traitement mis en place suite à l'évènement cardiovasculaire</a></li>
+                            <li><a href='#recidive'>Récidive</a></li>
+                            <li><a href='#clinique'>Clinique</a></li>
+                            <li><a href='#facteur'>Facteurs de risque cardiovasculaire</a></li>
+                            <li><a href='#place'>Traitement mis en place suite à l'évènement cardiovasculaire</a></li>
                             <li><a href='#biologie2'>Biologie</a></li>
-                            <li><a href='#settings'>Hématopoïèse clonale</a></li>
-                            <li><a href='#settings'>Evaluation cardiovasculaire</a></li>
+                            <li><a href='#hematopoiese'>Hématopoïèse clonale</a></li>
+                            <li><a href='#evaluation'>Evaluation cardiovasculaire</a></li>
                         </ul>
                     </li>
                     <li>
@@ -172,7 +172,7 @@
                         })
                     }}
                     {{ form_row(formVerification.sexe, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(formVerification.date_naissance, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+                    {{ form_row(formVerification.date_naissance, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
                     {{ form_row(formVerification.taille, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
@@ -417,7 +417,7 @@
             <section class="slide" id="tab-deces">
                 <h1 id="deces">Fiche Décès</h1>
 
-                {{ form_row(formDeces.date, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+                {{ form_row(formDeces.date, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
 
                 <div class="def"><span>Définition de la cause initiale du décès : </span>maladie ou traumatisme étant à l’origine de la séquence des événements morbides ayant entraîné la mort.</div>
 
@@ -501,6 +501,14 @@
     </script>
 
     <script>
+        jQuery(document).ready(function () {
+            $('.js-datepicker').datepicker({
+                language: 'fr',
+                clearButton: true,
+                onSelect: function (formattedDate, date, inst) {}
+            });
+        });
+
         /* Smooth scroll */
         $('.toc li a').on('click', function () {
             var page = $(this).attr('href');
