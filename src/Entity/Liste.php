@@ -23,6 +23,11 @@ class Liste
      */
     private $erreurs;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="listes")
+     */
+    private $participant;
+
     public function __construct()
     {
         $this->erreurs = new ArrayCollection();
@@ -60,6 +65,18 @@ class Liste
                 $erreur->setListe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getParticipant(): ?Participant
+    {
+        return $this->participant;
+    }
+
+    public function setParticipant(?Participant $participant): self
+    {
+        $this->participant = $participant;
 
         return $this;
     }

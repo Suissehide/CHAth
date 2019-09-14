@@ -63,10 +63,16 @@ class Participant
      */
     private $deces;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Liste", mappedBy="participant")
+     */
+    private $listes;
+
 
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
+        $this->listes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -192,6 +198,37 @@ class Participant
     public function setDeces(?Deces $deces): self
     {
         $this->deces = $deces;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Liste[]
+     */
+    public function getListes(): Collection
+    {
+        return $this->listes;
+    }
+
+    public function addListe(Liste $liste): self
+    {
+        if (!$this->listes->contains($liste)) {
+            $this->listes[] = $liste;
+            $liste->setParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListe(Liste $liste): self
+    {
+        if ($this->listes->contains($liste)) {
+            $this->listes->removeElement($liste);
+            // set the owning side to null (unless already changed)
+            if ($liste->getParticipant() === $this) {
+                $liste->setParticipant(null);
+            }
+        }
 
         return $this;
     }

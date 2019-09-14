@@ -19,6 +19,18 @@ class ListeRepository extends ServiceEntityRepository
         parent::__construct($registry, Liste::class);
     }
 
+    public function findAllErrorField($id, $pos): ?Liste
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.participant = :val')
+            ->setParameter('id', $id)
+            ->andWhere('l.position = :val')
+            ->setParameter('val', $pos)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     // /**
     //  * @return Liste[] Returns an array of Liste objects
     //  */
