@@ -77,12 +77,12 @@ class Donnee
     private $hemoglobine;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $leucocytes;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $pnn;
 
@@ -140,6 +140,21 @@ class Donnee
      * @ORM\Column(type="float", nullable=true)
      */
     private $fraction;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     */
+    private $genes;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Participant", mappedBy="donnee", cascade={"persist", "remove"})
+     */
+    private $participant;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     */
+    private $facteurs;
 
     public function getId(): ?int
     {
@@ -295,7 +310,7 @@ class Donnee
         return $this->leucocytes;
     }
 
-    public function setLeucocytes(float $leucocytes): self
+    public function setLeucocytes(?float $leucocytes): self
     {
         $this->leucocytes = $leucocytes;
 
@@ -307,7 +322,7 @@ class Donnee
         return $this->pnn;
     }
 
-    public function setPnn(float $pnn): self
+    public function setPnn(?float $pnn): self
     {
         $this->pnn = $pnn;
 
@@ -442,6 +457,48 @@ class Donnee
     public function setFraction(?float $fraction): self
     {
         $this->fraction = $fraction;
+
+        return $this;
+    }
+
+    public function getGenes(): ?Pack
+    {
+        return $this->genes;
+    }
+
+    public function setGenes(?Pack $genes): self
+    {
+        $this->genes = $genes;
+
+        return $this;
+    }
+
+    public function getParticipant(): ?Participant
+    {
+        return $this->participant;
+    }
+
+    public function setParticipant(?Participant $participant): self
+    {
+        $this->participant = $participant;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newDonnee = $participant === null ? null : $this;
+        if ($newDonnee !== $participant->getDonnee()) {
+            $participant->setDonnee($newDonnee);
+        }
+
+        return $this;
+    }
+
+    public function getFacteurs(): ?Pack
+    {
+        return $this->facteurs;
+    }
+
+    public function setFacteurs(?Pack $facteurs): self
+    {
+        $this->facteurs = $facteurs;
 
         return $this;
     }

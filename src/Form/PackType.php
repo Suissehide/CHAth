@@ -19,6 +19,12 @@ class PackType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
             ))
+            ->add('genes', CollectionType::class, array(
+                'entry_type' => GeneType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
+            ))
         ;
     }
 

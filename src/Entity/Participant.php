@@ -68,6 +68,11 @@ class Participant
      */
     private $listes;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Donnee", inversedBy="participant", cascade={"persist", "remove"})
+     */
+    private $donnee;
+
 
     public function __construct()
     {
@@ -229,6 +234,18 @@ class Participant
                 $liste->setParticipant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDonnee(): ?Donnee
+    {
+        return $this->donnee;
+    }
+
+    public function setDonnee(?Donnee $donnee): self
+    {
+        $this->donnee = $donnee;
 
         return $this;
     }

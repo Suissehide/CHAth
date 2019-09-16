@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Entity\Verification;
 use App\Entity\Qcm;
+use App\Entity\Gene;
 use App\Entity\Pack;
 use App\Entity\Cardiovasculaire;
+use App\Entity\Donnee;
 use App\Entity\Information;
 
 use App\Form\ParticipantType;
@@ -14,6 +16,7 @@ use App\Form\VerificationType;
 use App\Form\CardiovasculaireType;
 use App\Form\DecesType;
 use App\Form\InformationType;
+use App\Form\DonneeType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +46,7 @@ class ParticipantController extends AbstractController
                 $this->verification_create($participant);
                 $this->cardiovasculaire_create($participant);
                 $this->information_create($participant);
+                $this->donnee_create($participant);
 
                 $em->persist($participant);
                 $em->flush();
@@ -66,23 +70,23 @@ class ParticipantController extends AbstractController
 
         $qcm = new Qcm();
         $qcm->setQuestion("Patients (homme ou femme) âgés de plus de 80 ans");
-        $qcm->setReponse("oui");
+        $qcm->setReponse("Oui");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)");
-        $qcm->setReponse("oui");
+        $qcm->setReponse("Oui");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Absence de preuve pour une hémopathie maligne avérée (connue ou révélée sur les résultats de NFS)");
-        $qcm->setReponse("oui");
+        $qcm->setReponse("Oui");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Sujet affilié ou bénéficiaire d’un régime de sécurité sociale");
-        $qcm->setReponse("oui");
+        $qcm->setReponse("Oui");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Signature du consentement éclairé, Date ");
-        $qcm->setReponse("oui");
+        $qcm->setReponse("Oui");
         $pack->addQcm($qcm);
 
         $verification->setInclusion($pack);
@@ -91,39 +95,39 @@ class ParticipantController extends AbstractController
 
         $qcm = new Qcm();
         $qcm->setQuestion("Patient ayant présenté un ECV d’origine non-athéromateuse (dissection, embolique, ...)");
-        $qcm->setReponse("non");
+        $qcm->setReponse("Non");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient présentant un diabète mal équilibré (HbA1c > 10%)");
-        $qcm->setReponse("non");
+        $qcm->setReponse("Non");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient ayant présenté un ou plusieurs ECV avant 80 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse");
-        $qcm->setReponse("non");
+        $qcm->setReponse("Non");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient présentant une hémopathie maligne manifeste (connue ou révélée sur les résultats de NFS)");
-        $qcm->setReponse("non");
+        $qcm->setReponse("Non");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient présentant une maladie inflammatoire chronique (cancer, vascularite, rhumatismale, hépato-gastro-intestinales)");
-        $qcm->setReponse("non");
+        $qcm->setReponse("Non");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient traité par anti-inflammatoire au long cours (Corticoïdes, Anti-inflammatoires non stéroïdiens, Aspirine > 325mg/jour, Inhibiteurs de la cyclo-oxygénase II)");
-        $qcm->setReponse("non");
+        $qcm->setReponse("Non");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Personne placée sous sauvegarde de justice, tutelle ou curatelle");
-        $qcm->setReponse("non");
+        $qcm->setReponse("Non");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Personne étant dans l’incapacité de donner son consentement");
-        $qcm->setReponse("non");
+        $qcm->setReponse("Non");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Sujet non coopérant");
-        $qcm->setReponse("non");
+        $qcm->setReponse("Non");
         $pack->addQcm($qcm);
 
         $verification->setNonInclusion($pack);
@@ -244,6 +248,88 @@ class ParticipantController extends AbstractController
         $participant->setInformation($information);
     }
 
+    private function donnee_create(Participant $participant)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $donnee = new Donnee();
+
+        $pack = new Pack();
+
+        $qcm = new Qcm();
+        $qcm->setQuestion("Diabète");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Hypertension artérielle");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Dyslipidémie");
+        $pack->addQcm($qcm);
+
+        $donnee->setFacteurs($pack);
+
+        $pack = new Pack();
+
+        $qcm = new Qcm();
+        $qcm->setQuestion("Bêta-bloquant");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Aspirine");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Inhibiteur du récepteur P2Y12");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Statine");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Inhibiteur de l’Enzyme de Conversion");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Antagoniste du récepteur de l’angiotensine 2");
+        $pack->addQcm($qcm);
+
+        $donnee->setTraitement($pack);
+
+        $pack = new Pack();
+
+        $gene = new Gene();
+        $gene->setName("TET2");
+        $pack->addGene($gene);
+        $gene = new Gene();
+        $gene->setName("ASXL1");
+        $pack->addGene($gene);
+        $gene = new Gene();
+        $gene->setName("DNMT3A");
+        $pack->addGene($gene);
+        $gene = new Gene();
+        $gene->setName("SF3B1");
+        $pack->addGene($gene);
+        $gene = new Gene();
+        $gene->setName("TP53");
+        $pack->addGene($gene);
+        $gene = new Gene();
+        $gene->setName("CBL");
+        $pack->addGene($gene);
+        $gene = new Gene();
+        $gene->setName("SRSF2");
+        $pack->addGene($gene);
+        $gene = new Gene();
+        $gene->setName("PPM1D");
+        $pack->addGene($gene);
+        $gene = new Gene();
+        $gene->setName("GNB1");
+        $pack->addGene($gene);
+        $gene = new Gene();
+        $gene->setName("JAK2V617F");
+        $pack->addGene($gene);
+
+        $donnee->setGenes($pack);
+
+        $em->persist($donnee);
+        $em->flush();
+        $participant->setDonnee($donnee);
+    }
+
     /**
      * @Route("/participant/{id}", name="participant_view")
      */
@@ -294,6 +380,18 @@ class ParticipantController extends AbstractController
             return $this->redirect($request->getUri());
         }
 
+        $donnee = $participant->getDonnee();
+        $formDonnee = $this->createForm(DonneeType::class, $donnee);
+        $formDonnee->handleRequest($request);
+        if ($formDonnee->isSubmitted() && $formDonnee->isValid()) {
+            if ($formDonnee->get('save')->isClicked()) {
+                $participant = $formDonnee->getData();
+                $em->flush();
+            }
+            return $this->redirect($request->getUri());
+        }
+
+
         $deces = $participant->getDeces();
         $formDeces = $this->createForm(DecesType::class, $deces);
         $formDeces->handleRequest($request);
@@ -312,6 +410,7 @@ class ParticipantController extends AbstractController
             'formVerification' => $formVerification->createView(),
             'formCardiovasculaire' => $formCardiovasculaire->createView(),
             'formInformation' => $formInformation->createView(),
+            'formDonnee' => $formDonnee->createView(),
             'formDeces' => $formDeces->createView(),
             'date' => date("d/m/Y"),
         ]);

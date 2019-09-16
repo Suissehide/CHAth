@@ -28,9 +28,9 @@ class QcmType extends AbstractType
                 'multiple' => false,
                 'placeholder' => false,
                 'choices' => array(
-                    'oui' => 'oui',
-                    'non' => 'non',
-                    'non précisé' => 'non précisé',
+                    'Oui' => 'Oui',
+                    'Non' => 'Non',
+                    'Non précisé' => 'Non précisé',
                 ),
                 'required' => false,
             ))

@@ -302,11 +302,23 @@ label,
     height: 42px;
 }
 
+.row-flex {
+    display: flex;
+}
+
 .row-label {
-    text-align: center;
+    /* text-align: center; */
     padding-bottom: 5px;
     margin-bottom: 10px;
     border-bottom: 1px solid #3CBCC3;
+}
+
+.container-form .col-input textarea {
+    padding: 10px 20px;
+}
+
+.col-input label {
+    margin-bottom: 0;
 }
 
 .badge-danger {
@@ -733,3 +745,4 @@ main h3 {
 .def span {
     font-weight: bold;
 }
+

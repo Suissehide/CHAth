@@ -23,9 +23,15 @@ class Pack
      */
     private $qcm;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Gene", mappedBy="pack", cascade={"persist", "remove"})
+     */
+    private $genes;
+
     public function __construct()
     {
         $this->qcm = new ArrayCollection();
+        $this->genes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,6 +64,37 @@ class Pack
             // set the owning side to null (unless already changed)
             if ($qcm->getPack() === $this) {
                 $qcm->setPack(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Gene[]
+     */
+    public function getGenes(): Collection
+    {
+        return $this->genes;
+    }
+
+    public function addGene(Gene $gene): self
+    {
+        if (!$this->genes->contains($gene)) {
+            $this->genes[] = $gene;
+            $gene->setPack($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGene(Gene $gene): self
+    {
+        if ($this->genes->contains($gene)) {
+            $this->genes->removeElement($gene);
+            // set the owning side to null (unless already changed)
+            if ($gene->getPack() === $this) {
+                $gene->setPack(null);
             }
         }
 
