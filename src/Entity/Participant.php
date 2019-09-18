@@ -34,7 +34,7 @@ class Participant
     private $code;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $numero;
 
@@ -121,12 +121,12 @@ class Participant
         return $this;
     }
 
-    public function getNumero(): ?string
+    public function getNumero(): ?int
     {
         return $this->numero;
     }
 
-    public function setNumero(?string $numero): self
+    public function setNumero(?int $numero): self
     {
         $this->numero = $numero;
 

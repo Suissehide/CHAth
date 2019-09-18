@@ -230,6 +230,7 @@ input[readonly]:focus {
 }
 
 .form-btn:hover {
+    color: #fff;
     background-color: #1d699c;
 }
 
@@ -300,6 +301,14 @@ label,
     display: flex;
     align-items: center;
     height: 42px;
+}
+
+.col-label > .wrap-input {
+    font-family: Ubuntu-Bold;
+    color: #1a535c;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
 }
 
 .row-flex {
@@ -519,7 +528,15 @@ main h3 {
 }
 
 .qcm-question {
-    width: 65%;
+    flex: 65%;
+    overflow-y: auto;
+    height: 58px;
+    font-family: Ubuntu-Bold;
+    color: #1a535c;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding-top: 5px;
 }
 
 .qcm-question input[readonly],
@@ -647,7 +664,8 @@ main h3 {
 }
 
 .toc ul li a {
-    display: block;
+    display: flex;
+    justify-content: space-between;
     background: #1d699c;
     padding: 10px 15px;
     color: #fff;
@@ -690,6 +708,13 @@ main h3 {
     background: #999999cc;
     color: #1a535c;
     border-left: 4px solid #1d699c;
+}
+
+.menu-title {
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Float Right/Left */
@@ -746,3 +771,29 @@ main h3 {
     font-weight: bold;
 }
 
+#alimentation {
+    margin-top: 20px;
+}
+
+#alimentation span {
+    color: #808080;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-left: 2px #333 solid;
+}
+
+#alimentation span.green {
+    border-color: #55D6BE;
+    color:#55D6BE;
+}
+
+#alimentation span.orange {
+    border-color: orange;
+    color: orange;
+}
+
+#alimentation span.red {
+    border-color: #D63B53;
+    color: #D63B53;
+}

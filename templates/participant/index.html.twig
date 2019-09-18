@@ -49,9 +49,10 @@
                 <ul>
                     <li>
                         <a href='#profile'>
+                            <div class="menu-title">
                             <div class='fa fa-user'></div>
                             Participant
-                            {{ participant.code }}
+                            {{ participant.code }}</div>
                         </a>
                     </li>
                     {# <li>
@@ -63,8 +64,9 @@
                     </li> #}
                     <li class='sub-menu'>
                         <a href='#verification'>
+                            <div class="menu-title">
                             <div class='fa fa-feather-alt'></div>
-                            Vérification des critères d'éligibilité
+                            Vérification des critères d'éligibilité</div>
                             <div class='fa fa-caret-down right'></div>
                         </a>
                         <ul>
@@ -75,8 +77,9 @@
                     </li>
                     <li class='sub-menu'>
                         <a href='#cardiovasculaire'>
+                            <div class="menu-title">
                             <div class='fa fa-heartbeat'></div>
-                            Données cardiovasculaires
+                            Données cardiovasculaires</div>
                             <div class='fa fa-caret-down right'></div>
                         </a>
                         <ul>
@@ -86,8 +89,9 @@
                     </li>
                     <li class='sub-menu'>
                         <a href='#information'>
+                            <div class="menu-title">
                             <div class='fa fa-procedures'></div>
-                            Informations sur l’évènement cardiovasculaire
+                            Informations sur l’évènement cardiovasculaire</div>
                             <div class='fa fa-caret-down right'></div>
                         </a>
                         <ul>
@@ -99,8 +103,9 @@
                     </li>
                     <li class='sub-menu'>
                         <a href='#evenement'>
+                        <div class="menu-title">
                             <div class='fa fa-notes-medical'></div>
-                            Données à 6 mois de l'événement
+                            Données à 6 mois de l'événement</div>
                             <div class='fa fa-caret-down right'></div>
                         </a>
                         <ul>
@@ -115,8 +120,9 @@
                     </li>
                     <li>
                         <a href='#deces'>
+                            <div class="menu-title">
                             <div class='fa fa-skull-crossbones'></div>
-                            Décès
+                            Décès</div>
                         </a>
                     </li>
                 </ul>
@@ -134,18 +140,20 @@
 
                 <h3 id="inclusion">Critères d'inclusion</h3>
                 <div id="inclusion-qcm" class="qcm">
-                    {% for pack in formVerification.inclusion.qcm %}
+                    {% for qcm in formVerification.inclusion.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
-                                {{ form_widget(pack.question, {'attr': {'class': 'input'} }) }}
+                                {{ qcm.vars.value.question }}
                             </div>
                             <div class="qcm-response">
                                 <div class="wrap-input">
-                                    {{ form_widget(pack.reponse, {'attr': {'class': 'input radio-row'} }) }}
+                                    {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
+                    <div class="margin-space"></div>
+                    {{ form_row(formVerification.date, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
                 </div>
 
                 <h3 id="non-inclusion">Critères de non inclusion</h3>
@@ -153,7 +161,7 @@
                     {% for qcm in formVerification.non_inclusion.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
-                                {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
+                                {{ qcm.vars.value.question }}
                             </div>
                             <div class="qcm-response">
                                 <div class="wrap-input">
@@ -172,7 +180,7 @@
                         })
                     }}
                     {{ form_row(formVerification.sexe, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(formVerification.date_naissance, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
+                    {{ form_row(formVerification.date_naissance, {'attr': {'class': 'input js-birthday', 'autocomplete' : 'off'} }) }}
                     {{ form_row(formVerification.taille, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
@@ -225,7 +233,7 @@
                     {% for qcm in formCardiovasculaire.facteurs.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
-                                {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
+                                {{ qcm.vars.value.question }}
                             </div>
                             <div class="qcm-response">
                                 <div class="wrap-input">
@@ -241,7 +249,7 @@
                     {% for qcm in formCardiovasculaire.traitement.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
-                                {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
+                                {{ qcm.vars.value.question }}
                             </div>
                             <div class="qcm-response">
                                 <div class="wrap-input">
@@ -269,7 +277,7 @@
             <section class="slide" id="tab-information">
                 <h1 id="information">Informations sur l’évènement cardiovasculaire</h1>
 
-                {{ form_row(formInformation.date_survenue, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_row(formInformation.date_survenue, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
                 <div class="margin-space"></div>
 
                 <h3 id="type">Type d’infarctus du Myocarde</h3>
@@ -286,7 +294,7 @@
 
                         <div class="qcm-row">
                             <div class="qcm-question">
-                                {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
+                                {{ qcm.vars.value.question }}
                             </div>
                             <div class="qcm-response">
                                 <div class="wrap-input">
@@ -309,7 +317,7 @@
                     {% for qcm in formInformation.complications.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
-                                {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
+                                {{ qcm.vars.value.question }}
                             </div>
                             <div class="qcm-response">
                                 <div class="wrap-input">
@@ -424,13 +432,14 @@
                     {{ form_row(formDonnee.tabac, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                     {{ form_row(formDonnee.activite, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                     {{ form_row(formDonnee.alimentation, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
+                    <div id="alimentation"></div>
                 </div>
                 
                 <div class="qcm">
                     {% for qcm in formDonnee.facteurs.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
-                                {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
+                                {{ qcm.vars.value.question }}
                             </div>
                             <div class="qcm-response">
                                 <div class="wrap-input">
@@ -446,7 +455,7 @@
                     {% for qcm in formDonnee.traitement.qcm %}
                         <div class="qcm-row">
                             <div class="qcm-question">
-                                {{ form_widget(qcm.question, {'attr': {'class': 'input'} }) }}
+                                {{ qcm.vars.value.question }}
                             </div>
                             <div class="qcm-response">
                                 <div class="wrap-input">
@@ -537,7 +546,7 @@
                         <div class="row">
                             <div class="col-md-2 col-label">
                                 <div class="wrap-input">
-                                    {{ gene.vars.value.name }}
+                                    {{ gene.vars.value.nom }}
                                 </div>
                             </div>
                             <div class="col-md-4 col-input">
@@ -708,32 +717,49 @@
 
     <script>
         jQuery(document).ready(function () {
-            $('.js-datepicker').datepicker({
+            $('.js-datepicker').datepicker({language: 'fr', clearButton: true});
+        });
+
+        function getAge(dateString) {
+            var today = new Date();
+            let dateArray = dateString.split('/');
+            var date = new Date(dateArray[2], dateArray[1], dateArray[0]);
+            var age = today.getFullYear() - date.getFullYear();
+            var m = today.getMonth() - date.getMonth();
+            if (isNaN(age))
+                return -1;
+            if (m < 0 || (m === 0 && today.getDate() < date.getDate())) 
+                age--;
+            return age;
+        }
+        $('#verification_date_naissance').on('change', function() {
+            $('#verification_age').val(getAge($(this).val()));
+        })
+        jQuery(document).ready(function () {
+            $('.js-birthday').datepicker({
                 language: 'fr',
                 clearButton: true,
-                onSelect: function (formattedDate, date, inst) {}
+                onSelect: function (formattedDate, date, inst) {
+                    $('#verification_age').val(getAge(formattedDate));
+                }
             });
         });
 
-        /* Smooth scroll */
-        $('.toc > ul > li > a').on('click', function () {
-            var page = $(this).attr('href');
-            $('.slide').each(function(i, e) {
-                let id = 'tab-' + page.substring(1);
-                $(this).hide();
-                if ($(this).attr('id') == id)
-                    $(this).show();
-            })
-            return false;
-        });
+        /* alimentation */
+        function alimentation() {
+            let nb = $('input[type=checkbox][name="donnee[alimentation][]"]:checked').length;
+            $('#alimentation').empty();
+            if (nb >= 4)
+                $('#alimentation').append('<span class="green">Recommandée (4-5)</span');
+            else if (nb >= 2)
+                $('#alimentation').append('<span class="orange">Intermédiaire (2-3)</span');
+            else
+                $('#alimentation').append('<span class="red">Faible (0-1)</span');
+        }
 
-        $('.toc li a').on('click', function () {
-            var page = $(this).attr('href');
-            var speed = 550;
-            $('html, body').animate({
-                scrollTop: $(page).offset().top - 30
-            }, speed);
-            return false;
+        alimentation();
+        $('input[type=checkbox][name="donnee[alimentation][]"]').on('change', function () {
+            alimentation()
         });
 
         /* eligibilite */
@@ -767,6 +793,27 @@
 
     <script>
         /* TOC */
+        /* Smooth scroll */
+        $('.toc > ul > li > a').on('click', function () {
+            var page = $(this).attr('href');
+            $('.slide').each(function(i, e) {
+                let id = 'tab-' + page.substring(1);
+                $(this).hide();
+                if ($(this).attr('id') == id)
+                    $(this).show();
+            })
+            return false;
+        });
+
+        $('.toc li a').on('click', function () {
+            var page = $(this).attr('href');
+            var speed = 550;
+            $('html, body').animate({
+                scrollTop: $(page).offset().top - 30
+            }, speed);
+            return false;
+        });
+
         $(".toc > ul > li > a").click(function () {
             if (!$(this).hasClass('js-active')) {
                 $('.toc > ul > li > a').each(function (i) {

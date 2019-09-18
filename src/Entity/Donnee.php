@@ -57,11 +57,6 @@ class Donnee
     private $activite;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $alimentation;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
      */
     private $traitement;
@@ -155,6 +150,11 @@ class Donnee
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
      */
     private $facteurs;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $alimentation = [];
 
     public function getId(): ?int
     {
@@ -253,18 +253,6 @@ class Donnee
     public function setActivite(?string $activite): self
     {
         $this->activite = $activite;
-
-        return $this;
-    }
-
-    public function getAlimentation(): ?string
-    {
-        return $this->alimentation;
-    }
-
-    public function setAlimentation(?string $alimentation): self
-    {
-        $this->alimentation = $alimentation;
 
         return $this;
     }
@@ -499,6 +487,18 @@ class Donnee
     public function setFacteurs(?Pack $facteurs): self
     {
         $this->facteurs = $facteurs;
+
+        return $this;
+    }
+
+    public function getAlimentation(): ?array
+    {
+        return $this->alimentation;
+    }
+
+    public function setAlimentation(?array $alimentation): self
+    {
+        $this->alimentation = $alimentation;
 
         return $this;
     }

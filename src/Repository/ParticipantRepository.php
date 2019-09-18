@@ -33,8 +33,8 @@ class ParticipantRepository extends ServiceEntityRepository
 
         if ($searchPhrase != "") {
             $qb->andWhere('
-                    p.nom LIKE :search
-                    OR p.prenom LIKE :search
+                    p.code LIKE :search
+                    OR p.numero LIKE :search
                 ')
                 ->setParameter('search', '%' . $searchPhrase . '%');
         }
@@ -43,7 +43,7 @@ class ParticipantRepository extends ServiceEntityRepository
                 $qb->orderBy('p.' . $key, $value);
             }
         } else {
-            $qb->orderBy('p.nom', 'ASC');
+            $qb->orderBy('p.numero', 'ASC');
         }
         return $qb;
     }

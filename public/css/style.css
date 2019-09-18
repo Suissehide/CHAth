@@ -309,6 +309,10 @@ iframe {
     margin-bottom: 16px;
 }
 
+.wrap-sm {
+    margin-bottom: 0;
+}
+
 /*---------------------------------------------*/
 
 .input {

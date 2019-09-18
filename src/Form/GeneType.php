@@ -16,10 +16,14 @@ class GeneType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
-                'label' => ' ',
-                'required' => false,
-            ))
+            // ->add('nom', TextareaType::class, array(
+            //     'label' => ' ',
+            //     'empty_data' => '',
+            //     'attr' => array(
+            //         'readonly' => true,
+            //     ),
+            //     'required' => false,
+            // ))
             ->add('statut', ChoiceType::class, array(
                 'label' => ' ',
                 'expanded' => true,

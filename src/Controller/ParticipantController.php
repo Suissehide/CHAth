@@ -85,7 +85,7 @@ class ParticipantController extends AbstractController
         $qcm->setReponse("Oui");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
-        $qcm->setQuestion("Signature du consentement éclairé, Date ");
+        $qcm->setQuestion("Signature du consentement éclairé");
         $qcm->setReponse("Oui");
         $pack->addQcm($qcm);
 
@@ -293,34 +293,34 @@ class ParticipantController extends AbstractController
         $pack = new Pack();
 
         $gene = new Gene();
-        $gene->setName("TET2");
+        $gene->setNom("TET2");
         $pack->addGene($gene);
         $gene = new Gene();
-        $gene->setName("ASXL1");
+        $gene->setNom("ASXL1");
         $pack->addGene($gene);
         $gene = new Gene();
-        $gene->setName("DNMT3A");
+        $gene->setNom("DNMT3A");
         $pack->addGene($gene);
         $gene = new Gene();
-        $gene->setName("SF3B1");
+        $gene->setNom("SF3B1");
         $pack->addGene($gene);
         $gene = new Gene();
-        $gene->setName("TP53");
+        $gene->setNom("TP53");
         $pack->addGene($gene);
         $gene = new Gene();
-        $gene->setName("CBL");
+        $gene->setNom("CBL");
         $pack->addGene($gene);
         $gene = new Gene();
-        $gene->setName("SRSF2");
+        $gene->setNom("SRSF2");
         $pack->addGene($gene);
         $gene = new Gene();
-        $gene->setName("PPM1D");
+        $gene->setNom("PPM1D");
         $pack->addGene($gene);
         $gene = new Gene();
-        $gene->setName("GNB1");
+        $gene->setNom("GNB1");
         $pack->addGene($gene);
         $gene = new Gene();
-        $gene->setName("JAK2V617F");
+        $gene->setNom("JAK2V617F");
         $pack->addGene($gene);
 
         $donnee->setGenes($pack);
