@@ -71,17 +71,21 @@
 
                     <div class="row">
                         <div class="col-md-8">
-                            {{ form_row(psw.plainPassword.first, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
+                            <div class="wrap-input">
+                                {{ form_row(psw.plainPassword.first, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            {{ form_row(psw.plainPassword.second, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
+                            <div class="wrap-input">
+                                {{ form_row(psw.plainPassword.second, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <button id="password_form_edit" name="password_form[edit]" class="form-btn" type="submit">
+                            <button class="form-btn" id="password_form_edit" name="password_form[edit]" type="submit">
                                 <i aria-hidden="true" class="fa fa-pen"></i>Modifier le mot de passe</button>
                         </div>
                     </div>
