@@ -49,6 +49,11 @@ class Participant
     private $verification;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\General", inversedBy="participant", cascade={"persist", "remove"})
+     */
+    private $general;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", inversedBy="participant", cascade={"persist", "remove"})
      */
     private $cardiovasculaire;
@@ -167,6 +172,18 @@ class Participant
     public function setVerification(?Verification $verification): self
     {
         $this->verification = $verification;
+
+        return $this;
+    }
+
+    public function getGeneral(): ?General
+    {
+        return $this->general;
+    }
+
+    public function setGeneral(?General $general): self
+    {
+        $this->general = $general;
 
         return $this;
     }

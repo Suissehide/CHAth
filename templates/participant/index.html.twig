@@ -72,6 +72,16 @@
                         <ul>
                             <li><a href='#inclusion'>Critères d'inclusion</a></li>
                             <li><a href='#non-inclusion'>Critères de non inclusion</a></li>
+                        </ul>
+                    </li>
+                    <li class='sub-menu'>
+                        <a href='#general'>
+                            <div class="menu-title">
+                            <div class='fa fa-stethoscope'></div>
+                            Informations générales</div>
+                            <div class='fa fa-caret-down right'></div>
+                        </a>
+                        <ul>
                             <li><a href='#info'>Informations générales</a></li>
                         </ul>
                     </li>
@@ -105,7 +115,7 @@
                         <a href='#evenement'>
                         <div class="menu-title">
                             <div class='fa fa-notes-medical'></div>
-                            Données à 6 mois de l'événement</div>
+                            Données à 3 mois (± 1 mois) de l'événement</div>
                             <div class='fa fa-caret-down right'></div>
                         </a>
                         <ul>
@@ -172,48 +182,65 @@
                     {% endfor %}
                 </div>
 
-                <h3 id="info">Informations générales</h3>
-                <div class="form-space">
-                    {{ form_row(formVerification.age, {
-                            'attr': {'class': 'input', 'autocomplete' : 'off'},
-                            'useStyle': true,
-                        })
-                    }}
-                    {{ form_row(formVerification.sexe, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(formVerification.date_naissance, {'attr': {'class': 'input js-birthday', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(formVerification.taille, {
-                            'attr': {'class': 'input', 'autocomplete' : 'off'},
-                            'useStyle': true,
-                        })
-                    }}
-                    {{ form_row(formVerification.poids, {
-                            'attr': {'class': 'input', 'autocomplete' : 'off'},
-                            'useStyle': true,
-                        })
-                    }}
-                    {{ form_row(formVerification.imc, {
-                            'attr': {'class': 'input', 'autocomplete' : 'off'},
-                            'useStyle': true,
-                        })
-                    }}
-                    {{ form_row(formVerification.systolique, {
-                            'attr': {'class': 'input', 'autocomplete' : 'off'},
-                            'useStyle': true,
-                        })
-                    }}
-                    {{ form_row(formVerification.diastolique, {
-                            'attr': {'class': 'input', 'autocomplete' : 'off'},
-                            'useStyle': true,
-                        })
-                    }}
-                </div>
-
                 {{ form_row(formVerification.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
 
             </section>
 
             {{ form_row(formVerification._token) }}
             {{ form_end(formVerification, {'render_rest' : false}) }}
+
+            {# GENERAL #}
+
+            {{ form_start(formGeneral, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+            {{ form_errors(formGeneral) }}
+
+            {% form_theme formGeneral 'form-theme.html.twig' %}
+
+            <section class="slide" id="tab-general">
+                <h1 id="general">Informations générales</h1>
+
+                <h3 id="info">Informations générales</h3>
+                <div class="form-space">
+                    {{ form_row(formGeneral.age, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+                    {{ form_row(formGeneral.sexe, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
+                    {{ form_row(formGeneral.date_naissance, {'attr': {'class': 'input js-birthday', 'autocomplete' : 'off'} }) }}
+                    {{ form_row(formGeneral.taille, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+                    {{ form_row(formGeneral.poids, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+                    {{ form_row(formGeneral.imc, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+                    {{ form_row(formGeneral.systolique, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+                    {{ form_row(formGeneral.diastolique, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+                </div>
+
+                {{ form_row(formGeneral.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+
+            </section>
+
+            {{ form_row(formGeneral._token) }}
+            {{ form_end(formGeneral, {'render_rest' : false}) }}
 
             {# CARDIOVASCULAIRE #}
 
@@ -401,7 +428,7 @@
             {% form_theme formDonnee 'form-theme.html.twig' %}
 
             <section class="slide" id="tab-evenement">
-                <h1 id="evenement">Données à 6 mois de l'événement</h1>
+                <h1 id="evenement">Données à 3 mois (± 1 mois) de l'événement</h1>
                 <div class="form-space">
                 {{ form_row(formDonnee.dateVisite, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
                 </div>
@@ -863,6 +890,16 @@
                 width: "toggle"
             }, {duration: 500});
         })
+    </script>
+
+    <script>
+
+    class ErreurForm {
+        constructor() {
+            
+        }
+    }
+
     </script>
 
 {% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Entity\Verification;
+use App\Entity\General;
 use App\Entity\Qcm;
 use App\Entity\Gene;
 use App\Entity\Pack;
@@ -13,6 +14,7 @@ use App\Entity\Information;
 
 use App\Form\ParticipantType;
 use App\Form\VerificationType;
+use App\Form\GeneralType;
 use App\Form\CardiovasculaireType;
 use App\Form\DecesType;
 use App\Form\InformationType;
@@ -358,6 +360,17 @@ class ParticipantController extends AbstractController
             return $this->redirect($request->getUri());
         }
 
+        $general = $participant->getGeneral();
+        $formGeneral = $this->createForm(GeneralType::class, $general);
+        $formGeneral->handleRequest($request);
+        if ($formGeneral->isSubmitted() && $formGeneral->isValid()) {
+            if ($formGeneral->get('save')->isClicked()) {
+                $participant = $formGeneral->getData();
+                $em->flush();
+            }
+            return $this->redirect($request->getUri());
+        }
+
         $cardiovasculaire = $participant->getCardiovasculaire();
         $formCardiovasculaire = $this->createForm(CardiovasculaireType::class, $cardiovasculaire);
         $formCardiovasculaire->handleRequest($request);
@@ -408,6 +421,7 @@ class ParticipantController extends AbstractController
             'participant' => $participant,
             'form' => $form->createView(),
             'formVerification' => $formVerification->createView(),
+            'formGeneral' => $formGeneral->createView(),
             'formCardiovasculaire' => $formCardiovasculaire->createView(),
             'formInformation' => $formInformation->createView(),
             'formDonnee' => $formDonnee->createView(),

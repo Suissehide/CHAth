@@ -217,7 +217,7 @@
                             <div class="wrap-input wrap-sm">
                                 <label for="verification_date">
                                     <span></span>
-                                    <em>Date</em>
+                                    <em>Date de signature du consentement éclairé</em>
                                 </label>
                                 <input type="text" id="verification_date" name="verification[date]" placeholder="dd/mm/yyyy" class="input js-datepicker" autocomplete="off">
                                 <span class="focus-input"></span>
@@ -610,92 +610,107 @@
 
                 {{ form_row(form._token) }}
                 {{ form_end(form, {'render_rest' : false}) }}
-            </section</div>
+            </section>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}
 
-    {% block javascripts %}
-        <script>
-            $('li:eq(2)').addClass('active');
+{% block javascripts %}
+    <script>
+        $('li:eq(2)').addClass('active');
 
-            $('ul li').on('click', function () {
-                $('li').removeClass('active');
-                $(this).addClass('active');
-            });
+        $('ul li').on('click', function () {
+            $('li').removeClass('active');
+            $(this).addClass('active');
+        });
 
-            $('input[readonly]').next('span').remove();
+        $('input[readonly]').next('span').remove();
 
-            function disableButton() {
-                if (!$("#participant_validation").is(":disabled")) {
-                    $("#participant_validation").prop("disabled", true);
-                    $("#participant_code").val('');
-                    $('#participant_code').css({'border-color': '#d63b53'})
-                    var msg = `<span class="invalid-feedback">
+        function disableButton() {
+            if (!$("#participant_validation").is(":disabled")) {
+                $("#participant_validation").prop("disabled", true);
+                $("#participant_code").val('');
+                $('#participant_code').css({'border-color': '#d63b53'})
+                var msg = `<span class="invalid-feedback">
                                 <span class="initialism badge badge-danger">Error</span>
                                 <span class="form-error-message">Veuillez renseigner un nom et prénom (2 charactères minimum).</span>
                             </span>`;
-                    $("#participant_code").addClass('is-invalid').after(msg);
-                }
+                $("#participant_code").addClass('is-invalid').after(msg);
             }
-            disableButton();
+        }
+        disableButton();
 
-            $(":input").on('input propertychange', function () {
-                var nom = $('#participant_nom').val();
-                var prenom = $('#participant_prenom').val();
-                var ligne = $('#participant_ligne').val();
-                if (! nom || ! prenom || nom.length < 2 || prenom.length < 2) 
-                    return disableButton();
+        $(":input").on('input propertychange', function () {
+            var nom = $('#participant_nom').val();
+            var prenom = $('#participant_prenom').val();
+            var ligne = $('#participant_ligne').val();
+            if (! nom || ! prenom || nom.length < 2 || prenom.length < 2) 
+                return disableButton();
+            
 
-                $.ajax({
-                    url: "{{ path( 'participant_code_generate' ) }}",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        "nom": nom,
-                        "prenom": prenom,
-                        "ligne": ligne
-                    },
-                    success: function (resp) {
-                        if (resp == '') 
-                            return disableButton();
-                        $('#participant_code').val(resp);
-                        $('#participant_code').css({'border-color': 'forestgreen'})
-                        $("#participant_validation").prop("disabled", false);
-                        $('.invalid-feedback').remove();
-                    }
-                });
+
+            $.ajax({
+                url: "{{ path( 'participant_code_generate' ) }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "nom": nom,
+                    "prenom": prenom,
+                    "ligne": ligne
+                },
+                success: function (resp) {
+                    if (resp == '') 
+                        return disableButton();
+                    
+
+                    $('#participant_code').val(resp);
+                    $('#participant_code').css({'border-color': 'forestgreen'})
+                    $("#participant_validation").prop("disabled", false);
+                    $('.invalid-feedback').remove();
+                }
             });
-        </script>
+        });
+    </script>
 
-        <script>
-            function isValid() {
-                let inclusion = 1;
-                let non_inclusion = 1;
-                $('#cb0').prop('checked', true);
-                $('section').css({'display': 'block'});
-                $('#inclusion-qcm .qcm-row').each(function (e) {
-                    var radioValue = $(this).find('input:checked').val();
-                    console.log(radioValue);
-                    if (radioValue != "Oui") {
-                        inclusion = 0;
-                        return;
-                    }
-                });
-                $('#non-inclusion-qcm .qcm-row').each(function (e) {
-                    var radioValue = $(this).find('input:checked').val();
-                    if (radioValue != "Non") {
-                        non_inclusion = 0;
-                        return;
-                    }
-                });
-                if (! inclusion || ! non_inclusion) {
-                    $('#cb0').prop('checked', false);
-                    $('section').css({'display': 'none'});
+    <script>
+        // date js
+        jQuery(document).ready(function () {
+            $('.js-datepicker').datepicker({
+                language: 'fr',
+                clearButton: true,
+                onSelect: function (formattedDate, date, inst) {
+                    isValid();
                 }
+            });
+        });
+
+        function isValid() {
+            let inclusion = 1;
+            let non_inclusion = 1;
+            $('#cb0').prop('checked', true);
+            $('section').css({'display': 'block'});
+            $('#inclusion-qcm .qcm-row').each(function (e) {
+                var radioValue = $(this).find('input:checked').val();
+                if (radioValue != "Oui") {
+                    inclusion = 0;
+                    return;
+                }
+            });
+            $('#non-inclusion-qcm .qcm-row').each(function (e) {
+                var radioValue = $(this).find('input:checked').val();
+                if (radioValue != "Non") {
+                    non_inclusion = 0;
+                    return;
+                }
+            });
+            if (! inclusion || ! non_inclusion || $('#verification_date').val() == '') {
+                $('#cb0').prop('checked', false);
+                $('section').css({'display': 'none'});
             }
+        }
+        isValid();
+        $('main .qcm-row input').change(function () {
             isValid();
-            $('main .qcm-row input').change(function () {
-                isValid();
-            });
-        </script>
-    {% endblock %}
+        });
+    </script>
+{% endblock %}

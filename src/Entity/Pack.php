@@ -32,7 +32,7 @@ class Pack
     {
         $this->qcm = new ArrayCollection();
         $this->genes = new ArrayCollection();
-    }
+    } 
 
     public function getId(): ?int
     {

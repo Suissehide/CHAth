@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Participant;
 use App\Form\VerificationType;
+use App\Form\GeneralType;
 use App\Form\CardiovasculaireType;
 use App\Form\InformationType;
 use App\Form\DecesType;
@@ -54,6 +55,10 @@ class ParticipantType extends AbstractType
 
             ->add('verification', VerificationType::class, array(
                 'label' => 'Vérification'
+            ))
+
+            ->add('general', GeneralType::class, array(
+                'label' => 'Générales'
             ))
 
             ->add('cardiovasculaire', CardiovasculaireType::class, array(
