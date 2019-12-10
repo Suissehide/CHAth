@@ -40,7 +40,7 @@
                         <th data-column-id="email">Email</th>
                         <th data-column-id="nom">Nom</th>
                         <th data-column-id="prenom">Prénom</th>
-                        <th data-column-id="roles" data-formatter="roles">Roles</th>
+                        <th data-column-id="roles" data-formatter="roles" data-sortable="false">Roles</th>
                         {# <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">Actions</th> #}
                     </tr>
                 </thead>
@@ -116,7 +116,7 @@
     </script>
 
     <script>
-        alert_pos = 10;
+        alert_pos = 11;
 
         function modal_event(row) {
             let id = row.data("row-id");
@@ -189,7 +189,7 @@
 
         var grid = $("#data-grid").bootgrid({
             rowCount: [
-                -1, 10, 20, 50
+                20, 50, 100, -1
             ],
             columnSelection: false,
             ajax: true,
