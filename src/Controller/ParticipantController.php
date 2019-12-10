@@ -487,8 +487,6 @@ class ParticipantController extends AbstractController
      */
     public function delete(Request $request, Participant $participant) : Response
     {
-        dump($this->isCsrfTokenValid('delete' . $participant->getId(), $request->request->get('_token')));
-        
         if ($this->isCsrfTokenValid('delete' . $participant->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($participant);
