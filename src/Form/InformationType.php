@@ -16,7 +16,7 @@ class InformationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date_survenue', DateType::class, array(
+            ->add('dateSurvenue', DateType::class, array(
                 'label' => 'Date de survenue',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',

@@ -8,37 +8,44 @@
         <div class="wrap-login">
 
             {{ form_start(form, {'attr': {'class': 'login-form validate-form', 'autocomplete' : 'off'} }) }}
-            {{ form_errors(form) }}
 
-                <span class="login-form-title">
-                    Inscription
-                </span>
+            {% if errors %}
+                <ul class="alert alert-danger">
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <span class="login-form-title">
+                Inscription
+            </span>
 
             <div class="wrap-input validate-input">
-                {{ form_widget(form.email, {'attr': {'autofocus' : true, 'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_widget(form.email, {'attr': {'autofocus' : true, 'class': 'input', 'autocomplete' : 'email'} }) }}
                 <span class="focus-input"></span>
             </div>
 
             <div class="wrap-input validate-input">
-                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_widget(form.plainPassword.first, {'attr': {'class': 'input', 'autocomplete' : 'new-password'} }) }}
                 <span class="focus-input"></span>
             </div>
 
             <div class="wrap-input validate-input">
-                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                {{ form_widget(form.plainPassword.second, {'attr': {'class': 'input', 'autocomplete' : 'confirm-password'} }) }}
                 <span class="focus-input"></span>
             </div>
 
             <div class="container-login-form-btn">
                 {{ form_widget(form.save, {'attr': {'class': 'login-form-btn'} }) }}
             </div>
-            
+
             <div class="txt-register">
                 <a class="txt1" href="{{ url('login') }}">
                     Connexion
                 </a>
             </div>
-            
+
             {{ form_row(form._token) }}
             {{ form_end(form, {'render_rest' : false}) }}
 

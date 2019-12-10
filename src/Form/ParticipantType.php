@@ -21,24 +21,12 @@ class ParticipantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class, array(
-                'label' => 'Nom',
-                'required' => true,
-            ))
-            ->add('prenom', TextType::class, array(
-                'label' => 'Prénom',
-                'required' => true,
-            ))
             ->add('code', TextType::class, array(
                 'label' => 'Code',
                 'required' => true,
-                'attr' => array(
-                    'readonly' => true,
-                ),
-            ))
-            ->add('numero', TextType::class, array(
-                'label' => 'Numéro',
-                'required' => true,
+                // 'attr' => array(
+                //     'readonly' => true,
+                // ),
             ))
 
             // ->add('verification', EntityType::class, array(

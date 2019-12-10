@@ -256,10 +256,16 @@ input[readonly]:focus {
 
 .form-btn .fa {
     margin-right: 10px;
+    color: white;
+}
+
+.form-btn.btn-default .fa {
+    color: #07a8a0;
 }
 
 .form-btn:disabled {
     background-color: #1a535c;
+    cursor: not-allowed;
 }
 
 .container-form-btn {
@@ -510,6 +516,10 @@ main h3 {
     color: #f4f9f7;
 }
 
+.waiting {
+    margin-bottom: 15px;
+}
+
 .qcm {
     margin-bottom: 40px;
 }
@@ -571,7 +581,7 @@ main h3 {
 }
 
 .tag-yellow {
-    background: coral;
+    background: #ccc;
 }
 
 .tag-green {
@@ -580,6 +590,11 @@ main h3 {
 
 .tag-red {
     background: #d63b53;
+}
+
+.striped {
+    background: repeating-linear-gradient( 45deg, #f8f6ff, #f8f6ff 10px, #fff 10px, #fff 20px);
+    cursor: not-allowed !important;
 }
 
 /* ========= Modal ========= */
@@ -607,7 +622,6 @@ main h3 {
 }
 
 .modal-body span {
-    font-family: Ubuntu-bold;
     color: #07a8a0;
 }
 

@@ -28,7 +28,7 @@ class DecesType extends AbstractType
             ))
 
             ->add('causePrincipale', TextType::class, array(
-                'label' => ' ',
+                'label' => 'Cause',
                 'required' => false,
             ))
             ->add('codagePrincipal', NumberType::class, array(
@@ -37,7 +37,7 @@ class DecesType extends AbstractType
             ))
 
             ->add('causeSecondaire', TextType::class, array(
-                'label' => ' ',
+                'label' => 'Cause',
                 'required' => false,
             ))
             ->add('codageSecondaire', NumberType::class, array(

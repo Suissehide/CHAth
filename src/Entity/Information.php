@@ -19,7 +19,7 @@ class Information
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $date_survenue;
+    private $dateSurvenue;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
@@ -98,12 +98,12 @@ class Information
 
     public function getDateSurvenue(): ?\DateTimeInterface
     {
-        return $this->date_survenue;
+        return $this->dateSurvenue;
     }
 
-    public function setDateSurvenue(?\DateTimeInterface $date_survenue): self
+    public function setDateSurvenue(?\DateTimeInterface $dateSurvenue): self
     {
-        $this->date_survenue = $date_survenue;
+        $this->dateSurvenue = $dateSurvenue;
 
         return $this;
     }

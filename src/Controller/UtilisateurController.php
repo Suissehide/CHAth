@@ -61,30 +61,41 @@ class UtilisateurController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $session = $request->getSession();
         $user = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $user);
         $form->handleRequest($request);
+        $errors = [];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('save')->isClicked()) {
-                $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($password);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
-
-                $session->getFlashBag()->add('success', 'Félicitations ! Votre compte a été créé avec succès !');
-                return $this->redirectToRoute('login');
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                if ($form->get('save')->isClicked()) {
+                    $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                    $user->setPassword($password);
+                    $user->setRoles(['ROLE_GUEST']);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($user);
+                    $em->flush();
+                    $this->addFlash('notice', 'Félicitations ! Votre compte a été créé avec succès !');
+                    return $this->redirectToRoute('login');
+                }
+            } else {
+                foreach ($form->getErrors(true) as $error) {
+                    $errors[] = $error->getMessage();
+                }
+                if (strcmp($form->get('plainPassword')->get('first')->getData(), $form->get('plainPassword')->get('second')->getData()))
+                    $errors[] = 'Les deux mots de passe ne sont pas identiques.';
+                if (($key = array_search('This value is not valid.', $errors)) !== false)
+                    unset($errors[$key]);
             }
         }
         return $this->render('utilisateur/register.html.twig', [
             'controller_name' => 'RegisterController',
             'form' => $form->createView(),
+            'errors' => $errors,
         ]);
     }
 
-    /**
+    /** 
      * @Route("/guest", name="guest")
      */
     public function guest()
@@ -94,26 +105,31 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/utilisateur/ajax", name="utilisateur_roles_edit")
      */
-    public function roles_edit(UtilisateurRepository $utilisateurRepository, Request $request): JsonResponse
+    public function roles_edit(UtilisateurRepository $utilisateurRepository, Request $request, AuthorizationCheckerInterface $authChecker): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
 
-        if ($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest() && true === $authChecker->isGranted('ROLE_ADMIN')) {
             $email = $request->request->get('email');
+            $nom = $request->request->get('nom');
+            $prenom = $request->request->get('prenom');
             $roles = $request->request->get('roles');
 
             $utilisateur = $utilisateurRepository->findOneBy(['email' => $email]);
-            if ($roles == "Invité")
-                $utilisateur->setRoles(["ROLE_GUEST"]);
-            else if ($roles == "Utilisateur")
-                $utilisateur->setRoles(["ROLE_USER"]);
-            else if ($roles == "Administrateur")
-                $utilisateur->setRoles(["ROLE_ADMIN"]);
-            $em->flush();
+            if ($utilisateur) {
+                if ($roles == "Invité")
+                    $utilisateur->setRoles(["ROLE_GUEST"]);
+                else if ($roles == "Utilisateur")
+                    $utilisateur->setRoles(["ROLE_USER"]);
+                else if ($roles == "Administrateur")
+                    $utilisateur->setRoles(["ROLE_ADMIN"]);
+                $utilisateur->setNom($nom);
+                $utilisateur->setPrenom($prenom);
+                $em->flush();
+            }
             return new JsonResponse();
         }
     }
@@ -128,13 +144,13 @@ class UtilisateurController extends AbstractController
             $rowCount = $request->request->get('rowCount');
             $searchPhrase = $request->request->get('searchPhrase');
             $sort = $request->request->get('sort');
+            $roles = $request->request->get('roles');
 
-            $utilisateurs = $utilisateurRepository->findByFilter($sort, $searchPhrase);
-            if ($searchPhrase != "") {
+            $utilisateurs = $utilisateurRepository->findByFilter($sort, $searchPhrase, $roles);
+            if ($searchPhrase != "" || !empty($roles))
                 $count = count($utilisateurs->getQuery()->getResult());
-            } else {
+            else
                 $count = $utilisateurRepository->compte();
-            }
             if ($rowCount != -1) {
                 $min = ($current - 1) * $rowCount;
                 $max = $rowCount;
@@ -143,12 +159,14 @@ class UtilisateurController extends AbstractController
             $utilisateurs = $utilisateurs->getQuery()->getResult();
             $rows = array();
             foreach ($utilisateurs as $utilisateur) {
+                $status = $this->getUser()->getId() == $utilisateur->getId() ? 1 : 0;
                 $row = array(
                     "id" => $utilisateur->getId(),
                     "nom" => $utilisateur->getNom(),
                     "prenom" => $utilisateur->getPrenom(),
                     "email" => $utilisateur->getEmail(),
                     "roles" => $utilisateur->getRoles(),
+                    "status" => $status,
                 );
                 array_push($rows, $row);
             }
@@ -164,6 +182,7 @@ class UtilisateurController extends AbstractController
 
         return $this->render('utilisateur/list.html.twig', [
             'controller_name' => 'ListController',
+            'id' => $this->getUser()->getId(),
         ]);
     }
 
@@ -172,13 +191,12 @@ class UtilisateurController extends AbstractController
      */
     public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-
         $user = $this->getUser();
         $roles = $user->getRoles();
-        $form = $this->createForm(UtilisateurType::class, $user);
-        $psw = $this->createForm(PasswordFormType::class, $user);
         $em = $this->getDoctrine()->getManager();
+        $errors = [];
 
+        $form = $this->createForm(UtilisateurType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('save')->isClicked()) {
@@ -190,17 +208,28 @@ class UtilisateurController extends AbstractController
             return $this->redirectToRoute('utilisateur_edit');
         }
 
+        $psw = $this->createForm(PasswordFormType::class, $user);
         $psw->handleRequest($request);
         if ($psw->isSubmitted() && $psw->isValid()) {
-            if ($psw->get('edit')->isClicked()) {
+            $oldPassword = $request->request->get('password_form')['oldPassword'];
+            if ($psw->get('edit')->isClicked() && $passwordEncoder->isPasswordValid($user, $oldPassword)) {
                 $user = $form->getData();
                 $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
                 $user->setRoles($roles);
+
                 $em->persist($user);
                 $em->flush();
+
+                $this->addFlash('notice', 'Votre mot de passe à bien été changé !');
+
+                return $this->redirectToRoute('utilisateur_edit');
+            } else {
+                $errors[] = 'Ancien mot de passe incorrect.';
+                foreach ($form->getErrors(true) as $error) {
+                    $errors[] = $error->getMessage();
+                }
             }
-            return $this->redirectToRoute('utilisateur_edit');
         }
 
         return $this->render('utilisateur/edit.html.twig', [
@@ -208,6 +237,7 @@ class UtilisateurController extends AbstractController
             'user' => $user,
             'form' => $form->createView(),
             'psw' => $psw->createView(),
+            'errors' => $errors,
         ]);
     }
 
@@ -216,7 +246,6 @@ class UtilisateurController extends AbstractController
      */
     public function onAuthenticationSuccess(UrlGeneratorInterface $router, AuthorizationCheckerInterface $authChecker)
     {
-
         if (true === $authChecker->isGranted('ROLE_GUEST')) {
             // c'est un aministrateur : on le rediriger vers l'espace admin
             $redirection = new RedirectResponse($router->generate('guest'));
@@ -246,5 +275,4 @@ class UtilisateurController extends AbstractController
 
     }
     */
-
 }

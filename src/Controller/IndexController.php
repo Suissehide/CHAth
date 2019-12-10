@@ -38,16 +38,17 @@ class IndexController extends AbstractController
             $participants = $participants->getQuery()->getResult();
             $rows = array();
             foreach ($participants as $participant) {
-                $observ = $participant->getNumero() ? 1 : 0;
+                // $observ = $participant->getNumero() ? 1 : 0;
+                $observ = 0;
                 $sortie = 0;
                 if ($participant->getCode())
                     $sortie = 1;
                 $row = array(
                     "id" => $participant->getId(),
-                    "nom" => $participant->getNom(),
-                    "prenom" => $participant->getPrenom(),
                     "code" => $participant->getCode(),
-                    "numero" => $participant->getNumero(),
+                    "consentement" => $participant->getVerification()->getDate()->format('d/m/Y'),
+                    "evenement" => $participant->getInformation()->getDateSurvenue() ? $participant->getInformation()->getDateSurvenue()->format('d/m/Y') : '',
+                    "inclusion" => $participant->getDonnee()->getDateVisite() ? $participant->getDonnee()->getDateVisite()->format('d/m/Y') : '',
                     "status" => $sortie,
                     "observ" => $observ,
                 );

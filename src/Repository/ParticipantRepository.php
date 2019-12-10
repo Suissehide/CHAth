@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Participant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
  * @method Participant|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ParticipantRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Participant::class);
     }
@@ -30,20 +30,32 @@ class ParticipantRepository extends ServiceEntityRepository
     public function findByFilter($sort, $searchPhrase)
     {
         $qb = $this->createQueryBuilder('p');
+        $qb->leftJoin('p.verification', 'v');
+        $qb->leftJoin('p.information', 'i');
+        $qb->leftJoin('p.donnee', 'd');
 
         if ($searchPhrase != "") {
             $qb->andWhere('
                     p.code LIKE :search
-                    OR p.numero LIKE :search
+                    OR v.date LIKE :search
+                    OR i.dateSurvenue LIKE :search
+                    OR d.dateVisite LIKE :search
                 ')
                 ->setParameter('search', '%' . $searchPhrase . '%');
         }
         if ($sort) {
             foreach ($sort as $key => $value) {
-                $qb->orderBy('p.' . $key, $value);
+                if ($key == 'consentement')
+                    $qb->orderBy('v.date', $value);
+                else if ($key == 'evenement')
+                    $qb->orderBy('i.dateSurvenue', $value);
+                else if ($key == 'inclusion')
+                    $qb->orderBy('d.dateVisite', $value);
+                else
+                    $qb->orderBy('p.' . $key, $value);
             }
         } else {
-            $qb->orderBy('p.numero', 'ASC');
+            $qb->orderBy('p.code', 'ASC');
         }
         return $qb;
     }

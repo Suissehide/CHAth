@@ -17,6 +17,21 @@
             Liste des utilisateurs
         </div>
 
+        <div class="form_checkbox_group">
+            <div class="form_checkbox_group-item">
+                <input id="checkbox-1" type="checkbox" name="checkbox" value="ROLE_GUEST" checked>
+                <label for="checkbox-1">Invité</label>
+            </div>
+            <div class="form_checkbox_group-item">
+                <input id="checkbox-2" type="checkbox" name="checkbox" value="ROLE_USER" checked>
+                <label for="checkbox-2">Utilisateur</label>
+            </div>
+            <div class="form_checkbox_group-item">
+                <input id="checkbox-3" type="checkbox" name="checkbox" value="ROLE_ADMIN" checked>
+                <label for="checkbox-3">Administrateur</label>
+            </div>
+        </div>
+
         <div class="table-wrapper">
             <table cellspacing="0" class="table table-condensed table-hover table-striped" id="data-grid">
                 <thead>
@@ -33,56 +48,59 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+    {% if is_granted('ROLE_ADMIN') %}
+        <!-- Modal -->
+        <div id="modal" class="modal fade" role="dialog">
+            <div
+                class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">
-                        Modifier un utilisateur
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    <form class="container-form">
-                        <div class="wrap-input">
-                            <label for="utilisateur_email" class="required">Email</label>
-                            <input type="text" id="utilisateur_email" name="utilisateur[email]" required="required" readonly="readonly" class="input" autocomplete="off">
-                        </div>
-                        <div class="wrap-input">
-                            <label for="utilisateur_nom" class="required">Nom</label>
-                            <input type="text" id="utilisateur_nom" name="utilisateur[nom]" required="required" readonly="readonly" class="input" autocomplete="off">
-                        </div>
-                        <div class="wrap-input">
-                            <label for="utilisateur_prenom" class="required">Prénom</label>
-                            <input type="text" id="utilisateur_prenom" name="utilisateur[prenom]" required="required" readonly="readonly" class="input" autocomplete="off">
-                        </div>
-                        <div class="wrap-input">
-                            <label for="utilisateur_roles">Roles</label>
-                            <select id="utilisateur_roles" name="utilisateur[roles]" class="input">
-                                <option value="Invité">Invité</option>
-                                <option value="Utilisateur">Utilisateur</option>
-                                <option value="Administrateur">Administrateur</option>
-                            </select>
-                            <span class="focus-input"></span>
-                        </div>
-                        <div class="form-btn-container">
-                            <button class="form-btn btn-default" data-dismiss="modal">
-                                <span class="fa fa-times"></span>
-                                Annuler
-                            </button>
-                            <button id="edit" class="form-btn" data-dismiss="modal">
-                                <span class="fa fa-pencil-alt"></span>
-                                Modifier
-                            </button>
-                        </div>
-                    </form>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">
+                            Modifier un utilisateur
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="container-form">
+                            <div class="wrap-input">
+                                <label class="required" for="utilisateur_email">Email</label>
+                                <input autocomplete="off" class="input" id="utilisateur_email" name="utilisateur[email]" readonly="readonly" required="required" type="text">
+                            </div>
+                            <div class="wrap-input">
+                                <label class="required" for="utilisateur_nom">Nom</label>
+                                <input autocomplete="off" class="input" id="utilisateur_nom" name="utilisateur[nom]" type="text">
+                            </div>
+                            <div class="wrap-input">
+                                <label class="required" for="utilisateur_prenom">Prénom</label>
+                                <input autocomplete="off" class="input" id="utilisateur_prenom" name="utilisateur[prenom]" type="text">
+                            </div>
+                            <div class="wrap-input">
+                                <label for="utilisateur_roles">Roles</label>
+                                <select class="input" id="utilisateur_roles" name="utilisateur[roles]">
+                                    <option value="Invité">Invité</option>
+                                    <option value="Utilisateur">Utilisateur</option>
+                                    <option value="Administrateur">Administrateur</option>
+                                </select>
+                                <span class="focus-input"></span>
+                            </div>
+                            <div class="form-btn-container">
+                                <button class="form-btn btn-default" data-dismiss="modal">
+                                    <span class="fa fa-times"></span>
+                                    Annuler
+                                </button>
+                                <button class="form-btn" data-dismiss="modal" id="edit">
+                                    <span class="fa fa-pencil-alt"></span>
+                                    Modifier
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 
 {% endblock %}
 
@@ -91,7 +109,7 @@
     <script>
         $('li:eq(3)').addClass('active');
 
-        $('ul li').on('click', function() {
+        $('ul li').on('click', function () {
             $('li').removeClass('active');
             $(this).addClass('active');
         });
@@ -102,8 +120,9 @@
 
         function modal_event(row) {
             let id = row.data("row-id");
-            if (id == undefined)
+            if (id == undefined) 
                 return;
+            
             $('#utilisateur_email').val(row.find('td').eq(0).text());
             $('#utilisateur_nom').val(row.find('td').eq(1).text());
             $('#utilisateur_prenom').val(row.find('td').eq(2).text());
@@ -113,25 +132,60 @@
 
         $("#edit").on('click', function (e) {
             e.preventDefault();
-            var email = $('#utilisateur_email').val();
-            var roles = $('#utilisateur_roles').val();
+            let email = $('#utilisateur_email').val();
+            let roles = $('#utilisateur_roles').val();
+            let prenom = $('#utilisateur_prenom').val();
+            let nom = $('#utilisateur_nom').val();
             $.ajax({
                 url: "{{ path( 'utilisateur_roles_edit' ) }}",
                 type: "POST",
                 dataType: "json",
                 data: {
                     "email": email,
+                    "prenom": prenom,
+                    "nom": nom,
                     "roles": roles,
                 },
                 success: function (resp) {
-                    $('body').prepend(
-                        '<div class="row alerte alert-success text-center box-shadow" style="top:' + alert_pos + 'px;"><span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>Modification effectuée !</div>'
-                    );
-                    alert_pos += 72;
+                    $('body').prepend(`<div class="toast toast--green" style="top:` + alert_pos + `px;">
+                            <div class="toast__icon">
+                                <svg version="1.1" class="toast__svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                    <g>
+                                        <g>
+                                            <path d="M504.502,75.496c-9.997-9.998-26.205-9.998-36.204,0L161.594,382.203L43.702,264.311c-9.997-9.998-26.205-9.997-36.204,0    c-9.998,9.997-9.998,26.205,0,36.203l135.994,135.992c9.994,9.997,26.214,9.99,36.204,0L504.502,111.7    C514.5,101.703,514.499,85.494,504.502,75.496z"></path>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="toast__content">
+                                <p class="toast__type">Succès</p>
+                                <p class="toast__message">Modification effectuée !</p>
+                            </div>
+                            <div class="toast__close">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.642 15.642" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15.642 15.642">
+                                    <path fill-rule="evenodd" d="M8.882,7.821l6.541-6.541c0.293-0.293,0.293-0.768,0-1.061  c-0.293-0.293-0.768-0.293-1.061,0L7.821,6.76L1.28,0.22c-0.293-0.293-0.768-0.293-1.061,0c-0.293,0.293-0.293,0.768,0,1.061  l6.541,6.541L0.22,14.362c-0.293,0.293-0.293,0.768,0,1.061c0.147,0.146,0.338,0.22,0.53,0.22s0.384-0.073,0.53-0.22l6.541-6.541  l6.541,6.541c0.147,0.146,0.338,0.22,0.53,0.22c0.192,0,0.384-0.073,0.53-0.22c0.293-0.293,0.293-0.768,0-1.061L8.882,7.821z"></path>
+                                </svg>
+                            </div>
+                        </div>`)
+                    alert_pos += 99;
                     $("#data-grid").bootgrid('reload');
                 }
             });
         });
+
+        var roles = [];
+        getRoles();
+        function getRoles() {
+            roles = [];
+            $('.form_checkbox_group :checked').each(function() {
+                roles.push($(this).val());
+            });
+        }
+        $('.form_checkbox_group').change(function () {
+            getRoles();
+            $("#data-grid").bootgrid('reload');
+        })
+
 
         var grid = $("#data-grid").bootgrid({
             rowCount: [
@@ -140,26 +194,35 @@
             columnSelection: false,
             ajax: true,
             requestHandler: function (request) {
+                request.roles = roles;
                 return request;
             },
             url: "{{ path('utilisateur_list') }}",
             formatters: {
-                "roles": function(column, row) {
+                "roles": function (column, row) {
                     let ret = "<div>";
-                    $.each(row.roles, function(i, e) {
-                        if (e == "ROLE_GUEST")
+                    $.each(row.roles, function (i, e) {
+                        if (e == "ROLE_GUEST") 
                             ret += "<div class='tag tag-yellow'>Invité</div>"
-                        if (e == "ROLE_USER")
+                        
+                        if (e == "ROLE_USER") 
                             ret += "<div class='tag tag-green'>Utilisateur</div>"
-                        if (e == "ROLE_ADMIN")
+                        
+                        if (e == "ROLE_ADMIN") 
                             ret += "<div class='tag tag-red'>Administrateur</div>"
+                        
                     })
                     return ret + "</div>";
-                },
+                }
+            },
+            statusMapping: {
+                0: "",
+                1: "striped",
             }
-        }).on("loaded.rs.jquery.bootgrid", function() {
-            grid.find("tr").on("click", function(e) {
-                modal_event($(this), e);
+        }).on("loaded.rs.jquery.bootgrid", function () {
+            grid.find("tr").on("click", function (e) {
+                if ($(this).data("row-id") != {{ id }})
+                    modal_event($(this), e);
             });
         });
     </script>

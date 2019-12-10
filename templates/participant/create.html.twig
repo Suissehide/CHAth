@@ -26,6 +26,9 @@
 
         <div class="container-form">
 
+            {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+            {{ form_errors(form) }}
+
             <main class="slide" style="display: block">
                 <h1>Vérification des critères d'éligibilité</h1>
 
@@ -214,14 +217,7 @@
                     <div class="margin-space"></div>
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="wrap-input wrap-sm">
-                                <label for="verification_date">
-                                    <span></span>
-                                    <em>Date de signature du consentement éclairé</em>
-                                </label>
-                                <input type="text" id="verification_date" name="verification[date]" placeholder="dd/mm/yyyy" class="input js-datepicker" autocomplete="off">
-                                <span class="focus-input"></span>
-                            </div>
+                            {{ form_row(form.verification.date, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
                         </div>
                     </div>
                 </div>
@@ -562,45 +558,9 @@
             <section class="slide">
                 <h1>Informations générales</h1>
 
-                {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-                {{ form_errors(form) }}
-
-                <div class="row">
-                    <div class="col-md-6">
-                        {{ form_row(form.prenom, {'attr': {'autofocus' : true, 'class': 'input', 'autocomplete' : 'off'} }) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_row(form.nom, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="wrap-input">
-                            <label for="participant_ligne">Sélectionnez un chiffre</label>
-                            <select class="input" id="participant_ligne" name="participant[ligne]">
-                                <option selected value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                            <span class="focus-input"></span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="col-md-6">
                         {{ form_row(form.code, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form_row(form.numero, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
                     </div>
                 </div>
 
@@ -608,9 +568,10 @@
                     {{ form_widget(form.validation, {'attr': {'class': 'form-btn'} }) }}
                 </div>
 
-                {{ form_row(form._token) }}
-                {{ form_end(form, {'render_rest' : false}) }}
             </section>
+
+            {{ form_row(form._token) }}
+            {{ form_end(form, {'render_rest' : false}) }}
         </div>
     </div>
 {% endblock %}
@@ -629,11 +590,10 @@
         function disableButton() {
             if (!$("#participant_validation").is(":disabled")) {
                 $("#participant_validation").prop("disabled", true);
-                $("#participant_code").val('');
                 $('#participant_code').css({'border-color': '#d63b53'})
                 var msg = `<span class="invalid-feedback">
                                 <span class="initialism badge badge-danger">Error</span>
-                                <span class="form-error-message">Veuillez renseigner un nom et prénom (2 charactères minimum).</span>
+                                <span class="form-error-message">Veuillez renseigner la première lettre du nom et du prénom (e.g., LC).</span>
                             </span>`;
                 $("#participant_code").addClass('is-invalid').after(msg);
             }
@@ -641,34 +601,14 @@
         disableButton();
 
         $(":input").on('input propertychange', function () {
-            var nom = $('#participant_nom').val();
-            var prenom = $('#participant_prenom').val();
-            var ligne = $('#participant_ligne').val();
-            if (! nom || ! prenom || nom.length < 2 || prenom.length < 2) 
+            var code = $('#participant_code').val();
+            if (code.length != 2) 
                 return disableButton();
-            
-
-
-            $.ajax({
-                url: "{{ path( 'participant_code_generate' ) }}",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    "nom": nom,
-                    "prenom": prenom,
-                    "ligne": ligne
-                },
-                success: function (resp) {
-                    if (resp == '') 
-                        return disableButton();
-                    
-
-                    $('#participant_code').val(resp);
-                    $('#participant_code').css({'border-color': 'forestgreen'})
-                    $("#participant_validation").prop("disabled", false);
-                    $('.invalid-feedback').remove();
-                }
-            });
+            else {
+                $('#participant_code').css({'border-color': 'forestgreen'})
+                $("#participant_validation").prop("disabled", false);
+                $('.invalid-feedback').remove();
+            }
         });
     </script>
 

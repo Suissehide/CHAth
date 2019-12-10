@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% form_theme form _self %}
+{% form_theme psw _self %}
 
 {% block form_row %}
     {% set widget_attr = {} %}
@@ -66,21 +67,30 @@
 
                 <section class="flex-2">
                     <h3>Mot de passe</h3>
+                    {% if errors %}
+                        <ul class="alert alert-danger alert-small">
+                            {% for error in errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
                     {{ form_start(psw, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
                     {{ form_errors(psw) }}
 
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="wrap-input">
-                                {{ form_row(psw.plainPassword.first, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
-                            </div>
+                            {{ form_row(psw.oldPassword, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="wrap-input">
-                                {{ form_row(psw.plainPassword.second, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
-                            </div>
+                            {{ form_row(psw.plainPassword.first, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            {{ form_row(psw.plainPassword.second, {'attr': {'class': 'input', 'placeholder': '', 'autocomplete' : 'off'} }) }}
                         </div>
                     </div>
                     <div class="row">

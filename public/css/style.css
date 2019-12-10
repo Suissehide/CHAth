@@ -521,30 +521,105 @@ iframe {
 
 /* ========= Alert flashbag ========= */
 
-.alerte {
-    padding: 20px;
-    opacity: 0.9;
-    transition: opacity 0.7s;
-    margin-bottom: 15px;
+.toast__svg {
+    fill: #fff;
+}
+
+.toast {
+    z-index: 1000;
     position: fixed;
-    right: 0;
-    z-index: 10;
-    margin: 10px;
+    right: 11px;
+    text-align: left;
+    padding: 15px 0;
+    transition: opacity 0.7s;
+    opacity: 1;
+    border-bottom: #fff 1px solid;
+    border-top: #fff 1px solid;
+    border-right: #fff 1px solid;
+    background-color: #fff;
+    border-radius: 4px;
+    max-width: 500px;
+    top: 0px;
+    box-shadow: 1px 7px 14px -5px rgba(0, 0, 0, 0.2);
 }
 
-.closebtn {
-    margin-left: 15px;
-    color: inherit;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
+.toast:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.toast__icon {
+    position: absolute;
+    top: 50%;
+    left: 22px;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    padding: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.toast__content {
+    font-family: Ubuntu-Bold;
+    padding-left: 70px;
+    padding-right: 60px;
+}
+
+.toast__type {
+    color: #3e3e3e;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 17px;
+}
+
+.toast__message {
+    font-size: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #878787;
+}
+
+.toast__close {
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    width: 14px;
     cursor: pointer;
-    transition: 0.3s;
+    height: 14px;
+    fill: #878787;
+    transform: translateY(-50%);
 }
 
-.closebtn:hover {
-    color: black;
+.toast--green {
+    border-color: #1a535c;
+}
+
+.toast--green:before, .toast--green .toast__icon {
+    background-color: #1a535c;
+}
+
+.toast--blue {
+    border-color: #2892D7;
+}
+
+.toast--blue:before, .toast--blue .toast__icon {
+    background-color: #2892D7;
+}
+
+.toast--yellow {
+    border-color: #D63B53;
+}
+
+.toast--yellow:before, .toast--yellow .toast__icon {
+    background-color: #D63B53;
 }
 
 /* ========= RADIO ========= */
@@ -668,6 +743,78 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 
 .radio-container label {
     margin: 0;
+}
+
+
+/* ====== */
+
+.form_checkbox_group {
+    display: flex;
+    width: fit-content;
+    overflow: hidden;
+    z-index: 5;
+    position: relative;
+    top: 50px;
+}
+
+.form_checkbox_group input[type=checkbox] {
+    display: none;
+}
+
+.form_checkbox_group label {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0px 14px;
+    line-height: 34px;
+    user-select: none;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-right: none;
+    margin: 0;
+}
+
+.form_checkbox_group .form_checkbox_group-item:first-child label {
+    border-radius: 6px 0 0 6px;
+    background-color: #fff;
+}
+
+.form_checkbox_group .form_checkbox_group-item:last-child label {
+    border-radius: 0 6px 6px 0;
+    border-right: 1px solid #999;
+}
+
+/* Checked */
+
+.form_checkbox_group input[type=checkbox]:checked+label {
+    background: #1a535c;
+    font-weight: 700;
+    border-color: #666;
+    color: white;
+}
+
+.form_checkbox_group .form_checkbox_group-item:first-child input[type=checkbox]:checked+label {
+    background-color: #ccc;
+    color: #555;
+}
+
+.form_checkbox_group .form_checkbox_group-item:last-child input[type=checkbox]:checked+label {
+    background-color: #D63B53;
+}
+
+/* Hover */
+
+.form_checkbox_group label:hover {
+    color: #666;
+}
+
+/* Disabled */
+
+.form_checkbox_group input[type=checkbox]:disabled+label {
+    background: #efefef;
+    color: #666;
 }
 
 /* Top scroll

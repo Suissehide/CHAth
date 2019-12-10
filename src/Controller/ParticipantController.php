@@ -19,7 +19,7 @@ use App\Form\CardiovasculaireType;
 use App\Form\DecesType;
 use App\Form\InformationType;
 use App\Form\DonneeType;
-
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,8 +44,12 @@ class ParticipantController extends AbstractController
 
                 if ($participant->getCode() == '')
                     $participant->setCode('ERROR');
+                else {
+                    $id = count($em->getRepository(Participant::class)->findAll()) == 0 ? '1' : $em->getRepository(Participant::class)->findOneBy([], ['id' => 'desc'])->getId() + 1;
+                    $participant->setCode($participant->getCode() . $id);
+                }
 
-                $this->verification_create($participant);
+                $this->verification_create($participant, $participant->getVerification()->getDate());
                 $this->cardiovasculaire_create($participant);
                 $this->information_create($participant);
                 $this->donnee_create($participant);
@@ -63,10 +67,12 @@ class ParticipantController extends AbstractController
         ]);
     }
 
-    private function verification_create(Participant $participant)
+    private function verification_create(Participant $participant, DateTime $date)
     {
         $em = $this->getDoctrine()->getManager();
         $verification = new Verification();
+
+        $verification->setDate($date);
 
         $pack = new Pack();
 

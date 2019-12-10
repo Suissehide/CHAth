@@ -42,7 +42,10 @@ class GeneralType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'MM/yyyy',
                 'attr' => [
-                    'placeholder' => 'dd/mm/yyyy',
+                    'placeholder' => 'mm/yyyy',
+                    'data-min-view' => "months",
+                    'data-view' => "months",
+                    'data-date-format' => "mm/yyyy",
                     'class' => 'datepicker',
                 ],
                 'required' => false,
