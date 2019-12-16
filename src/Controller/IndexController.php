@@ -46,7 +46,7 @@ class IndexController extends AbstractController
                 $row = array(
                     "id" => $participant->getId(),
                     "code" => $participant->getCode(),
-                    "consentement" => $participant->getVerification()->getDate()->format('d/m/Y'),
+                    "consentement" => $participant->getVerification()->getDate() ? $participant->getVerification()->getDate()->format('d/m/Y') : '',
                     "evenement" => $participant->getInformation()->getDateSurvenue() ? $participant->getInformation()->getDateSurvenue()->format('d/m/Y') : '',
                     "inclusion" => $participant->getDonnee()->getDateVisite() ? $participant->getDonnee()->getDateVisite()->format('d/m/Y') : '',
                     "status" => $sortie,

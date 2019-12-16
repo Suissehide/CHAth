@@ -12,16 +12,10 @@
     <div class="container-fluid">
 
         <div class="title-wrapper">
-            Liste des patients
+            Historique du champs [CHAMPS] du patient [CODE]
         </div>
 
         <div class="container-form">
-            <div class="btn-bar">
-                <a href="#" class="form-btn btn-check">
-                    <i aria-hidden="true" class="fa fa-file-download"></i>Exporter</a>
-                <a href="{{ path('patient_add') }}" class="form-btn btn-check">
-                    <i aria-hidden="true" class="fa fa-plus"></i>Ajouter un patient</a>
-            </div>
             <div class="flex-row">
                 <div class="table-wrapper">
                     <table cellspacing="0" class="table table-condensed table-hover table-striped" id="data-grid">
@@ -29,7 +23,7 @@
                             <tr>
                                 <th data-column-id="id" data-identifier="true" data-searchable="false" data-type="numeric" data-visible="false">Id</th>
                                 <th data-column-id="prenom">Prénom</th>
-                                <th data-column-id="nom">Nom</th>
+                                <th data-column-id="date">Date</th>
                                 <th data-column-id="status" data-searchable="false" data-visible="false">Status</th>
                             </tr>
                         </thead>
