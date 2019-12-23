@@ -67,6 +67,7 @@ input:focus, a:focus, button:focus {
 /*---------------------------------------------*/
 
 a {
+    cursor: pointer;
     font-family: Ubuntu-Regular;
     font-size: 14px;
     line-height: 1.7;
@@ -184,6 +185,11 @@ iframe {
     width: 100%;
     padding-top: 50px;
     text-align: center;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
 }
 
 .flex-row {
@@ -315,7 +321,7 @@ iframe {
 
 /*---------------------------------------------*/
 
-.input {
+.input, .input-text {
     font-family: Ubuntu-Bold;
     color: #1a535c;
     line-height: 1.2;
@@ -325,6 +331,12 @@ iframe {
     background: transparent;
     height: 62px;
     padding: 0 20px 0 38px;
+}
+
+.input-text {
+    margin-top: 10px;
+    padding: 0 0 0 10px;
+    height: 30px;
 }
 
 .focus-input {
@@ -361,6 +373,7 @@ iframe {
 }
 
 .container-form .form-unity {
+    flex: 1;
     position: relative;
     display: flex;
     /* margin-bottom: 16px; */

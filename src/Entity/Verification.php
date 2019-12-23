@@ -33,11 +33,6 @@ class Verification
      */
     private $non_inclusion;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Participant", mappedBy="verification", cascade={"persist", "remove"})
-     */
-    private $participant;
-
     public function __construct()
     {
 
@@ -80,24 +75,6 @@ class Verification
     public function setNonInclusion(?Pack $non_inclusion): self
     {
         $this->non_inclusion = $non_inclusion;
-
-        return $this;
-    }
-
-    public function getParticipant(): ?Participant
-    {
-        return $this->participant;
-    }
-
-    public function setParticipant(?Participant $participant): self
-    {
-        $this->participant = $participant;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newVerification = $participant === null ? null : $this;
-        if ($newVerification !== $participant->getVerification()) {
-            $participant->setVerification($newVerification);
-        }
 
         return $this;
     }

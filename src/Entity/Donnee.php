@@ -142,11 +142,6 @@ class Donnee
     private $genes;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Participant", mappedBy="donnee", cascade={"persist", "remove"})
-     */
-    private $participant;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
      */
     private $facteurs;
@@ -457,24 +452,6 @@ class Donnee
     public function setGenes(?Pack $genes): self
     {
         $this->genes = $genes;
-
-        return $this;
-    }
-
-    public function getParticipant(): ?Participant
-    {
-        return $this->participant;
-    }
-
-    public function setParticipant(?Participant $participant): self
-    {
-        $this->participant = $participant;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newDonnee = $participant === null ? null : $this;
-        if ($newDonnee !== $participant->getDonnee()) {
-            $participant->setDonnee($newDonnee);
-        }
 
         return $this;
     }

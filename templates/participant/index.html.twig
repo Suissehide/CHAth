@@ -1,736 +1,736 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}
-    Participant
-    {{ participant.code }}
+	Participant
+	{{ participant.code }}
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/index.css') }}">
 {% endblock %}
 
 {% block page_content %}
 
-    <div
-        class="container-form">
-        <!-- Hero -->
-        <section id="tab-profile" class="hero-tabs">
-            <div class="hero-header">
-                <div class="flex-row hero-title">
-                    <h1 id="profile">PARTICIPANT
-                        <span>{{ participant.code }}</span>
-                    </h1>
-                    <div class="eligible">
-                        <h1>Éligibilité</h1>
-                        <input class="tgl tgl-skewed" id="cb0" type="checkbox" disabled/>
-                        <label class="tgl-btn" data-tg-off="NON" data-tg-on="OUI" for="cb0"></label>
-                    </div>
-                </div>
+	<div class="container-form">
+		<!-- Hero -->
+		<section id="tab-profile" class="hero-tabs">
+			<div class="hero-header">
+				<div class="flex-row hero-title">
+					<h1 id="profile">PARTICIPANT
+						<span>{{ participant.code }}</span>
+					</h1>
+					<div class="eligible">
+						<h1>Éligibilité</h1>
+						<input class="tgl tgl-skewed" id="cb0" type="checkbox" disabled/>
+						<label class="tgl-btn" data-tg-off="NON" data-tg-on="OUI" for="cb0"></label>
+					</div>
+				</div>
 
-                <div class="button-block">
-                    <a href="{{ path('index_participant') }}" class="form-btn btn-default">
-                        <i aria-hidden="true" class="fa fa-arrow-left"></i>Retour</a>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <button class="form-btn" data-target="#save-modal" data-toggle="modal" type="button">
-                            <i aria-hidden="true" class="fa fa-check"></i>Valider le participant</button>
-                    {% endif %}
-                    {{ include('participant/_delete_form.html.twig') }}
-                </div>
-            </div>
+				<div class="button-block">
+					<a href="{{ path('index_participant') }}" class="form-btn btn-default">
+						<i aria-hidden="true" class="fa fa-arrow-left"></i>Retour</a>
+					{% if is_granted('ROLE_SUPER_ADMIN') %}
+						<button class="form-btn" data-target="#save-modal" data-toggle="modal" type="button">
+							<i aria-hidden="true" class="fa fa-check"></i>Valider le participant</button>
+					{% endif %}
+					{{ include('participant/_delete_form.html.twig') }}
+				</div>
+			</div>
 
-        </section>
+		</section>
 
-        <!-- Main -->
-        <main
-            class="main">
+		<!-- Main -->
+		<main class="main">
 
-            <!-- Toc -->
-            <nav class='toc animated bounceInDown'>
-                <ul>
-                    <li>
-                        <a href='#profile'>
-                            <div class="menu-title">
-                            <div class='fa fa-user'></div>
-                            Participant
-                            {{ participant.code }}</div>
-                        </a>
-                    </li>
-                    {# <li>
+			<!-- Toc -->
+			<nav class='toc animated bounceInDown'>
+				<ul>
+					<li>
+						<a href='#profile'>
+							<div class="menu-title">
+								<div class='fa fa-user'></div>
+								Participant
+								{{ participant.code }}</div>
+						</a>
+					</li>
+					{# <li>
                         <a href='#message'>
                             <div class='fa fa-envelope'></div>
                             Messages
                             <span class='badge right'>12</span>
                         </a>
                     </li> #}
-                    <li class='sub-menu'>
-                        <a href='#verification'>
-                            <div class="menu-title">
-                            <div class='fa fa-feather-alt'></div>
-                            Vérification des critères d'éligibilité</div>
-                            <div class='fa fa-caret-down right'></div>
-                        </a>
-                        <ul>
-                            <li><a href='#inclusion'>Critères d'inclusion</a></li>
-                            <li><a href='#non-inclusion'>Critères de non inclusion</a></li>
-                        </ul>
-                    </li>
-                    <li class='sub-menu'>
-                        <a href='#general'>
-                            <div class="menu-title">
-                            <div class='fa fa-stethoscope'></div>
-                            Informations générales</div>
-                            <div class='fa fa-caret-down right'></div>
-                        </a>
-                        <ul>
-                            <li><a href='#info'>Informations générales</a></li>
-                        </ul>
-                    </li>
-                    <li class='sub-menu'>
-                        <a href='#cardiovasculaire'>
-                            <div class="menu-title">
-                            <div class='fa fa-heartbeat'></div>
-                            Données cardiovasculaires</div>
-                            <div class='fa fa-caret-down right'></div>
-                        </a>
-                        <ul>
-                            <li><a href='#risque'>Facteurs de risque cardiovasculaire</a></li>
-                            <li><a href='#traitement'>Traitement au moment de l’évènement</a></li>
-                        </ul>
-                    </li>
-                    <li class='sub-menu'>
-                        <a href='#information'>
-                            <div class="menu-title">
-                            <div class='fa fa-procedures'></div>
-                            Informations sur l’évènement cardiovasculaire</div>
-                            <div class='fa fa-caret-down right'></div>
-                        </a>
-                        <ul>
-                            <li><a href='#type'>Type d’infarctus du Myocarde</a></li>
-                            <li><a href='#aigue'>Traitement à la phase aiguë</a></li>
-                            <li><a href='#complication'>Complications immédiates</a></li>
-                            <li><a href='#biologie1'>Biologie</a></li>
-                        </ul>
-                    </li>
-                    <li class='sub-menu'>
-                        <a href='#evenement'>
-                        <div class="menu-title">
-                            <div class='fa fa-notes-medical'></div>
-                            Données à 3 mois (± 1 mois) de l'événement</div>
-                            <div class='fa fa-caret-down right'></div>
-                        </a>
-                        <ul>
-                            <li><a href='#recidive'>Récidive</a></li>
-                            <li><a href='#clinique'>Clinique</a></li>
-                            <li><a href='#facteur'>Facteurs de risque cardiovasculaire</a></li>
-                            <li><a href='#place'>Traitement mis en place suite à l'évènement cardiovasculaire</a></li>
-                            <li><a href='#biologie2'>Biologie</a></li>
-                            <li><a href='#hematopoiese'>Hématopoïèse clonale</a></li>
-                            <li><a href='#evaluation'>Evaluation cardiovasculaire</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href='#deces'>
-                            <div class="menu-title">
-                            <div class='fa fa-skull-crossbones'></div>
-                            Décès</div>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+					<li class='sub-menu'>
+						<a href='#verification'>
+							<div class="menu-title">
+								<div class='fa fa-feather-alt'></div>
+								Vérification des critères d'éligibilité</div>
+							<div class='fa fa-caret-down right'></div>
+						</a>
+						<ul>
+							<li><a href='#inclusion'>Critères d'inclusion</a></li>
+							<li><a href='#non-inclusion'>Critères de non inclusion</a></li>
+						</ul>
+					</li>
+					<li class='sub-menu'>
+						<a href='#general'>
+							<div class="menu-title">
+								<div class='fa fa-stethoscope'></div>
+								Informations générales</div>
+							<div class='fa fa-caret-down right'></div>
+						</a>
+						<ul>
+							<li><a href='#info'>Informations générales</a></li>
+						</ul>
+					</li>
+					<li class='sub-menu'>
+						<a href='#cardiovasculaire'>
+							<div class="menu-title">
+								<div class='fa fa-heartbeat'></div>
+								Données cardiovasculaires</div>
+							<div class='fa fa-caret-down right'></div>
+						</a>
+						<ul>
+							<li><a href='#risque'>Facteurs de risque cardiovasculaire</a></li>
+							<li><a href='#traitement'>Traitement au moment de l’évènement</a></li>
+						</ul>
+					</li>
+					<li class='sub-menu'>
+						<a href='#information'>
+							<div class="menu-title">
+								<div class='fa fa-procedures'></div>
+								Informations sur l’évènement cardiovasculaire</div>
+							<div class='fa fa-caret-down right'></div>
+						</a>
+						<ul>
+							<li><a href='#type'>Type d’infarctus du Myocarde</a></li>
+							<li><a href='#aigue'>Traitement à la phase aiguë</a></li>
+							<li><a href='#complication'>Complications immédiates</a></li>
+							<li><a href='#biologie1'>Biologie</a></li>
+						</ul>
+					</li>
+					<li class='sub-menu'>
+						<a href='#evenement'>
+							<div class="menu-title">
+								<div class='fa fa-notes-medical'></div>
+								Données à 3 mois (± 1 mois) de l'événement</div>
+							<div class='fa fa-caret-down right'></div>
+						</a>
+						<ul>
+							<li><a href='#recidive'>Récidive</a></li>
+							<li><a href='#clinique'>Clinique</a></li>
+							<li><a href='#facteur'>Facteurs de risque cardiovasculaire</a></li>
+							<li><a href='#place'>Traitement mis en place suite à l'évènement cardiovasculaire</a></li>
+							<li><a href='#biologie2'>Biologie</a></li>
+							<li><a href='#hematopoiese'>Hématopoïèse clonale</a></li>
+							<li><a href='#evaluation'>Evaluation cardiovasculaire</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href='#deces'>
+							<div class="menu-title">
+								<div class='fa fa-skull-crossbones'></div>
+								Décès</div>
+						</a>
+					</li>
+				</ul>
+			</nav>
 
-            {# VERIFICATION #}
+			{#========== VERIFICATION ==========#}
 
-            {{ form_start(formVerification, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-            {{ form_errors(formVerification) }}
+			{{ form_start(formVerification, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+			{{ form_errors(formVerification) }}
 
-            {% form_theme formVerification 'form-theme.html.twig' %}
+			{% form_theme formVerification 'form-theme.html.twig' %}
 
-            <section class="slide" id="tab-verification">
-                <h1 id="verification">Vérification des critères d'éligibilité</h1>
+			<section class="slide" id="tab-verification">
+				<h1 id="verification">Vérification des critères d'éligibilité</h1>
 
-                <h3 id="inclusion">Critères d'inclusion</h3>
-                <div id="inclusion-qcm" class="qcm">
-                    {% for qcm in formVerification.inclusion.qcm %}
-                        <div class="qcm-row">
-                            <div class="qcm-question">
-                                {{ qcm.vars.value.question }}
-                            </div>
-                            <div class="qcm-response">
-                                <div class="wrap-input">
-                                    {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                    <div class="margin-space"></div>
-                    {{ form_row(formVerification.date, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
-                </div>
+				<h3 id="inclusion">Critères d'inclusion</h3>
+				<div id="inclusion-qcm" class="qcm">
+					{% for qcm in formVerification.inclusion.qcm %}
+						<div class="qcm-row">
+							<div class="qcm-question">
+								{{ qcm.vars.value.question }}
+							</div>
+							<div class="qcm-response">
+								<div class="wrap-input qcm-flex">
+									{{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+					<div class="margin-space"></div>
+					{{ form_row(formVerification.date, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
+				</div>
 
-                <h3 id="non-inclusion">Critères de non inclusion</h3>
-                <div id="non-inclusion-qcm" class="qcm">
-                    {% for qcm in formVerification.non_inclusion.qcm %}
-                        <div class="qcm-row">
-                            <div class="qcm-question">
-                                {{ qcm.vars.value.question }}
-                            </div>
-                            <div class="qcm-response">
-                                <div class="wrap-input">
-                                    {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+				<h3 id="non-inclusion">Critères de non inclusion</h3>
+				<div id="non-inclusion-qcm" class="qcm">
+					{% for qcm in formVerification.non_inclusion.qcm %}
+						<div class="qcm-row">
+							<div class="qcm-question">
+								{{ qcm.vars.value.question }}
+							</div>
+							<div class="qcm-response">
+								<div class="wrap-input qcm-flex">
+									{{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
 
-                {{ form_row(formVerification.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+				{{ form_row(formVerification.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
 
-            </section>
+			</section>
 
-            {{ form_row(formVerification._token) }}
-            {{ form_end(formVerification, {'render_rest' : false}) }}
+			{{ form_row(formVerification._token) }}
+			{{ form_end(formVerification, {'render_rest' : false}) }}
 
-            {# GENERAL #}
+			{#========== GENERAL ==========#}
 
-            {{ form_start(formGeneral, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-            {{ form_errors(formGeneral) }}
+			{{ form_start(formGeneral, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+			{{ form_errors(formGeneral) }}
 
-            {% form_theme formGeneral 'form-theme.html.twig' %}
+			{% form_theme formGeneral 'form-theme.html.twig' %}
 
-            <section class="slide" id="tab-general">
-                <h1 id="general">Informations générales</h1>
+			<section class="slide" id="tab-general">
+				<h1 id="general">Informations générales</h1>
 
-                <h3 id="info">Informations générales</h3>
-                <div class="form-space">
-                    {{ form_row(formGeneral.age, {
+				<h3 id="info">Informations générales</h3>
+				<div class="form-space">
+					{{ form_row(formGeneral.age, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(formGeneral.sexe, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(formGeneral.date_naissance, {'attr': {'class': 'input js-birthday', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(formGeneral.taille, {
+					{{ form_row(formGeneral.sexe, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
+					{{ form_row(formGeneral.date_naissance, {'attr': {'class': 'input js-birthday', 'autocomplete' : 'off'} }) }}
+					{{ form_row(formGeneral.taille, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(formGeneral.poids, {
+					{{ form_row(formGeneral.poids, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(formGeneral.imc, {
+					{{ form_row(formGeneral.imc, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(formGeneral.systolique, {
+					{{ form_row(formGeneral.systolique, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(formGeneral.diastolique, {
+					{{ form_row(formGeneral.diastolique, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                </div>
+				</div>
 
-                {{ form_row(formGeneral.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+				{{ form_row(formGeneral.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
 
-            </section>
+			</section>
 
-            {{ form_row(formGeneral._token) }}
-            {{ form_end(formGeneral, {'render_rest' : false}) }}
+			{{ form_row(formGeneral._token) }}
+			{{ form_end(formGeneral, {'render_rest' : false}) }}
 
-            {# CARDIOVASCULAIRE #}
+			{#========== CARDIOVASCULAIRE ==========#}
 
-            {{ form_start(formCardiovasculaire, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-            {{ form_errors(formCardiovasculaire) }}
+			{{ form_start(formCardiovasculaire, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+			{{ form_errors(formCardiovasculaire) }}
 
-            {% form_theme formCardiovasculaire 'form-theme.html.twig' %}
+			{% form_theme formCardiovasculaire 'form-theme.html.twig' %}
 
-            <section class="slide" id="tab-cardiovasculaire">
-                <h1 id="cardiovasculaire">Données cardiovasculaires</h1>
+			<section class="slide" id="tab-cardiovasculaire">
+				<h1 id="cardiovasculaire">Données cardiovasculaires</h1>
 
-                <h3 id="risque">Facteurs de risque cardiovasculaire</h3>
-                {{ form_row(formCardiovasculaire.tabac, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                {{ form_row(formCardiovasculaire.activite_physique, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                {{ form_row(formCardiovasculaire.alimentation, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                <div class="qcm">
-                    {% for qcm in formCardiovasculaire.facteurs.qcm %}
-                        <div class="qcm-row">
-                            <div class="qcm-question">
-                                {{ qcm.vars.value.question }}
-                            </div>
-                            <div class="qcm-response">
-                                <div class="wrap-input">
-                                    {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+				<h3 id="risque">Facteurs de risque cardiovasculaire</h3>
+				{{ form_row(formCardiovasculaire.tabac, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+				{{ form_row(formCardiovasculaire.activite_physique, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+				{{ form_row(formCardiovasculaire.alimentation, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+				<div class="qcm">
+					{% for qcm in formCardiovasculaire.facteurs.qcm %}
+						<div class="qcm-row">
+							<div class="qcm-question">
+								{{ qcm.vars.value.question }}
+							</div>
+							<div class="qcm-response">
+								<div class="wrap-input qcm-flex">
+									{{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
 
-                <h3 id="traitement">Traitement au moment de l’évènement</h3>
-                <div class="qcm">
-                    {% for qcm in formCardiovasculaire.traitement.qcm %}
-                        <div class="qcm-row">
-                            <div class="qcm-question">
-                                {{ qcm.vars.value.question }}
-                            </div>
-                            <div class="qcm-response">
-                                <div class="wrap-input">
-                                    {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+				<h3 id="traitement">Traitement au moment de l’évènement</h3>
+				<div class="qcm">
+					{% for qcm in formCardiovasculaire.traitement.qcm %}
+						<div class="qcm-row">
+							<div class="qcm-question">
+								{{ qcm.vars.value.question }}
+							</div>
+							<div class="qcm-response">
+								<div class="wrap-input qcm-flex">
+									{{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
 
-                {{ form_row(formCardiovasculaire.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+				{{ form_row(formCardiovasculaire.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
 
-            </section>
+			</section>
 
-            {{ form_row(formCardiovasculaire._token) }}
-            {{ form_end(formCardiovasculaire, {'render_rest' : false}) }}
+			{{ form_row(formCardiovasculaire._token) }}
+			{{ form_end(formCardiovasculaire, {'render_rest' : false}) }}
 
-            {# INFORMATIONS #}
+			{#========== INFORMATIONS ==========#}
 
-            {{ form_start(formInformation, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-            {{ form_errors(formInformation) }}
+			{{ form_start(formInformation, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+			{{ form_errors(formInformation) }}
 
-            {% form_theme formInformation 'form-theme.html.twig' %}
+			{% form_theme formInformation 'form-theme.html.twig' %}
 
-            <section class="slide" id="tab-information">
-                <h1 id="information">Informations sur l’évènement cardiovasculaire</h1>
+			<section class="slide" id="tab-information">
+				<h1 id="information">Informations sur l’évènement cardiovasculaire</h1>
 
-                {{ form_row(formInformation.dateSurvenue, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
-                <div class="margin-space"></div>
+				{{ form_row(formInformation.dateSurvenue, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
+				<div class="margin-space"></div>
 
-                <h3 id="type">Type d’infarctus du Myocarde</h3>
-                <div class="qcm">
-                    {% for qcm in formInformation.type.qcm %}
-                        {% set counter = ( counter | default(0) ) + 1 %}
-                        {% if counter == 2 %}
-                            <div class="margin-space"></div>
-                            <h5>Territoire atteint</h5>
-                        {% elseif counter == 7 %}
-                            <div class="margin-space"></div>
-                            <h5>Coronarographie (sténose > 50%)</h5>
-                        {% endif %}
+				<h3 id="type">Type d’infarctus du Myocarde</h3>
+				<div class="qcm">
+					{% for qcm in formInformation.type.qcm %}
+						{% set counter = ( counter | default(0) ) + 1 %}
+						{% if counter == 2 %}
+							<div class="margin-space"></div>
+							<h5>Territoire atteint</h5>
+						{% elseif counter == 7 %}
+							<div class="margin-space"></div>
+							<h5>Coronarographie (sténose > 50%)</h5>
+						{% endif %}
 
-                        <div class="qcm-row">
-                            <div class="qcm-question">
-                                {{ qcm.vars.value.question }}
-                            </div>
-                            <div class="qcm-response">
-                                <div class="wrap-input">
-                                    {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+						<div class="qcm-row">
+							<div class="qcm-question">
+								{{ qcm.vars.value.question }}
+							</div>
+							<div class="qcm-response">
+								<div class="wrap-input qcm-flex">
+									{{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
 
-                <h3 id="aigue">Traitement à la phase aiguë</h3>
-                <div class="form-space">
-                    {{ form_row(formInformation.traitement, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
-                </div>
+				<h3 id="aigue">Traitement à la phase aiguë</h3>
+				<div class="form-space">
+					{{ form_row(formInformation.traitement, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+				</div>
 
-                {# <div class="margin-space"></div> #}
+				{#========== <div class="margin-space"></div> ==========#}
 
-                <h3 id="complication">Complications immédiates</h3>
-                <div class="qcm">
-                    {% for qcm in formInformation.complications.qcm %}
-                        <div class="qcm-row">
-                            <div class="qcm-question">
-                                {{ qcm.vars.value.question }}
-                            </div>
-                            <div class="qcm-response">
-                                <div class="wrap-input">
-                                    {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+				<h3 id="complication">Complications immédiates</h3>
+				<div class="qcm">
+					{% for qcm in formInformation.complications.qcm %}
+						<div class="qcm-row">
+							<div class="qcm-question">
+								{{ qcm.vars.value.question }}
+							</div>
+							<div class="qcm-response">
+								<div class="wrap-input qcm-flex">
+									{{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
 
-                <h3 id="biologie1">Biologie</h3>
-                <h5>Inflammation</h5>
-                {{ form_row(formInformation.CRP, {
+				<h3 id="biologie1">Biologie</h3>
+				<h5>Inflammation</h5>
+				{{ form_row(formInformation.CRP, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                <h5>NFS</h5>
-                {{ form_row(formInformation.hemoglobine, {
+				<h5>NFS</h5>
+				{{ form_row(formInformation.hemoglobine, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                {{ form_row(formInformation.leucocytes, {
+				{{ form_row(formInformation.leucocytes, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                {{ form_row(formInformation.PNN, {
+				{{ form_row(formInformation.PNN, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                {{ form_row(formInformation.plaquettes, {
-                        'attr': {'class': 'input', 'autocomplete' : 'off'},
-                        'useStyle': true,
-                    })
-                }}
-
-                <h5>Bilan lipidique</h5>
-                {{ form_row(formInformation.cholesterol, {
-                        'attr': {'class': 'input', 'autocomplete' : 'off'},
-                        'useStyle': true,
-                    })
-                }}
-                {{ form_row(formInformation.LDL_c, {
-                        'attr': {'class': 'input', 'autocomplete' : 'off'},
-                        'useStyle': true,
-                    })
-                }}
-                {{ form_row(formInformation.HDL_c, {
+				{{ form_row(formInformation.plaquettes, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
 
-                <div class="separator-space"></div>
-                {{ form_row(formInformation.HbA1c, {
+				<h5>Bilan lipidique</h5>
+				{{ form_row(formInformation.cholesterol, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
-                {{ form_row(formInformation.creatininemie, {
+				{{ form_row(formInformation.LDL_c, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
+				{{ form_row(formInformation.HDL_c, {
                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                         'useStyle': true,
                     })
                 }}
 
-                {{ form_row(formInformation.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+				<div class="separator-space"></div>
+				{{ form_row(formInformation.HbA1c, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
+				{{ form_row(formInformation.creatininemie, {
+                        'attr': {'class': 'input', 'autocomplete' : 'off'},
+                        'useStyle': true,
+                    })
+                }}
 
-            </section>
+				{{ form_row(formInformation.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
 
-            {{ form_row(formInformation._token) }}
-            {{ form_end(formInformation, {'render_rest' : false}) }}
+			</section>
 
-            {# DONNEES #}
+			{{ form_row(formInformation._token) }}
+			{{ form_end(formInformation, {'render_rest' : false}) }}
 
-            {{ form_start(formDonnee, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-            {{ form_errors(formDonnee) }}
+			{#========== DONNEES ==========#}
 
-            {% form_theme formDonnee 'form-theme.html.twig' %}
+			{{ form_start(formDonnee, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+			{{ form_errors(formDonnee) }}
 
-            <section class="slide" id="tab-evenement">
-                <h1 id="evenement">Données à 3 mois (± 1 mois) de l'événement</h1>
-                <div class="form-space">
-                {{ form_row(formDonnee.dateVisite, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
-                </div>
+			{% form_theme formDonnee 'form-theme.html.twig' %}
 
-                <h3 id="recidive">Récidive</h3>
-                <div class="form-space">
-                    {{ form_row(formDonnee.recidive, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(formDonnee.dateSurvenue, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(formDonnee.type, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                </div>
+			<section class="slide" id="tab-evenement">
+				<h1 id="evenement">Données à 3 mois (± 1 mois) de l'événement</h1>
+				<div class="form-space">
+					{{ form_row(formDonnee.dateVisite, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
+				</div>
 
-                <h3 id="clinique">Clinique</h3>
-                <div class="form-space">
-                    {{ form_row(formDonnee.dyspnee, {
+				<h3 id="recidive">Récidive</h3>
+				<div class="form-space">
+					{{ form_row(formDonnee.recidive, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
+					{{ form_row(formDonnee.dateSurvenue, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
+					{{ form_row(formDonnee.type, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+				</div>
+
+				<h3 id="clinique">Clinique</h3>
+				<div class="form-space">
+					{{ form_row(formDonnee.dyspnee, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(formDonnee.douleur, {
+					{{ form_row(formDonnee.douleur, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                </div>
+				</div>
 
-                <h3 id="facteur">Facteurs de risque cardiovasculaire</h3>
-                <div class="form-space">
-                    {{ form_row(formDonnee.tabac, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(formDonnee.activite, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
-                    {{ form_row(formDonnee.alimentation, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
-                    <div id="alimentation"></div>
-                </div>
-                
-                <div class="qcm">
-                    {% for qcm in formDonnee.facteurs.qcm %}
-                        <div class="qcm-row">
-                            <div class="qcm-question">
-                                {{ qcm.vars.value.question }}
-                            </div>
-                            <div class="qcm-response">
-                                <div class="wrap-input">
-                                    {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+				<h3 id="facteur">Facteurs de risque cardiovasculaire</h3>
+				<div class="form-space">
+					{{ form_row(formDonnee.tabac, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+					{{ form_row(formDonnee.activite, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+					{{ form_row(formDonnee.alimentation, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
+					<div id="alimentation"></div>
+				</div>
 
-                <h3 id="place">Traitement mis en place suite à l'évènement cardiovasculaire</h3>
-                <div class="qcm">
-                    {% for qcm in formDonnee.traitement.qcm %}
-                        <div class="qcm-row">
-                            <div class="qcm-question">
-                                {{ qcm.vars.value.question }}
-                            </div>
-                            <div class="qcm-response">
-                                <div class="wrap-input">
-                                    {{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+				<div class="qcm">
+					{% for qcm in formDonnee.facteurs.qcm %}
+						<div class="qcm-row">
+							<div class="qcm-question">
+								{{ qcm.vars.value.question }}
+							</div>
+							<div class="qcm-response">
+								<div class="wrap-input qcm-flex">
+									{{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
 
-                <h3 id="biologie2">Biologie</h3>
-                <div class="form-space">
-                    <h5>Inflammation</h5>
-                    {{ form_row(formDonnee.crp, {
-                            'attr': {'class': 'input', 'autocomplete' : 'off'},
-                            'useStyle': true,
-                        })
-                    }}
+				<h3 id="place">Traitement mis en place suite à l'évènement cardiovasculaire</h3>
+				<div class="qcm">
+					{% for qcm in formDonnee.traitement.qcm %}
+						<div class="qcm-row">
+							<div class="qcm-question">
+								{{ qcm.vars.value.question }}
+							</div>
+							<div class="qcm-response">
+								<div class="wrap-input qcm-flex">
+									{{ form_widget(qcm.reponse, {'attr': {'class': 'input radio-row'} }) }}
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
 
-                    <h5>NFS</h5>
-                    {{ form_row(formDonnee.hemoglobine, {
-                            'attr': {'class': 'input', 'autocomplete' : 'off'},
-                            'useStyle': true,
-                        })
-                    }}
-                    {{ form_row(formDonnee.leucocytes, {
-                            'attr': {'class': 'input', 'autocomplete' : 'off'},
-                            'useStyle': true,
-                        })
-                    }}
-                    {{ form_row(formDonnee.pnn, {
-                            'attr': {'class': 'input', 'autocomplete' : 'off'},
-                            'useStyle': true,
-                        })
-                    }}
-                    {{ form_row(formDonnee.plaquettes, {
+				<h3 id="biologie2">Biologie</h3>
+				<div class="form-space">
+					<h5>Inflammation</h5>
+					{{ form_row(formDonnee.crp, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
 
-                    <h5>Bilan lipidique</h5>
-                    {{ form_row(formDonnee.cholesterol, {
+					<h5>NFS</h5>
+					{{ form_row(formDonnee.hemoglobine, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(formDonnee.ldl, {
+					{{ form_row(formDonnee.leucocytes, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(formDonnee.hdl, {
+					{{ form_row(formDonnee.pnn, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+					{{ form_row(formDonnee.plaquettes, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
 
-                    <h5>HbA1c</h5>
-                    {{ form_row(formDonnee.hba1c, {
+					<h5>Bilan lipidique</h5>
+					{{ form_row(formDonnee.cholesterol, {
                             'attr': {'class': 'input', 'autocomplete' : 'off'},
                             'useStyle': true,
                         })
                     }}
-                </div>
+					{{ form_row(formDonnee.ldl, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+					{{ form_row(formDonnee.hdl, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
 
-                <h3 id="hematopoiese">Hématopoïèse clonale</h3>
-                <div class="form-space">
-                    {{ form_row(formDonnee.hematopoiese, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
+					<h5>HbA1c</h5>
+					{{ form_row(formDonnee.hba1c, {
+                            'attr': {'class': 'input', 'autocomplete' : 'off'},
+                            'useStyle': true,
+                        })
+                    }}
+				</div>
 
-                    <div class="margin-space"></div>
+				<h3 id="hematopoiese">Hématopoïèse clonale</h3>
+				<div class="form-space">
+					{{ form_row(formDonnee.hematopoiese, {'attr': {'class': 'input radio-row', 'autocomplete' : 'off'} }) }}
 
-                    <div class="row row-flex">
-                        <div class="col-md-2 row-label">
-                            Gène
-                        </div>
-                        <div class="col-md-4 row-label">
-                            Statut
-                        </div>
-                        <div class="col-md-4 row-label">
-                            Mutation
-                        </div>
-                        <div class="col-md-2 row-label">
-                            Fréquence de l’allèle variant
-                        </div>
-                    </div>
-                    {% for gene in formDonnee.genes.genes %}
-                        <div class="row">
-                            <div class="col-md-2 col-label">
-                                <div class="wrap-input">
-                                    {{ gene.vars.value.nom }}
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-input">
-                                <div class="wrap-input">
-                                    {{ form_widget(gene.statut, {'attr': {'class': 'input radio-row'} }) }}
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-input">
-                                <div class="wrap-input">
-                                    {{ form_widget(gene.mutation, {'attr': {'class': 'input'} }) }}
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-input">
-                                {{ form_row(gene.frequence, {
+					<div class="margin-space"></div>
+
+					<div class="row-flex">
+						<div class="col-flex-2 col-flex row-label">
+							Gène
+						</div>
+						<div class="col-flex-3 col-flex row-label">
+							Statut
+						</div>
+						<div class="col-flex-4 col-flex row-label">
+							Mutation
+						</div>
+						<div class="col-flex-3 col-flex row-label">
+							Fréquence de l’allèle variant
+						</div>
+					</div>
+					{% for gene in formDonnee.genes.genes %}
+						<div class="row-flex">
+							<div class="col-flex-2 col-flex col-label">
+								<div class="wrap-input">
+									{{ gene.vars.value.nom }}
+								</div>
+							</div>
+							<div class="col-flex-3 col-flex col-input">
+								<div class="wrap-input flex">
+									{{ form_widget(gene.statut, {'attr': {'class': 'input radio-row'} }) }}
+								</div>
+							</div>
+							<div class="col-flex-4 col-flex col-input">
+								<div class="wrap-input flex">
+									{{ form_widget(gene.mutation, {'attr': {'class': 'input'} }) }}
+								</div>
+							</div>
+							<div class="col-flex-3 col-flex col-input">
+								{{ form_row(gene.frequence, {
                                         'attr': {'class': 'input', 'autocomplete' : 'off'},
                                         'useStyle': true,
                                     })
                                 }}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
 
-                <h3 id="evaluation">Evaluation cardiovasculaire</h3>
-                <div class="form-space">
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ form_row(formDonnee.carotideCommuneGauche, {
+				<h3 id="evaluation">Evaluation cardiovasculaire</h3>
+				<div class="form-space">
+					<div class="row">
+						<div class="col-md-6">
+							{{ form_row(formDonnee.carotideCommuneGauche, {
                                     'attr': {'class': 'input', 'autocomplete' : 'off'},
                                     'useStyle': true,
                                 })
                             }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(formDonnee.carotideCommuneDroite, {
+						</div>
+						<div class="col-md-6">
+							{{ form_row(formDonnee.carotideCommuneDroite, {
                                     'attr': {'class': 'input', 'autocomplete' : 'off'},
                                     'useStyle': true,
                                 })
                             }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ form_row(formDonnee.carotideInterneGauche, {
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							{{ form_row(formDonnee.carotideInterneGauche, {
                                     'attr': {'class': 'input', 'autocomplete' : 'off'},
                                     'useStyle': true,
                                 })
                             }}
-                        </div>
-                        <div class="col-md-6">
-                            {{ form_row(formDonnee.carotideInterneDroite, {
+						</div>
+						<div class="col-md-6">
+							{{ form_row(formDonnee.carotideInterneDroite, {
                                     'attr': {'class': 'input', 'autocomplete' : 'off'},
                                     'useStyle': true,
                                 })
                             }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ form_row(formDonnee.fraction, {
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							{{ form_row(formDonnee.fraction, {
                                     'attr': {'class': 'input', 'autocomplete' : 'off'},
                                     'useStyle': true,
                                 })
                             }}
-                        </div>
-                    </div>
-                </div>
+						</div>
+					</div>
+				</div>
 
-                {{ form_row(formDonnee.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+				{{ form_row(formDonnee.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
 
-            </section>
+			</section>
 
-            {{ form_row(formDonnee._token) }}
-            {{ form_end(formDonnee, {'render_rest' : false}) }}
+			{{ form_row(formDonnee._token) }}
+			{{ form_end(formDonnee, {'render_rest' : false}) }}
 
-            {# DECES #}
+			{#========== DECES ==========#}
 
-            {{ form_start(formDeces, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
-            {{ form_errors(formDeces) }}
+			{{ form_start(formDeces, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+			{{ form_errors(formDeces) }}
 
-            {% form_theme formDeces 'form-theme.html.twig' %}
+			{% form_theme formDeces 'form-theme.html.twig' %}
 
-            <section class="slide" id="tab-deces">
-                <h1 id="deces">Fiche Décès</h1>
+			<section class="slide" id="tab-deces">
+				<h1 id="deces">Fiche Décès</h1>
 
-                {{ form_row(formDeces.date, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
+				{{ form_row(formDeces.date, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
 
-                <div class="def"><span>Définition de la cause initiale du décès : </span>maladie ou traumatisme étant à l’origine de la séquence des événements morbides ayant entraîné la mort.</div>
+				<div class="def">
+					<span>Définition de la cause initiale du décès :
+					</span>maladie ou traumatisme étant à l’origine de la séquence des événements morbides ayant entraîné la mort.</div>
 
-                <h5>Cause principale de décès</h5>
-                {{ form_row(formDeces.causePrincipale, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
-                {{ form_row(formDeces.codagePrincipal, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+				<h5>Cause principale de décès</h5>
+				{{ form_row(formDeces.causePrincipale, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+				{{ form_row(formDeces.codagePrincipal, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
 
-                <h5>Cause secondaire ayant contribué au décès</h5>
-                {{ form_row(formDeces.causeSecondaire, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
-                {{ form_row(formDeces.codageSecondaire, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+				<h5>Cause secondaire ayant contribué au décès</h5>
+				{{ form_row(formDeces.causeSecondaire, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
+				{{ form_row(formDeces.codageSecondaire, {'attr': {'class': 'input ', 'autocomplete' : 'off'} }) }}
 
-                {{ form_row(formDeces.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
+				{{ form_row(formDeces.save, {'attr': {'class': 'form-btn btn-save', 'autocomplete' : 'off'} }) }}
 
-            </section>
+			</section>
 
-            {{ form_row(formDeces._token) }}
-            {{ form_end(formDeces, {'render_rest' : false}) }}
+			{{ form_row(formDeces._token) }}
+			{{ form_end(formDeces, {'render_rest' : false}) }}
 
-        </main>
+		</main>
 
-        <div class="cd-top js-cd-top">
-            <a href="{{ path('index_participant') }}" class="cd-btn btn-back">
-                <i aria-hidden="true" class="fa fa-arrow-left"></i>
-            </a>
-            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <a class="cd-btn btn-check" data-target="#save-modal" data-toggle="modal">
-                    <i aria-hidden="true" class="fa fa-check"></i>
-                </a>
-            {% endif %}
-            <a class="cd-btn btn-delete">
-                <i aria-hidden="true" class="fa fa-trash"></i>
-            </a>
-            <a class="cd-btn btn-top" href="#0">
-                <i aria-hidden="true" class="fa fa-chevron-up"></i>
-            </a>
-        </div>
+		<div class="cd-top js-cd-top">
+			<a href="{{ path('index_participant') }}" class="cd-btn btn-back">
+				<i aria-hidden="true" class="fa fa-arrow-left"></i>
+			</a>
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+				<a class="cd-btn btn-check" data-target="#save-modal" data-toggle="modal">
+					<i aria-hidden="true" class="fa fa-check"></i>
+				</a>
+			{% endif %}
+			<a class="cd-btn btn-delete">
+				<i aria-hidden="true" class="fa fa-trash"></i>
+			</a>
+			<a class="cd-btn btn-top" href="#0">
+				<i aria-hidden="true" class="fa fa-chevron-up"></i>
+			</a>
+		</div>
 
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <!-- Modal -->
-            <div aria-hidden="true" aria-labelledby="save" class="modal fade" id="save-modal" role="dialog" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h1 class="modal-title">Validation des données</h1>
-                        </div>
-                        <div class="modal-body">
-                            <p>&emsp;&emsp;Je, soussigné(e) Pr/Dr
-                                <span>{{ app.user.nom }}</span>, confirme que le suivi du participant a eu lieu sous ma responsabilité conformément au protocole d’étude clinique ; toutes les données contenues dans ce cahier d’observation sont complètes et exactes.</p>
-                            <div class="flex-row user-data">
-                                <div class="date">Date:</br>
-                                <span>{{ date }}</span>
-                            </div>
-                            <div class="signature">Signature:</br>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="button-block space-between">
-                        <button class="form-btn btn-default" data-dismiss="modal" type="button">
-                            <i aria-hidden="true" class="fa fa-times"></i>Fermer</button>
-                        <button class="form-btn" type="submit">
-                            <i aria-hidden="true" class="fa fa-check"></i>Valider</button>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+			<!-- Modal -->
+			<div aria-hidden="true" aria-labelledby="save" class="modal fade" id="save-modal" role="dialog" tabindex="-1">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h1 class="modal-title">Validation des données</h1>
+						</div>
+						<div class="modal-body">
+							<p>&emsp;&emsp;Je, soussigné(e) Pr/Dr
+								<span>{{ app.user.nom }}</span>, confirme que le suivi du participant a eu lieu sous ma responsabilité conformément au protocole d’étude clinique ; toutes les données contenues dans ce cahier d’observation sont complètes et exactes.</p>
+							<div class="flex-row user-data">
+								<div class="date">Date:</br>
+								<span>{{ date }}</span>
+							</div>
+							<div class="signature">Signature:</br>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="button-block space-between">
+						<button class="form-btn btn-default" data-dismiss="modal" type="button">
+							<i aria-hidden="true" class="fa fa-times"></i>Fermer</button>
+						<button class="form-btn" type="submit">
+							<i aria-hidden="true" class="fa fa-check"></i>Valider</button>
+					</div>
+				</div>
+			</div>
+		{% endif %}
 
-    </div>
+	</div>
 
 {% endblock %}
 
@@ -743,6 +743,20 @@
     </script>
 
     <script>
+        /* History */
+        $('.history').click(function(event) {
+            event.preventDefault(); 
+            participantId = {{ participant.id }};
+            fieldId = $(this).parents('.wrap-input').find('input').attr('id');
+            if (fieldId.substring(fieldId.length - 2) === "_0")
+                fieldId = fieldId.substring(0, fieldId.length - 2);
+            var url = '{{ path("history_list", {'participant': 'participantId', 'fieldId': 'fieldId'}) }}'; 
+            url = url.replace("participantId", participantId);
+            url = url.replace("fieldId", fieldId);
+            window.location.href = url;
+        });
+
+        /* Date */
         jQuery(document).ready(function () {
             $('.js-datepicker').datepicker({language: 'fr', clearButton: true});
         });
@@ -773,7 +787,7 @@
             });
         });
 
-        /* alimentation */
+        /* Alimentation */
         function alimentation() {
             let nb = $('input[type=checkbox][name="donnee[alimentation][]"]:checked').length;
             $('#alimentation').empty();
@@ -790,7 +804,7 @@
             alimentation()
         });
 
-        /* eligibilite */
+        /* Eligibilite */
         function isValid() {
             let inclusion = 1;
             let non_inclusion = 1;
@@ -822,24 +836,44 @@
     <script>
         /* TOC */
         /* Smooth scroll */
-        $('.toc > ul > li > a').on('click', function () {
-            var page = $(this).attr('href');
+
+        displaySlide = (page) => {
             $('.slide').each(function(i, e) {
                 let id = 'tab-' + page.substring(1);
                 $(this).hide();
                 if ($(this).attr('id') == id)
                     $(this).show();
             })
+        }
+
+        $('.toc > ul > li > a').on('click', function () {
+            displaySlide($(this).attr('href'));
+            window.location.hash = $(this).attr("href");
             return false;
         });
 
-        $('.toc li a').on('click', function () {
-            var page = $(this).attr('href');
+        scrollToc = (page) => {
             var speed = 550;
             $('html, body').animate({
                 scrollTop: $(page).offset().top - 30
             }, speed);
+        }
+
+        $('.toc li a').on('click', function () {
+            scrollToc($(this).attr('href'));
             return false;
+        });
+
+        //onLoad
+        var hash = window.location.hash.substr(0);
+        $('.toc > ul > li > a').each(function (i) {
+            page = $(this).attr('href');
+            if (hash == page) {
+                $(this).toggleClass('js-active');
+                toggleMenu($(this));
+                displaySlide(page);
+                scrollToc(page);
+            }
         });
 
         $(".toc > ul > li > a").click(function () {
@@ -891,16 +925,6 @@
                 width: "toggle"
             }, {duration: 500});
         })
-    </script>
-
-    <script>
-
-    class ErreurForm {
-        constructor() {
-            
-        }
-    }
-
     </script>
 
 {% endblock %}

@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UtilisateurFixtures extends Fixture

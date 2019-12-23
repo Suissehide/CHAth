@@ -2,15 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
 use App\Entity\Participant;
 use App\Entity\Verification;
-use App\Entity\General;
 use App\Entity\Qcm;
 use App\Entity\Gene;
 use App\Entity\Pack;
 use App\Entity\Cardiovasculaire;
 use App\Entity\Donnee;
 use App\Entity\Information;
+use App\Entity\Erreur;
 
 use App\Form\ParticipantType;
 use App\Form\VerificationType;
@@ -19,15 +20,33 @@ use App\Form\CardiovasculaireType;
 use App\Form\DecesType;
 use App\Form\InformationType;
 use App\Form\DonneeType;
+
 use DateTime;
+use DateTimeZone;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Symfony\Component\Form\FormInterface;
+
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+use Symfony\Component\Security\Core\Security;
+
 class ParticipantController extends AbstractController
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * @Route("/participant/add", name="participant_add", methods="GET|POST")
      */
@@ -338,12 +357,59 @@ class ParticipantController extends AbstractController
         $participant->setDonnee($donnee);
     }
 
+    private function generateJson(FormInterface $form)
+    {
+        $fields = ['fields' => []];
+
+        foreach ($form->all() as $field) {
+            $name = $field->getName();
+            $value = $field->getViewData();
+            $type = $field->getConfig()->getType()->getBlockPrefix();
+            // if ($field->getChildren())
+                // $this->generateJson($field->getChildren());
+            $fields['fields'][$name] = [
+                'value' => $value,
+                'type' => $type,
+            ];
+        }
+
+        // dump(json_encode($fields, JSON_PRETTY_PRINT));
+        return $fields;
+    }
+
+    private function addErreur($participantId, $fieldId, $etat, $message, bool $user) {
+        $em = $this->getDoctrine()->getManager();
+        $participant = $em->getRepository(Participant::class)->find($participantId);
+        $createdAt = new DateTime("now", new DateTimeZone('Europe/Paris'));
+
+        $erreur = new Erreur();
+        $erreur->setDate($createdAt);
+        $erreur->setEtat($etat);
+        $erreur->setMessage($message);
+        $erreur->setFieldId($fieldId);
+        $erreur->setUtilisateur($user ? $this->security->getUser()->getEmail() : 'Système');
+
+        $em->persist($erreur);
+        $em->flush();
+        $participant->addErreur($erreur);
+    }
+
     /**
      * @Route("/participant/{id}", name="participant_view")
      */
     public function index(Participant $participant, Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $oldSerialized = $serializer->serialize($participant, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+        $oldArray = json_decode($oldSerialized, true);
 
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
@@ -360,6 +426,17 @@ class ParticipantController extends AbstractController
         $formVerification->handleRequest($request);
         if ($formVerification->isSubmitted() && $formVerification->isValid()) {
             if ($formVerification->get('save')->isClicked()) {
+                // $data = $formVerification->all();
+                $verificationSerialized = $serializer->serialize($formVerification->getData(), 'json', [
+                    'circular_reference_handler' => function ($object) {
+                        return $object->getId();
+                    }
+                ]);
+                $verificationArray = json_decode($verificationSerialized, true);
+
+                if ($oldArray['verification']['date']['timestamp'] !== $verificationArray['date']['timestamp'])
+                    $this->addErreur($participant->getId(), 'verification_date' , 'notice', 'Modification des données', true);
+
                 $participant = $formVerification->getData();
                 $em->flush();
             }

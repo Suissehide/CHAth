@@ -29,45 +29,44 @@ class Participant
     private $utilisateurs;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Verification", inversedBy="participant", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Verification", cascade={"persist", "remove"}, fetch="EAGER")
      */
     private $verification;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\General", inversedBy="participant", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\General", cascade={"persist", "remove"}, fetch="EAGER")
      */
     private $general;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", inversedBy="participant", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", cascade={"persist", "remove"}, fetch="EAGER")
      */
     private $cardiovasculaire;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Information", inversedBy="participant", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Information", cascade={"persist", "remove"}, fetch="EAGER")
      */
     private $information;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Deces", inversedBy="participant", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Deces", cascade={"persist", "remove"}, fetch="EAGER")
      */
     private $deces;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Liste", mappedBy="participant")
-     */
-    private $listes;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Donnee", inversedBy="participant", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Donnee", cascade={"persist", "remove"}, fetch="EAGER")
      */
     private $donnee;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Erreur", mappedBy="participant")
+     */
+    private $erreurs;
 
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
-        $this->listes = new ArrayCollection();
+        $this->erreurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -173,37 +172,6 @@ class Participant
         return $this;
     }
 
-    /**
-     * @return Collection|Liste[]
-     */
-    public function getListes(): Collection
-    {
-        return $this->listes;
-    }
-
-    public function addListe(Liste $liste): self
-    {
-        if (!$this->listes->contains($liste)) {
-            $this->listes[] = $liste;
-            $liste->setParticipant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeListe(Liste $liste): self
-    {
-        if ($this->listes->contains($liste)) {
-            $this->listes->removeElement($liste);
-            // set the owning side to null (unless already changed)
-            if ($liste->getParticipant() === $this) {
-                $liste->setParticipant(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getDonnee(): ?Donnee
     {
         return $this->donnee;
@@ -212,6 +180,37 @@ class Participant
     public function setDonnee(?Donnee $donnee): self
     {
         $this->donnee = $donnee;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Erreur[]
+     */
+    public function getErreurs(): Collection
+    {
+        return $this->erreurs;
+    }
+
+    public function addErreur(Erreur $erreur): self
+    {
+        if (!$this->erreurs->contains($erreur)) {
+            $this->erreurs[] = $erreur;
+            $erreur->setParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeErreur(Erreur $erreur): self
+    {
+        if ($this->erreurs->contains($erreur)) {
+            $this->erreurs->removeElement($erreur);
+            // set the owning side to null (unless already changed)
+            if ($erreur->getParticipant() === $this) {
+                $erreur->setParticipant(null);
+            }
+        }
 
         return $this;
     }

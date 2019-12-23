@@ -1,3 +1,5 @@
+
+
 {% block form_label %}
     {% if label is not same as(false) %}
         {% if not compound %}
@@ -34,17 +36,6 @@
     </div>
 {% endblock choice_widget_expanded %}
 
-{% block _qcm_question_widget %}
-    <div class="wrap-input">
-        {% if compound %}
-            {{ block('form_widget_compound') }}
-        {% else %}
-            {{ block('form_widget_simple') }}
-        {% endif %}
-        <span class="focus-input"></span>
-    </div>
-{% endblock _qcm_question_widget %}
-
 {% block form_row %}
     {% set widget_attr = {} %}
     {% if help is not empty %}
@@ -52,25 +43,15 @@
     {% endif %}
     <div class="wrap-input" {% with {attr: row_attr|default({} )} %} {{ block('attributes') }} {% endwith %}>
         {{ form_label(form) }}
-        {{ form_errors(form) }}
-        {{ form_widget(form, widget_attr) }}
-        {{ form_help(form) }}
-        <span class="focus-input"></span>
+        <div class="flex">
+            {{ form_errors(form) }}
+            {{ form_widget(form, widget_attr) }}
+            {{ form_help(form) }}
+            <span class="focus-input"></span>
+            <button class="history"><div class="history-icon"></div></button>
+        </div>
     </div>
 {% endblock form_row %}
-
-{% block integer_widget %}
-    {% set type = type|default('integer') %}
-    {% if not useStyle|default(false) %}
-        {{ block('form_widget_simple') }}
-    {% else %}
-        <div class="form-unity">
-            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}/>
-            <span class="focus-input"></span>
-            <div class="unity">{{ attr.unity|default('') }}</div>
-        </div>
-    {% endif %}
-{% endblock integer_widget %}
 
 {% block number_widget %}
     {% set type = type|default('number') %}
@@ -84,3 +65,58 @@
         </div>
     {% endif %}
 {% endblock number_widget %}
+
+
+
+{% block _donnee_genes_genes_entry_mutation_widget %}
+    {{ block('textarea_widget') }}
+     <button class="history"><div class="history-icon"></div></button>
+{% endblock _donnee_genes_genes_entry_mutation_widget %}
+
+{% block _donnee_genes_genes_entry_statut_widget %}
+    {{ block('qcm_widget') }}
+{% endblock _donnee_genes_genes_entry_statut_widget %}
+
+{% block _donnee_traitement_qcm_entry_reponse_widget %}
+    {{ block('qcm_widget') }}
+{% endblock _donnee_traitement_qcm_entry_reponse_widget %}
+
+{% block _donnee_facteurs_qcm_entry_reponse_widget %}
+    {{ block('qcm_widget') }}
+{% endblock _donnee_facteurs_qcm_entry_reponse_widget %}
+
+{% block _information_type_qcm_entry_reponse_widget %}
+    {{ block('qcm_widget') }}
+{% endblock _information_type_qcm_entry_reponse_widget %}
+
+{% block _information_complications_qcm_entry_reponse_widget %}
+    {{ block('qcm_widget') }}
+{% endblock _information_complications_qcm_entry_reponse_widget %}
+
+{% block _cardiovasculaire_traitement_qcm_entry_reponse_widget %}
+    {{ block('qcm_widget') }}
+{% endblock _cardiovasculaire_traitement_qcm_entry_reponse_widget %}
+
+{% block _cardiovasculaire_facteurs_qcm_entry_reponse_widget %}
+    {{ block('qcm_widget') }}
+{% endblock _cardiovasculaire_facteurs_qcm_entry_reponse_widget %}
+
+{% block _verification_non_inclusion_qcm_entry_reponse_widget %}
+    {{ block('qcm_widget') }}
+{% endblock _verification_non_inclusion_qcm_entry_reponse_widget %}
+
+{% block _verification_inclusion_qcm_entry_reponse_widget %}
+    {{ block('qcm_widget') }}
+{% endblock _verification_inclusion_qcm_entry_reponse_widget %}
+
+{% block qcm_widget %}
+    <div {{ block('widget_container_attributes') }}>
+        {% for child in form %}
+            <div class="radio-container">
+                {{ form_widget(child) }}
+                {{ form_label(child, null, {translation_domain: choice_translation_domain}) }}
+            </div>
+        {% endfor %}
+    </div>
+    <button class="history"><div class="history-icon"></div></button>
+{% endblock qcm_widget %}

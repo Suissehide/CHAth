@@ -19,6 +19,39 @@ class ErreurRepository extends ServiceEntityRepository
         parent::__construct($registry, Erreur::class);
     }
 
+    public function compte()
+    {
+        return $this->createQueryBuilder('e')
+                    ->select('COUNT(e)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
+    }
+
+    public function findByFilter($sort, $searchPhrase, $participantId, $fieldId)
+    {
+        $qb = $this->createQueryBuilder('e')
+        ->andWhere('e.participant = :participantId')
+        ->andWhere('e.fieldId = :fieldId')
+        ->setParameters(['participantId' => $participantId, 'fieldId' => $fieldId]);
+
+        if ($searchPhrase != "") {
+            $qb->andWhere('
+                    e.utilisateur LIKE :search
+                    OR e.message LIKE :search
+                    OR e.date LIKE :search
+                ')
+                ->setParameter('search', '%' . $searchPhrase . '%');
+        }
+        if ($sort) {
+            foreach ($sort as $key => $value) {
+                $qb->orderBy('e.' . $key, $value);
+            }
+        } else {
+            $qb->orderBy('e.date', 'DESC');
+        }
+        return $qb;
+    }
+
     // /**
     //  * @return Erreur[] Returns an array of Erreur objects
     //  */

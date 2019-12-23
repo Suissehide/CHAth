@@ -242,6 +242,30 @@ class UtilisateurController extends AbstractController
     }
 
     /**
+     * @Route("/utilisateur/view/{id}", name="utilisateur_view")
+     */
+    public function view(Utilisateur $utilisateur): Response
+    {
+        return $this->render('utilisateur/view.html.twig', [
+            'controller_name' => 'ViewController',
+            'user' => $utilisateur,
+        ]);
+    }
+
+    /**
+     * @Route("/utilisateur/getByEmail", name="utilisateur_getByEmail")
+     */
+    public function getByEmail(Request $request): Response
+    {
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $email = $request->request->get('email');
+            $user = $em->getRepository(Utilisateur::class)->findOneBy(['email' => $email]);
+            return new JsonResponse($user->getId());
+        }
+    }
+
+    /**
      * @Route("/onAuthenticationSuccess", name="onAuthenticationSuccess")
      */
     public function onAuthenticationSuccess(UrlGeneratorInterface $router, AuthorizationCheckerInterface $authChecker)

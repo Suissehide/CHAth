@@ -22,11 +22,6 @@ class Erreur
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Utilisateur", inversedBy="erreurs")
-     */
-    private $utilisateur;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $message;
@@ -37,9 +32,19 @@ class Erreur
     private $etat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Liste", inversedBy="erreurs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="erreurs")
      */
-    private $liste;
+    private $participant;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $fieldId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $utilisateur;
 
     public function getId(): ?int
     {
@@ -54,18 +59,6 @@ class Erreur
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getUtilisateur(): ?Utilisateur
-    {
-        return $this->utilisateur;
-    }
-
-    public function setUtilisateur(?Utilisateur $utilisateur): self
-    {
-        $this->utilisateur = $utilisateur;
 
         return $this;
     }
@@ -94,14 +87,38 @@ class Erreur
         return $this;
     }
 
-    public function getListe(): ?Liste
+    public function getParticipant(): ?Participant
     {
-        return $this->liste;
+        return $this->participant;
     }
 
-    public function setListe(?Liste $liste): self
+    public function setParticipant(?Participant $participant): self
     {
-        $this->liste = $liste;
+        $this->participant = $participant;
+
+        return $this;
+    }
+
+    public function getFieldId(): ?string
+    {
+        return $this->fieldId;
+    }
+
+    public function setFieldId(?string $fieldId): self
+    {
+        $this->fieldId = $fieldId;
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?string
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?string $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

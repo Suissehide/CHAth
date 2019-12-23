@@ -56,11 +56,6 @@ class General
      */
     private $diastolique;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Participant", mappedBy="general", cascade={"persist", "remove"})
-     */
-    private $participant;
-
     public function __construct()
     {
 
@@ -163,24 +158,6 @@ class General
     public function setDiastolique(?float $diastolique): self
     {
         $this->diastolique = $diastolique;
-
-        return $this;
-    }
-
-    public function getParticipant(): ?Participant
-    {
-        return $this->participant;
-    }
-
-    public function setParticipant(?Participant $participant): self
-    {
-        $this->participant = $participant;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newVerification = $participant === null ? null : $this;
-        if ($newVerification !== $participant->getVerification()) {
-            $participant->setVerification($newVerification);
-        }
 
         return $this;
     }

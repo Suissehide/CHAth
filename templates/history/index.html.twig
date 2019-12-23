@@ -1,7 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Erreur
-{% endblock %}
+{% block title %}Historique{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/bootgrid.min.css') }}">
@@ -12,24 +11,32 @@
     <div class="container-fluid">
 
         <div class="title-wrapper">
-            Historique du champs [CHAMPS] du patient [CODE]
+            <h1>Historique</h1>
+            <h3>participant <span>{{ code_participant }}</span></h3>
+            <h3>Champs <span>{{ id_field }}</span></h3>
         </div>
 
         <div class="container-form">
+            <div class="button-block">
+                <a onclick="history.back(-1)" class="form-btn btn-default">
+                    <i aria-hidden="true" class="fa fa-arrow-left"></i>Retour</a>
+            </div>
+
             <div class="flex-row">
                 <div class="table-wrapper">
                     <table cellspacing="0" class="table table-condensed table-hover table-striped" id="data-grid">
                         <thead>
                             <tr>
                                 <th data-column-id="id" data-identifier="true" data-searchable="false" data-type="numeric" data-visible="false">Id</th>
-                                <th data-column-id="prenom">Prénom</th>
-                                <th data-column-id="date">Date</th>
-                                <th data-column-id="status" data-searchable="false" data-visible="false">Status</th>
+                                <th data-column-id="etat" data-width="10%" data-formatter="etat" data-searchable="false">Etat</th>
+                                <th data-column-id="date" data-width="20%">Date</th>
+                                <th data-column-id="utilisateur" data-width="20%">Utilisateur</th>
+                                <th data-column-id="message" data-width="50%">Message</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
-            <div>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -58,39 +65,44 @@
                 1: "out"
             },
             requestHandler: function (request) {
+                request.participantId = 1;
+                request.fieldId = 'verification_date';
                 return request;
             },
-            url: "{{ path('index_patient') }}",
+            url: "{{ path('history_list', {participant: 1, fieldId: 'verification_date'}) }}",
             formatters: {
-                "observ": function (column, row) {
-                    if (row.observ) 
-                        return "<div class=\"pastille\"></div>";
-                    
-
+                "etat": function (column, row) {
+                    if (row.etat == 'notice') 
+                        return "<div class=\"pastille pastille__notice\"></div>";
+                    if (row.etat == 'info') 
+                        return "<div class=\"pastille pastille__info\"></div>";
+                    if (row.etat == 'error') 
+                        return "<div class=\"pastille pastille__error\"></div>";
                 },
                 "commands": function (column, row) {
                     return "<button type=\"button\" class=\"btn btn-xs btn-default command-view\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-eye\"></i></button> " + "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-pencil-alt\"></i></button> " + "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-trash-alt\"></i></button>";
                 }
             }
-        }).on("loaded.rs.jquery.bootgrid", function () {
-            grid.find(".command-edit").on("click", function (e) { // alert("You pressed edit on row: " + $(this).data("row-id"));
-            }).end().find(".command-delete").on("click", function (e) { // alert("You pressed delete on row: " + $(this).data("row-id"));
-            }).end().find(".command-view").on("click", function (e) { // alert("You pressed view on row: " + $(this).data("row-id"));
-            }).end().find("tr").on("click", function (e) {
-                redirect($(this).data("row-id"));
-            });
+        }).on('click.rs.jquery.bootgrid', function (e, cols, row, target) {
+            if (typeof row != "undefined")
+                redirect(row.utilisateur);
         });
 
-        function redirect(id) {
-            if (id == undefined) 
+        function redirect(email) {
+            if (email == undefined) 
                 return;
-
-            let pathArray = window.location.pathname.split("/");
-            let url = window.location.protocol + "//" + window.location.host;
-            for (let i = 0; i < pathArray.length - 1; i++) 
-                url += pathArray[i] + "/";
-
-            window.location.assign(url + "patient/" + id);
+            let url = "{{ path('utilisateur_view', {id: 'userId'}) }}";
+            $.ajax({
+                type: "POST",
+                url: "{{ path('utilisateur_getByEmail') }}",
+                data: {
+                    'email': email
+                },
+                success: function(response) {
+                    url = url.replace('userId', response);
+                    window.location.assign(url);
+                },
+            });
         };
     </script>
 {% endblock %}

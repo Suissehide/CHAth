@@ -1,0 +1,80 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+	Profil
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+{% endblock %}
+
+{% block page_content %}
+	<div class="container-fluid">
+
+		<div class="title-wrapper">
+			Profil
+		</div>
+
+		<div class="container-form">
+
+			<main class="flex-row">
+				<section class="flex-2">
+					<h3>Informations générales</h3>
+
+					<div class="row">
+						<div class="col-md-8">
+							<div class="wrap-input">
+								<label>Email</label>
+								<p class="input-text">{{ user.email }}</p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8">
+							<div class="wrap-input">
+								<label>Prenom</label>
+								<p class="input-text">{{ user.prenom }}</p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8">
+							<div class="wrap-input">
+								<label>Nom</label>
+								<p class="input-text">{{ user.nom }}</p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8">
+                            <div class="wrap-input">
+								<label>Roles</label>
+                                <ul>
+                                    {% for role in user.roles %}
+                                        {% if role == 'ROLE_ADMIN' %}
+                                            <li class="input-text">Admin</li>
+                                        {% elseif role == 'ROLE_USER' %}
+                                            <li class="input-text">Utilisateur</li>
+                                        {% elseif role == 'ROLE_GUEST' %}
+                                            <li class="input-text">Invité</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+						</div>
+					</div>
+
+                    <div class="button-block">
+                        <a type="button" class="form-btn btn-default" onclick="history.back(-1)">
+                            <i aria-hidden="true" class="fa fa-arrow-left"></i>Retour</a>
+                    </div>
+
+				</section>
+			</main>
+
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
