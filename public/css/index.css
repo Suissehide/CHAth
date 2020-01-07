@@ -401,8 +401,7 @@ label,
     flex: 30%;
 }
 
-.row-label {
-    /* text-align: center; */
+.row-flex .row-label {
     padding-bottom: 5px;
     margin-bottom: 10px;
     border-bottom: 1px solid #55D6BE;

@@ -37,7 +37,7 @@ class GeneralType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('date_naissance', DateType::class, array(
+            ->add('dateNaissance', DateType::class, array(
                 'label' => 'Date de naissance',
                 'widget' => 'single_text',
                 'format' => 'MM/yyyy',
@@ -70,17 +70,17 @@ class GeneralType extends AbstractType
             ))
             ->add('imc', NumberType::class, array(
                 'label' => 'IMC',
-                'scale' => 2,
+                'scale' => 1,
                 'attr' => array(
                     'unity' => 'kg/m²',
                     'data-min' => 10,
                     'data-max' => 80,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
-            ->add('systolique', NumberType::class, array(
+            ->add('systolique', IntegerType::class, array(
                 'label' => 'Tension artérielle systolique',
-                'scale' => 2,
                 'attr' => array(
                     'unity' => 'mmHg',
                     'data-min' => 1,
@@ -88,9 +88,8 @@ class GeneralType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('diastolique', NumberType::class, array(
+            ->add('diastolique', IntegerType::class, array(
                 'label' => 'Tension artérielle diastolique',
-                'scale' => 2,
                 'attr' => array(
                     'unity' => 'mmHg',
                     'data-min' => 1,

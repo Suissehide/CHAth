@@ -41,7 +41,6 @@ class GeneType extends AbstractType
             ))
             ->add('frequence', NumberType::class, array(
                 'label' => ' ',
-                'scale' => 2,
                 'attr' => array(
                     'unity' => '%',
                     'data-min' => 0,

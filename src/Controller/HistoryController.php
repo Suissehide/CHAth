@@ -39,7 +39,7 @@ class HistoryController extends AbstractController
             if ($searchPhrase != "")
                 $count = count($erreurs->getQuery()->getResult());
             else
-                $count = $erreurRepository->compte();
+                $count = $erreurRepository->compte($participantId, $fieldId);
             if ($rowCount != -1) {
                 $min = ($current - 1) * $rowCount;
                 $max = $rowCount;

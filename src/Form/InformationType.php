@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class InformationType extends AbstractType
@@ -47,9 +48,8 @@ class InformationType extends AbstractType
                 'label' => 'Type d\'infarctus du Myocarde'
             ))
 
-            ->add('CRP', NumberType::class, array(
+            ->add('CRP', IntegerType::class, array(
                 'label' => 'CRP ultra-sensible',
-                'scale' => 2,
                 'attr' => array(
                     'unity' => 'mg/L',
                     'data-min' => 0,
@@ -59,41 +59,45 @@ class InformationType extends AbstractType
             ))
             ->add('hemoglobine', NumberType::class, array(
                 'label' => 'Hémoglobine',
-                'scale' => 2,
+                'scale' => 1,
                 'attr' => array(
                     'unity' => 'g/dL',
                     'data-min' => 0,
                     'data-max' => 100,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
             ->add('leucocytes', NumberType::class, array(
                 'label' => 'Leucocytes',
-                'scale' => 2,
+                'scale' => 1,
                 'attr' => array(
-                    'unity' => 'G/L',
+                    'unity' => 'g/L',
                     'data-min' => 0,
                     'data-max' => 100,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
             ->add('PNN', NumberType::class, array(
                 'label' => 'PNN',
-                'scale' => 2,
+                'scale' => 1,
                 'attr' => array(
-                    'unity' => 'G/L',
+                    'unity' => 'g/L',
                     'data-min' => 0,
                     'data-max' => 100,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
             ->add('plaquettes', NumberType::class, array(
                 'label' => 'Plaquettes',
-                'scale' => 2,
+                'scale' => 1,
                 'attr' => array(
-                    'unity' => 'G/L',
+                    'unity' => 'g/L',
                     'data-min' => 0,
                     'data-max' => 100,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
@@ -104,46 +108,51 @@ class InformationType extends AbstractType
                     'unity' => 'g/L',
                     'data-min' => 0,
                     'data-max' => 100,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
-            ->add('LDL_c', NumberType::class, array(
+            ->add('LDLC', NumberType::class, array(
                 'label' => 'LDL-c',
                 'scale' => 2,
                 'attr' => array(
                     'unity' => 'g/L',
                     'data-min' => 0,
                     'data-max' => 100,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
-            ->add('HDL_c', NumberType::class, array(
+            ->add('HDLC', NumberType::class, array(
                 'label' => 'HDL-c',
                 'scale' => 2,
                 'attr' => array(
                     'unity' => 'g/L',
                     'data-min' => 0,
                     'data-max' => 100,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
             ->add('HbA1c', NumberType::class, array(
                 'label' => 'HbA1c',
-                'scale' => 2,
+                'scale' => 1,
                 'attr' => array(
                     'unity' => '%',
                     'data-min' => 0,
                     'data-max' => 100,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
             ->add('creatininemie', NumberType::class, array(
                 'label' => 'Créatininémie',
-                'scale' => 2,
+                'scale' => 1,
                 'attr' => array(
                     'unity' => '%',
                     'data-min' => 0,
                     'data-max' => 100,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))

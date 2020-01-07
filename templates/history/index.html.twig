@@ -54,6 +54,10 @@
     </script>
 
     <script>
+        var url = "{{ path('history_list', {participant: 'participant_id', fieldId: 'field_id'}) }}"
+        url = url.replace('participant_id', {{ id_participant }});
+        url = url.replace('field_id', '{{ id_field }}');
+
         var grid = $("#data-grid").bootgrid({
             rowCount: [
                 5, 10, 20, -1
@@ -65,11 +69,11 @@
                 1: "out"
             },
             requestHandler: function (request) {
-                request.participantId = 1;
-                request.fieldId = 'verification_date';
+                request.participantId = {{ id_participant }};
+                request.fieldId = '{{ id_field }}';
                 return request;
             },
-            url: "{{ path('history_list', {participant: 1, fieldId: 'verification_date'}) }}",
+            url: url,
             formatters: {
                 "etat": function (column, row) {
                     if (row.etat == 'notice') 
@@ -91,7 +95,7 @@
         function redirect(email) {
             if (email == undefined) 
                 return;
-            let url = "{{ path('utilisateur_view', {id: 'userId'}) }}";
+            let redirectUrl = "{{ path('utilisateur_view', {id: 'userId'}) }}";
             $.ajax({
                 type: "POST",
                 url: "{{ path('utilisateur_getByEmail') }}",
@@ -99,8 +103,8 @@
                     'email': email
                 },
                 success: function(response) {
-                    url = url.replace('userId', response);
-                    window.location.assign(url);
+                    redirectUrl = redirectUrl.replace('userId', response);
+                    window.location.assign(redirectUrl);
                 },
             });
         };

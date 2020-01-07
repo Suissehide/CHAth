@@ -43,18 +43,44 @@
     {% endif %}
     <div class="wrap-input" {% with {attr: row_attr|default({} )} %} {{ block('attributes') }} {% endwith %}>
         {{ form_label(form) }}
-        <div class="flex">
-            {{ form_errors(form) }}
+        <div class="flex{% if errors is not empty %} error-input{% endif %}">
             {{ form_widget(form, widget_attr) }}
             {{ form_help(form) }}
             <span class="focus-input"></span>
             <button class="history"><div class="history-icon"></div></button>
         </div>
+        {{ form_errors(form) }}
     </div>
 {% endblock form_row %}
 
+{% block form_errors %}
+    {% if errors|length > 0 %}
+        {% if compound %}
+            {# ... display the global form errors #}
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {# ... display the errors for a single field #}
+            <div class="error-container">
+                <div class="error-form">
+                    <input class="input js-error-input"/>
+                    <button class="btn btn-danger js-error-button">Envoyer</button>
+                </div>
+                <ul class="error-list">
+                    {% for error in errors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock form_errors %}
+
 {% block number_widget %}
-    {% set type = type|default('number') %}
+    {% set type = type|default('text') %}
     {% if not useStyle|default(false) %}
         {{ block('form_widget_simple') }}
     {% else %}
@@ -65,6 +91,19 @@
         </div>
     {% endif %}
 {% endblock number_widget %}
+
+{%- block integer_widget -%}
+    {% set type = type|default('number') %}
+        {% if not useStyle|default(false) %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+        <div class="form-unity">
+            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}/>
+            <span class="focus-input"></span>
+            <div class="unity">{{ attr.unity|default('') }}</div>
+        </div>
+    {% endif %}
+{%- endblock integer_widget -%}
 
 
 

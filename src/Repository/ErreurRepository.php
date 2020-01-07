@@ -19,9 +19,27 @@ class ErreurRepository extends ServiceEntityRepository
         parent::__construct($registry, Erreur::class);
     }
 
-    public function compte()
+    public function getLastErreur($participantId, $fieldId)
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->andWhere('e.fieldId = :fieldId')
+            ->leftJoin('e.participant', 'p')
+            ->andWhere('p.id = :participantId')
+            ->setParameters(['participantId' => $participantId, 'fieldId' => $fieldId])
+            ->orderBy('e.date', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+        return $qb;
+    }
+
+    public function compte($participantId, $fieldId)
     {
         return $this->createQueryBuilder('e')
+                    ->andWhere('e.fieldId = :fieldId')
+                    ->leftJoin('e.participant', 'p')
+                    ->andWhere('p.id = :participantId')
+                    ->setParameters(['participantId' => $participantId, 'fieldId' => $fieldId])
                     ->select('COUNT(e)')
                     ->getQuery()
                     ->getSingleScalarResult();
@@ -30,8 +48,9 @@ class ErreurRepository extends ServiceEntityRepository
     public function findByFilter($sort, $searchPhrase, $participantId, $fieldId)
     {
         $qb = $this->createQueryBuilder('e')
-        ->andWhere('e.participant = :participantId')
         ->andWhere('e.fieldId = :fieldId')
+        ->leftJoin('e.participant', 'p')
+        ->andWhere('p.id = :participantId')
         ->setParameters(['participantId' => $participantId, 'fieldId' => $fieldId]);
 
         if ($searchPhrase != "") {

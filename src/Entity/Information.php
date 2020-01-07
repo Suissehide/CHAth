@@ -42,47 +42,47 @@ class Information
     private $CRP;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
      */
     private $hemoglobine;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
      */
     private $leucocytes;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
      */
     private $PNN;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
      */
     private $plaquettes;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $cholesterol;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
-    private $LDL_c;
+    private $LDLC;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
-    private $HDL_c;
+    private $HDLC;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
      */
     private $HbA1c;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
      */
     private $creatininemie;
 
@@ -213,24 +213,24 @@ class Information
 
     public function getLDLC(): ?float
     {
-        return $this->LDL_c;
+        return $this->LDLC;
     }
 
-    public function setLDLC(?float $LDL_c): self
+    public function setLDLC(?float $LDLC): self
     {
-        $this->LDL_c = $LDL_c;
+        $this->LDLC = $LDLC;
 
         return $this;
     }
 
     public function getHDLC(): ?float
     {
-        return $this->HDL_c;
+        return $this->HDLC;
     }
 
-    public function setHDLC(?float $HDL_c): self
+    public function setHDLC(?float $HDLC): self
     {
-        $this->HDL_c = $HDL_c;
+        $this->HDLC = $HDLC;
 
         return $this;
     }

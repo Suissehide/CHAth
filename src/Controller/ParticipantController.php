@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Utilisateur;
 use App\Entity\Participant;
 use App\Entity\Verification;
 use App\Entity\Qcm;
@@ -30,6 +29,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Serializer\Serializer;
@@ -357,6 +357,80 @@ class ParticipantController extends AbstractController
         $participant->setDonnee($donnee);
     }
 
+    /**
+     * @Route("/erreur/add", name="erreur_add_info")
+     */
+    public function erreur_add_info(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $participantId = $request->request->get('participantId');
+            $fieldId = $request->request->get('fieldId');
+            $message = $request->request->get('message');
+            dump($fieldId, $participantId, $message);
+            // $this->addErreur($participantId, $fieldId, 'info', $message, true);
+        }
+    }
+
+    private function formatKey($key)
+    {
+        return strtolower(preg_replace('/(?<=[a-z])([A-Z]+)/', '_$1', $key));
+    }
+
+    private function serializeEntity($data)
+    {
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $serialized = $serializer->serialize($data, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+            }
+        ]);
+        return json_decode($serialized, true);
+    }
+
+    private function searchDiff(Participant $participant, $oldArray, $newArray, $start, $path)
+    {
+        // dump($newArray);
+        foreach ($newArray as $key => $value) {
+            if (is_array($value) && array_key_exists('timestamp', $value) && $oldArray[$start][$key]['timestamp'] !== $value['timestamp']) {
+                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification des données', true);
+            }
+            else if (is_array($value) && array_key_exists('reponse', $value) && $oldArray[$start][$key]['reponse'] !== $value['reponse']) {
+                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) . '_reponse' , 'notice', 'Modification des données', true);
+            }
+            else if (is_array($value) && 'alimentation' === $key && !empty(array_diff($oldArray[$start][$key], $value))) {
+                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification des données', true);
+            }
+            else if (is_array($value) && !array_key_exists('timestamp', $value) && !array_key_exists('reponse', $value) && 'alimentation' !== $key) {
+                $this->searchDiff($participant, $oldArray[$start], $newArray[$key], $key, $path . '_' . $this->formatKey($key));
+            }
+            else if ($oldArray[$start][$key] !== $value)
+                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification des données', true);
+        }
+    }
+
+    private function generateErreur($participantId, formInterface $form, $array, $start, $path)
+    {
+        $em = $this->getDoctrine()->getManager();
+        foreach ($array[$start] as $key => $value) {
+            if (is_array($value) && !array_key_exists('timestamp', $value) && !array_key_exists('reponse', $value) && 'alimentation' !== $key) {
+                $this->generateErreur($participantId, $form, $array[$start], $key, $path . '_' . $this->formatKey($key));
+            }
+            $erreur = $em->getRepository(Erreur::class)->getLastErreur($participantId, $path . '_' . $this->formatKey($key));
+            if ($erreur /* && $erreur->getEtat() === 'error' */) {
+                $split = explode('_', $path . '_' . $key);
+                dump($split, $key);
+                $formGet = $form;
+                foreach(array_slice($split, 1) as $s) {
+                    $formGet = $formGet->get($s);
+                }
+                $formGet->addError(new FormError($erreur->getMessage()));
+            }
+        }
+    }
+
     private function generateJson(FormInterface $form)
     {
         $fields = ['fields' => []];
@@ -372,7 +446,6 @@ class ParticipantController extends AbstractController
                 'type' => $type,
             ];
         }
-
         // dump(json_encode($fields, JSON_PRETTY_PRINT));
         return $fields;
     }
@@ -400,18 +473,11 @@ class ParticipantController extends AbstractController
     public function index(Participant $participant, Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
 
-        $oldSerialized = $serializer->serialize($participant, 'json', [
-            'circular_reference_handler' => function ($object) {
-                return $object->getId();
-            }
-        ]);
-        $oldArray = json_decode($oldSerialized, true);
+        $oldArray = $this->serializeEntity($participant);
 
         $form = $this->createForm(ParticipantType::class, $participant);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('validation')->isClicked()) {
@@ -423,19 +489,21 @@ class ParticipantController extends AbstractController
 
         $verification = $participant->getVerification();
         $formVerification = $this->createForm(VerificationType::class, $verification);
+                
+        /* GENERATE ERREUR */
+        $this->generateErreur($participant->getId(), $formVerification, $oldArray, 'verification', 'verification');
+
         $formVerification->handleRequest($request);
         if ($formVerification->isSubmitted() && $formVerification->isValid()) {
             if ($formVerification->get('save')->isClicked()) {
-                // $data = $formVerification->all();
-                $verificationSerialized = $serializer->serialize($formVerification->getData(), 'json', [
-                    'circular_reference_handler' => function ($object) {
-                        return $object->getId();
-                    }
-                ]);
-                $verificationArray = json_decode($verificationSerialized, true);
+                
+                /* SERIALISATION */
+                $verificationArray = $this->serializeEntity($formVerification->getData());
 
-                if ($oldArray['verification']['date']['timestamp'] !== $verificationArray['date']['timestamp'])
-                    $this->addErreur($participant->getId(), 'verification_date' , 'notice', 'Modification des données', true);
+                /* SPECIAL ERROR */
+                
+                /* SEARCH DIFF */
+                $this->searchDiff($participant, $oldArray, $verificationArray, 'verification', 'verification');
 
                 $participant = $formVerification->getData();
                 $em->flush();
@@ -445,9 +513,26 @@ class ParticipantController extends AbstractController
 
         $general = $participant->getGeneral();
         $formGeneral = $this->createForm(GeneralType::class, $general);
+        
+        /* GENERATE ERREUR */
+        $this->generateErreur($participant->getId(), $formGeneral, $oldArray, 'general', 'general');
+
         $formGeneral->handleRequest($request);
         if ($formGeneral->isSubmitted() && $formGeneral->isValid()) {
             if ($formGeneral->get('save')->isClicked()) {
+
+                /* SERIALISATION */
+                $generalArray = $this->serializeEntity($formGeneral->getData());
+
+                /* SPECIAL ERROR */
+                if ($generalArray['dateNaissance']['timestamp'] !== $oldArray['general']['dateNaissance']['timestamp'] && 
+                    (floor((time() - $generalArray['dateNaissance']['timestamp']) / 31556926) < 75)) {
+                        $this->addErreur($participant->getId(), 'general_date_naissance' , 'error', 'Le participant doit avoir un âge >= 75 ans', false);
+                }
+
+                /* SEARCH DIFF */
+                $this->searchDiff($participant, $oldArray, $generalArray, 'general', 'general');
+
                 $participant = $formGeneral->getData();
                 $em->flush();
             }
@@ -456,9 +541,22 @@ class ParticipantController extends AbstractController
 
         $cardiovasculaire = $participant->getCardiovasculaire();
         $formCardiovasculaire = $this->createForm(CardiovasculaireType::class, $cardiovasculaire);
+                        
+        /* GENERATE ERREUR */
+        $this->generateErreur($participant->getId(), $formCardiovasculaire, $oldArray, 'cardiovasculaire', 'cardiovasculaire');
+
         $formCardiovasculaire->handleRequest($request);
         if ($formCardiovasculaire->isSubmitted() && $formCardiovasculaire->isValid()) {
             if ($formCardiovasculaire->get('save')->isClicked()) {
+                                
+                /* SERIALISATION */
+                $cardiovasculaireArray = $this->serializeEntity($formCardiovasculaire->getData());
+
+                /* SPECIAL ERROR */
+
+                /* SEARCH DIFF */
+                $this->searchDiff($participant, $oldArray, $cardiovasculaireArray, 'cardiovasculaire', 'cardiovasculaire');
+
                 $participant = $formCardiovasculaire->getData();
                 $em->flush();
             }
@@ -467,9 +565,22 @@ class ParticipantController extends AbstractController
 
         $information = $participant->getInformation();
         $formInformation = $this->createForm(InformationType::class, $information);
+                        
+        /* GENERATE ERREUR */
+        $this->generateErreur($participant->getId(), $formInformation, $oldArray, 'information', 'information');
+
         $formInformation->handleRequest($request);
         if ($formInformation->isSubmitted() && $formInformation->isValid()) {
             if ($formInformation->get('save')->isClicked()) {
+                                                
+                /* SERIALISATION */
+                $informationArray = $this->serializeEntity($formInformation->getData());
+
+                /* SPECIAL ERROR */
+
+                /* SEARCH DIFF */
+                $this->searchDiff($participant, $oldArray, $informationArray, 'information', 'information');
+
                 $participant = $formInformation->getData();
                 $em->flush();
             }
@@ -478,9 +589,22 @@ class ParticipantController extends AbstractController
 
         $donnee = $participant->getDonnee();
         $formDonnee = $this->createForm(DonneeType::class, $donnee);
+                        
+        /* GENERATE ERREUR */
+        $this->generateErreur($participant->getId(), $formDonnee, $oldArray, 'donnee', 'donnee');
+
         $formDonnee->handleRequest($request);
         if ($formDonnee->isSubmitted() && $formDonnee->isValid()) {
             if ($formDonnee->get('save')->isClicked()) {
+                                                                
+                /* SERIALISATION */
+                $donneeArray = $this->serializeEntity($formDonnee->getData());
+
+                /* SPECIAL ERROR */
+
+                /* SEARCH DIFF */
+                $this->searchDiff($participant, $oldArray, $donneeArray, 'donnee', 'donnee');
+
                 $participant = $formDonnee->getData();
                 $em->flush();
             }
@@ -490,9 +614,22 @@ class ParticipantController extends AbstractController
 
         $deces = $participant->getDeces();
         $formDeces = $this->createForm(DecesType::class, $deces);
+                        
+        /* GENERATE ERREUR */
+        $this->generateErreur($participant->getId(), $formDeces, $oldArray, 'deces', 'deces');
+
         $formDeces->handleRequest($request);
         if ($formDeces->isSubmitted() && $formDeces->isValid()) {
             if ($formDeces->get('save')->isClicked()) {
+                                                                                
+                /* SERIALISATION */
+                $decesArray = $this->serializeEntity($formDeces->getData());
+
+                /* SPECIAL ERROR */
+
+                /* SEARCH DIFF */
+                $this->searchDiff($participant, $oldArray, $decesArray, 'deces', 'deces');
+
                 $participant = $formDeces->getData();
                 $em->flush();
             }
@@ -516,7 +653,7 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/generate", name="participant_code_generate", methods="GET|POST")
      */
-    public function rendezVous_date_error(Request $request): JsonResponse
+    public function participant_code_generate(Request $request): JsonResponse
     {
         if ($request->isXmlHttpRequest()) {
             $nom = $this->stripAccents($request->request->get('nom'));

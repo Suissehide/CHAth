@@ -29,7 +29,7 @@ class General
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $date_naissance;
+    private $dateNaissance;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -42,17 +42,17 @@ class General
     private $poids;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
      */
     private $imc;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $systolique;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $diastolique;
 
@@ -92,12 +92,12 @@ class General
 
     public function getDateNaissance(): ?\DateTimeInterface
     {
-        return $this->date_naissance;
+        return $this->dateNaissance;
     }
 
-    public function setDateNaissance(?\DateTimeInterface $date_naissance): self
+    public function setDateNaissance(?\DateTimeInterface $dateNaissance): self
     {
-        $this->date_naissance = $date_naissance;
+        $this->dateNaissance = $dateNaissance;
 
         return $this;
     }

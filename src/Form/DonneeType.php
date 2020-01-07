@@ -60,9 +60,8 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('dyspnee', NumberType::class, array(
+            ->add('dyspnee', IntegerType::class, array(
                 'label' => 'Dyspnée',
-                'scale' => 2,
                 'attr' => array(
                     'unity' => 'NYHA',
                     'data-min' => 0,
@@ -70,9 +69,8 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('douleur', NumberType::class, array(
+            ->add('douleur', IntegerType::class, array(
                 'label' => 'Douleur thoracique',
-                'scale' => 2,
                 'attr' => array(
                     'unity' => 'CCS',
                     'data-min' => 0,
@@ -123,9 +121,8 @@ class DonneeType extends AbstractType
                 'label' => 'Traitement mis en place suite à l\'événement cardiovasculaire'
             ))
 
-            ->add('crp', NumberType::class, array(
+            ->add('crp', IntegerType::class, array(
                 'label' => 'CRP ultra-sensible',
-                'scale' => 0,
                 'attr' => array(
                     'unity' => 'mg/L',
                     'data-min' => 1,
@@ -135,81 +132,89 @@ class DonneeType extends AbstractType
             ))
             ->add('hemoglobine', NumberType::class, array(
                 'label' => 'Hémoglobine',
-                'scale' => 0,
+                'scale' => 1,
                 'attr' => array(
                     'unity' => 'g/dL',
                     'data-min' => 1,
                     'data-max' => 30,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
             ->add('leucocytes', NumberType::class, array(
                 'label' => 'Leucocytes',
-                'scale' => 0,
+                'scale' => 1,
                 'attr' => array(
-                    'unity' => 'G/L',
+                    'unity' => 'g/L',
                     'data-min' => 1,
                     'data-max' => 30,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
             ->add('pnn', NumberType::class, array(
                 'label' => 'PNN',
-                'scale' => 0,
+                'scale' => 1,
                 'attr' => array(
-                    'unity' => 'G/L',
+                    'unity' => 'g/L',
                     'data-min' => 1,
                     'data-max' => 30,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
             ->add('plaquettes', NumberType::class, array(
                 'label' => 'Plaquettes',
-                'scale' => 0,
+                'scale' => 1,
                 'attr' => array(
-                    'unity' => 'G/L',
+                    'unity' => 'g/L',
                     'data-min' => 1,
                     'data-max' => 30,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
             ->add('cholesterol', NumberType::class, array(
                 'label' => 'Cholestérol total',
-                'scale' => 0,
+                'scale' => 2,
                 'attr' => array(
                     'unity' => 'g/L',
                     'data-min' => 1,
                     'data-max' => 30,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
             ->add('ldl', NumberType::class, array(
                 'label' => 'LDL-c',
-                'scale' => 0,
+                'scale' => 2,
                 'attr' => array(
                     'unity' => 'g/L',
                     'data-min' => 1,
                     'data-max' => 30,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
             ->add('hdl', NumberType::class, array(
                 'label' => 'HDL-c',
-                'scale' => 0,
+                'scale' => 2,
                 'attr' => array(
                     'unity' => 'g/L',
                     'data-min' => 1,
                     'data-max' => 30,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
             ->add('hba1c', NumberType::class, array(
                 'label' => ' ',
-                'scale' => 0,
+                'scale' => 1,
                 'attr' => array(
                     'unity' => '%',
                     'data-min' => 1,
                     'data-max' => 30,
+                    'step' => 0.1,
                 ),
                 'required' => false,
             ))
@@ -230,7 +235,7 @@ class DonneeType extends AbstractType
             ))
 
 
-            ->add('carotideCommuneDroite', NumberType::class, array(
+            ->add('carotideCommuneDroite', IntegerType::class, array(
                 'label' => 'Volume athérome carotide commune droite',
                 'attr' => array(
                     'unity' => '',
@@ -239,7 +244,7 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('carotideCommuneGauche', NumberType::class, array(
+            ->add('carotideCommuneGauche', IntegerType::class, array(
                 'label' => 'Volume athérome carotide commune gauche',
                 'attr' => array(
                     'unity' => '',
@@ -248,7 +253,7 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('carotideInterneDroite', NumberType::class, array(
+            ->add('carotideInterneDroite', IntegerType::class, array(
                 'label' => 'Volume athérome carotide interne droite',
                 'attr' => array(
                     'unity' => '',
@@ -257,7 +262,7 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('carotideInterneGauche', NumberType::class, array(
+            ->add('carotideInterneGauche', IntegerType::class, array(
                 'label' => 'Volume athérome carotide interne gauche',
                 'attr' => array(
                     'unity' => '',
@@ -266,7 +271,7 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('fraction', NumberType::class, array(
+            ->add('fraction', IntegerType::class, array(
                 'label' => 'Fraction d’éjection ventriculaire gauche',
                 'attr' => array(
                     'unity' => '%',
