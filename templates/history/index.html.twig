@@ -54,7 +54,7 @@
     </script>
 
     <script>
-        var url = "{{ path('history_list', {participant: 'participant_id', fieldId: 'field_id'}) }}"
+        var url = "{{ path('history_list_field', {participant: 'participant_id', fieldId: 'field_id'}) }}"
         url = url.replace('participant_id', {{ id_participant }});
         url = url.replace('field_id', '{{ id_field }}');
 

@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Erreur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Erreur|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,21 +19,56 @@ class ErreurRepository extends ServiceEntityRepository
         parent::__construct($registry, Erreur::class);
     }
 
-    public function getLastErreur($participantId, $fieldId)
+    public function getCountAll($participantId)
+    {
+        return $this->createQueryBuilder('e')
+                    ->leftJoin('e.participant', 'p')
+                    ->andWhere('p.id = :participantId')
+                    ->setParameters(['participantId' => $participantId])
+                    ->select('COUNT(e)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
+    }
+    
+    public function findHistory($sort, $searchPhrase, $participantId)
     {
         $qb = $this->createQueryBuilder('e')
-            ->andWhere('e.fieldId = :fieldId')
-            ->leftJoin('e.participant', 'p')
-            ->andWhere('p.id = :participantId')
-            ->setParameters(['participantId' => $participantId, 'fieldId' => $fieldId])
-            ->orderBy('e.date', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+        ->leftJoin('e.participant', 'p')
+        ->andWhere('p.id = :participantId')
+        ->setParameters(['participantId' => $participantId]);
+
+        if ($searchPhrase != "") {
+            $qb->andWhere('
+                    e.utilisateur LIKE :search
+                    OR e.message LIKE :search
+                    OR e.date LIKE :search
+                ')
+                ->setParameter('search', '%' . $searchPhrase . '%');
+        }
+        if ($sort) {
+            foreach ($sort as $key => $value) {
+                $qb->orderBy('e.' . $key, $value);
+            }
+        } else {
+            $qb->orderBy('e.date', 'DESC');
+        }
         return $qb;
     }
 
-    public function compte($participantId, $fieldId)
+    public function getLastErreur($participantId)
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->leftJoin('e.participant', 'p')
+            ->andWhere('p.id = :participantId')
+            ->setParameters(['participantId' => $participantId])
+            ->orderBy('e.date', 'DESC')
+            ->groupBy('e.fieldId')
+            ->getQuery()
+            ->getResult();
+        return $qb;
+    }
+
+    public function getCount($participantId, $fieldId)
     {
         return $this->createQueryBuilder('e')
                     ->andWhere('e.fieldId = :fieldId')

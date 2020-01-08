@@ -20,6 +20,9 @@ use App\Form\DecesType;
 use App\Form\InformationType;
 use App\Form\DonneeType;
 
+
+use App\Repository\ErreurRepository;
+
 use DateTime;
 use DateTimeZone;
 
@@ -45,6 +48,51 @@ class ParticipantController extends AbstractController
     public function __construct(Security $security)
     {
         $this->security = $security;
+    }
+
+    /**
+     * @Route("/participant/history", name="history_list")
+     */
+    public function history(ErreurRepository $erreurRepository, Request $request): Response
+    {
+        if ($request->isXmlHttpRequest()) {
+            $current = $request->request->get('current');
+            $rowCount = $request->request->get('rowCount');
+            $searchPhrase = $request->request->get('searchPhrase');
+            $sort = $request->request->get('sort');
+            $participantId = $request->request->get('participantId');
+
+            $erreurs = $erreurRepository->findHistory($sort, $searchPhrase, $participantId);
+            if ($searchPhrase != "")
+                $count = count($erreurs->getQuery()->getResult());
+            else
+                $count = $erreurRepository->getCountAll($participantId);
+            if ($rowCount != -1) {
+                $min = ($current - 1) * $rowCount;
+                $max = $rowCount;
+                $erreurs->setMaxResults($max)->setFirstResult($min);
+            }
+            $erreurs = $erreurs->getQuery()->getResult();
+            $rows = array();
+            foreach ($erreurs as $erreur) {
+                $row = array(
+                    "id" => $erreur->getId(),
+                    "date" => $this->formatDate($erreur->getDate()),
+                    "utilisateur" => $erreur->getUtilisateur(),
+                    "message" => $erreur->getMessage(),
+                    "etat" => $erreur->getEtat(),
+                );
+                array_push($rows, $row);
+            }
+
+            $data = array(
+                "current" => intval($current),
+                "rowCount" => intval($rowCount),
+                "rows" => $rows,
+                "total" => intval($count)
+            );
+            return new JsonResponse($data);
+        }
     }
 
     /**
@@ -414,6 +462,8 @@ class ParticipantController extends AbstractController
     private function generateErreur($participantId, formInterface $form, $array, $start, $path)
     {
         $em = $this->getDoctrine()->getManager();
+        $erreurs = $em->getRepository(Erreur::class)->getLastErreur($participantId);
+
         foreach ($array[$start] as $key => $value) {
             if (is_array($value) && !array_key_exists('timestamp', $value) && !array_key_exists('reponse', $value) && 'alimentation' !== $key) {
                 $this->generateErreur($participantId, $form, $array[$start], $key, $path . '_' . $this->formatKey($key));
@@ -421,15 +471,15 @@ class ParticipantController extends AbstractController
             if (is_array($value) && array_key_exists('reponse', $value))
                 $key = $key . '_reponse';
 
-            if (substr($key, -1) !== '_')
-                $erreur = $em->getRepository(Erreur::class)->getLastErreur($participantId, $path . '_' . $this->formatKey($key));
-            if ($erreur && $erreur->getEtat() === 'error') {
-                $split = explode('_', $path . '_' . $key);
-                $formGet = $form;
-                foreach(array_slice($split, 1) as $s) {
-                    $formGet = $formGet->get($s);
+            foreach($erreurs as $erreur) {
+                if ($erreur->getFieldId() === $path . '_' . $this->formatKey($key) && $erreur->getEtat() === 'error') {
+                    $split = explode('_', $path . '_' . $key);
+                    $formGet = $form;
+                    foreach(array_slice($split, 1) as $s) {
+                        $formGet = $formGet->get($s);
+                    }
+                    $formGet->addError(new FormError($erreur->getMessage()));
                 }
-                $formGet->addError(new FormError($erreur->getMessage()));
             }
         }
     }
@@ -478,17 +528,6 @@ class ParticipantController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $oldArray = $this->serializeEntity($participant);
-
-        $form = $this->createForm(ParticipantType::class, $participant);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('validation')->isClicked()) {
-                $participant = $form->getData();
-                $em->flush();
-            }
-            return $this->redirect($request->getUri());
-        }
 
         $verification = $participant->getVerification();
         $formVerification = $this->createForm(VerificationType::class, $verification);
@@ -594,7 +633,6 @@ class ParticipantController extends AbstractController
         $formDonnee = $this->createForm(DonneeType::class, $donnee);
 
         /* GENERATE ERREUR */
-        // $formDonnee->get('facteurs')->get('qcm')->get(0)->get('reponse')->addError(new FormError('HEYA'));
         $this->generateErreur($participant->getId(), $formDonnee, $oldArray, 'donnee', 'donnee');
 
         $formDonnee->handleRequest($request);
@@ -643,7 +681,6 @@ class ParticipantController extends AbstractController
         return $this->render('participant/index.html.twig', [
             'controller_name' => 'ParticipantController',
             'participant' => $participant,
-            'form' => $form->createView(),
             'formVerification' => $formVerification->createView(),
             'formGeneral' => $formGeneral->createView(),
             'formCardiovasculaire' => $formCardiovasculaire->createView(),
@@ -652,6 +689,15 @@ class ParticipantController extends AbstractController
             'formDeces' => $formDeces->createView(),
             'date' => date("d/m/Y"),
         ]);
+    }
+
+    private function formatDate(\DateTime $date) {
+        $formatter = new \IntlDateFormatter(
+            \Locale::getDefault(),
+            \IntlDateFormatter::MEDIUM,
+            \IntlDateFormatter::SHORT,
+        );
+        return $formatter->format($date);
     }
 
     /**

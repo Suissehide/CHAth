@@ -150,7 +150,7 @@ class UtilisateurController extends AbstractController
             if ($searchPhrase != "" || !empty($roles))
                 $count = count($utilisateurs->getQuery()->getResult());
             else
-                $count = $utilisateurRepository->compte();
+                $count = $utilisateurRepository->getCount();
             if ($rowCount != -1) {
                 $min = ($current - 1) * $rowCount;
                 $max = $rowCount;

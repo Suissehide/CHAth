@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bootgrid.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/index.css') }}">
 {% endblock %}
 
@@ -46,7 +47,7 @@
 			<nav class='toc animated bounceInDown'>
 				<ul>
 					<li>
-						<a href='#profile'>
+						<a href='#history'>
 							<div class="menu-title">
 								<div class='fa fa-user'></div>
 								Participant
@@ -135,6 +136,26 @@
 					</li>
 				</ul>
 			</nav>
+
+            <section class="slide" id="tab-history" style="display: block;">
+                <h1 id="history">Historique</h1>
+    
+                <div class="flex-row">
+                    <div class="table-wrapper">
+                        <table cellspacing="0" class="table table-condensed table-hover table-striped" id="data-grid">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="id" data-identifier="true" data-searchable="false" data-type="numeric" data-visible="false">Id</th>
+                                    <th data-column-id="etat" data-width="10%" data-formatter="etat" data-searchable="false">Etat</th>
+                                    <th data-column-id="date" data-width="20%">Date</th>
+                                    <th data-column-id="utilisateur" data-width="20%">Utilisateur</th>
+                                    <th data-column-id="message" data-width="50%">Message</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
 			{#========== VERIFICATION ==========#}
 
@@ -735,6 +756,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('js/bootgrid.min.js') }}"></script>
 
     <script>
         $('.sidebar-navigation ul li').on('click', function () {
@@ -744,6 +766,42 @@
     </script>
 
     <script>
+
+        var url = "{{ path('history_list') }}";
+
+        var grid = $("#data-grid").bootgrid({
+            rowCount: [
+                20, 50, -1
+            ],
+            columnSelection: false,
+            ajax: true,
+            statusMapping: {
+                0: "in",
+                1: "out"
+            },
+            requestHandler: function (request) {
+                request.participantId = {{ participant.id }};
+                return request;
+            },
+            url: url,
+            formatters: {
+                "etat": function (column, row) {
+                    if (row.etat == 'notice') 
+                        return "<div class=\"pastille pastille__notice\"></div>";
+                    if (row.etat == 'info') 
+                        return "<div class=\"pastille pastille__info\"></div>";
+                    if (row.etat == 'error') 
+                        return "<div class=\"pastille pastille__error\"></div>";
+                },
+                "commands": function (column, row) {
+                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-view\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-eye\"></i></button> " + "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-pencil-alt\"></i></button> " + "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-trash-alt\"></i></button>";
+                }
+            }
+        }).on('click.rs.jquery.bootgrid', function (e, cols, row, target) {
+            if (typeof row != "undefined")
+                redirect(row.utilisateur);
+        });
+
         /* Add error info */
         $('.js-error-button').click(function(event) {
             event.preventDefault();
@@ -774,7 +832,7 @@
             fieldId = fieldId.toLowerCase();
             if (fieldId.substring(fieldId.length - 2) === "_0")
                 fieldId = fieldId.substring(0, fieldId.length - 2);
-            var url = '{{ path("history_list", {'participant': 'participantId', 'fieldId': 'fieldId'}) }}'; 
+            var url = '{{ path("history_list_field", {'participant': 'participantId', 'fieldId': 'fieldId'}) }}'; 
             url = url.replace("participantId", participantId);
             url = url.replace("fieldId", fieldId);
             window.location.href = url;

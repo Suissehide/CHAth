@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Participant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Participant|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,7 +19,7 @@ class ParticipantRepository extends ServiceEntityRepository
         parent::__construct($registry, Participant::class);
     }
 
-    public function compte()
+    public function getCount()
     {
         return $this->createQueryBuilder('p')
                     ->select('COUNT(p)')

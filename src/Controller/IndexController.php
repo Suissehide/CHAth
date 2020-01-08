@@ -28,7 +28,7 @@ class IndexController extends AbstractController
             if ($searchPhrase != "") {
                 $count = count($participants->getQuery()->getResult());
             } else {
-                $count = $participantRepository->compte();
+                $count = $participantRepository->getCount();
             }
             if ($rowCount != -1) {
                 $min = ($current - 1) * $rowCount;

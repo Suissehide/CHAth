@@ -22,11 +22,10 @@ class HistoryController extends AbstractController
     }
 
     /**
-     * @Route("/participant/{participant}/history/{fieldId}", name="history_list")
+     * @Route("/participant/{participant}/history/{fieldId}", name="history_list_field")
      */
     public function index(ErreurRepository $erreurRepository, Participant $participant, $fieldId, Request $request): Response
-    {
-        setlocale (LC_TIME, 'fr_FR.utf8','fra');    
+    {  
         if ($request->isXmlHttpRequest()) {
             $current = $request->request->get('current');
             $rowCount = $request->request->get('rowCount');
@@ -39,7 +38,7 @@ class HistoryController extends AbstractController
             if ($searchPhrase != "")
                 $count = count($erreurs->getQuery()->getResult());
             else
-                $count = $erreurRepository->compte($participantId, $fieldId);
+                $count = $erreurRepository->getCount($participantId, $fieldId);
             if ($rowCount != -1) {
                 $min = ($current - 1) * $rowCount;
                 $max = $rowCount;
