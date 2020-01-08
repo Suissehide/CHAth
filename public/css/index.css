@@ -229,6 +229,7 @@ input[readonly]:focus {
 
 .container-form .qcm-flex {
     display: flex;
+    flex-flow: column;
 }
 
 .container-form .history {

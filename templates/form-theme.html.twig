@@ -34,6 +34,7 @@
             </div>
         {% endfor %}
     </div>
+    {{ form_errors(form) }}
 {% endblock choice_widget_expanded %}
 
 {% block form_row %}
@@ -57,23 +58,29 @@
     {% if errors|length > 0 %}
         {% if compound %}
             {# ... display the global form errors #}
-            <ul>
-                {% for error in errors %}
-                    <li>{{ error.message }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            {# ... display the errors for a single field #}
             <div class="error-container">
-                <div class="error-form">
-                    <input class="input js-error-input"/>
-                    <button class="btn btn-danger js-error-button">Envoyer</button>
-                </div>
                 <ul class="error-list">
                     {% for error in errors %}
                         <li>{{ error.message }}</li>
                     {% endfor %}
                 </ul>
+                <div class="error-form">
+                    <input class="input js-error-input"/>
+                    <button class="btn btn-danger js-error-button">Envoyer</button>
+                </div>
+            </div>
+        {% else %}
+            {# ... display the errors for a single field #}
+            <div class="error-container">
+                <ul class="error-list">
+                    {% for error in errors %}
+                        <li>{{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="error-form">
+                    <input class="input js-error-input"/>
+                    <button class="btn btn-danger js-error-button">Envoyer</button>
+                </div>
             </div>
         {% endif %}
     {% endif %}
@@ -108,8 +115,11 @@
 
 
 {% block _donnee_genes_genes_entry_mutation_widget %}
-    {{ block('textarea_widget') }}
-     <button class="history"><div class="history-icon"></div></button>
+    <div class="flex{% if errors is not empty %} error-input{% endif %}">
+        {{ block('textarea_widget') }}
+        <button class="history"><div class="history-icon"></div></button>
+    </div>
+    {{ form_errors(form) }}
 {% endblock _donnee_genes_genes_entry_mutation_widget %}
 
 {% block _donnee_genes_genes_entry_statut_widget %}
@@ -149,13 +159,16 @@
 {% endblock _verification_inclusion_qcm_entry_reponse_widget %}
 
 {% block qcm_widget %}
-    <div {{ block('widget_container_attributes') }}>
-        {% for child in form %}
-            <div class="radio-container">
-                {{ form_widget(child) }}
-                {{ form_label(child, null, {translation_domain: choice_translation_domain}) }}
-            </div>
-        {% endfor %}
+    <div class="flex">
+        <div {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                <div class="radio-container">
+                    {{ form_widget(child) }}
+                    {{ form_label(child, null, {translation_domain: choice_translation_domain}) }}
+                </div>
+            {% endfor %}
+        </div>
+        <button class="history"><div class="history-icon"></div></button>
     </div>
-    <button class="history"><div class="history-icon"></div></button>
+    {{ form_errors(form) }}
 {% endblock qcm_widget %}

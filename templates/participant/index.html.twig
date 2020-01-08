@@ -252,7 +252,7 @@
 
 				<h3 id="risque">Facteurs de risque cardiovasculaire</h3>
 				{{ form_row(formCardiovasculaire.tabac, {'attr': {'class': 'input'} }) }}
-				{{ form_row(formCardiovasculaire.activite_physique, {'attr': {'class': 'input'} }) }}
+				{{ form_row(formCardiovasculaire.activitePhysique, {'attr': {'class': 'input'} }) }}
 				{{ form_row(formCardiovasculaire.alimentation, {'attr': {'class': 'input'} }) }}
 				<div class="qcm">
 					{% for qcm in formCardiovasculaire.facteurs.qcm %}
@@ -575,12 +575,12 @@
 								</div>
 							</div>
 							<div class="col-flex-3 col-flex col-input">
-								<div class="wrap-input flex">
+								<div class="wrap-input">
 									{{ form_widget(gene.statut, {'attr': {'class': 'input radio-row'} }) }}
 								</div>
 							</div>
 							<div class="col-flex-4 col-flex col-input">
-								<div class="wrap-input flex">
+								<div class="wrap-input">
 									{{ form_widget(gene.mutation, {'attr': {'class': 'input'} }) }}
 								</div>
 							</div>
@@ -745,18 +745,23 @@
 
     <script>
         /* Add error info */
-        $('.js-error-button').on('click', function() {
+        $('.js-error-button').click(function(event) {
+            event.preventDefault();
+            let message = $(this).parent().find('.js-error-input').val();
+            let participantId = '{{ participant.id }}';
+            let fieldId = $(this).parents('.wrap-input').find('.input').attr('id');
             $.ajax({
-                method: "POST",
+                type: "POST",
                 url: "{{ path('erreur_add_info') }}",
                 data: {
-                        message: $(this).parent().find('.js-error-input'),
-                        participantId: '{{ participant.id }}',
-                        fieldId: $(this).parents('.wrap-input').find('.error-input input').attr('id'),
-                    },
-                }).done(function( msg ) {
-                    alert( "Data Saved: " + msg );
-                });
+                    'message': message,
+                    'participantId': participantId,
+                    'fieldId': fieldId,
+                },
+                success: function(response) {
+                    location.reload();
+                },
+            });
         });
 
         /* History */

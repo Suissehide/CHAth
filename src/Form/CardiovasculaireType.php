@@ -25,7 +25,7 @@ class CardiovasculaireType extends AbstractType
                 'required' => false,
             ))
 
-            ->add('activite_physique', ChoiceType::class, array(
+            ->add('activitePhysique', ChoiceType::class, array(
                 'label' => 'Activité physique',
                 'placeholder' => '',
                 'choices' => array(

@@ -1112,9 +1112,11 @@ input[type="radio"]:checked+label span {
 
 .error-container {
     display: flex;
-    flex-flow: row-reverse;
+    flex-flow: row wrap;
+    justify-content: flex-start;
     align-items: center;
     margin-top: 10px;
+    margin-bottom: 10px;
     border: 1px solid #E40C2B;
     background-color: rgb(228, 12, 43, 0.1);
     padding: 10px;
@@ -1142,11 +1144,12 @@ input[type="radio"]:checked+label span {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-right: none;
+    font-size: 14px;
 }
 
 .error-list {
-    flex: 1;
-
+    /* flex: 1; */
+    margin: 5px 20px 5px 0;
 }
 
 .error-input {
@@ -1168,7 +1171,7 @@ input[type="radio"]:checked+label span {
     font-size: 20px;
     position: absolute;
     top: 8px;
-    right: 110px;
+    right: 50px;
 }
 
 .container-form .error-input .focus-input {

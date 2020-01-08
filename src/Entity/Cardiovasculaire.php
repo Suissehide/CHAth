@@ -24,7 +24,7 @@ class Cardiovasculaire
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $activite_physique;
+    private $activitePhysique;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -60,12 +60,12 @@ class Cardiovasculaire
 
     public function getActivitePhysique(): ?string
     {
-        return $this->activite_physique;
+        return $this->activitePhysique;
     }
 
-    public function setActivitePhysique(?string $activite_physique): self
+    public function setActivitePhysique(?string $activitePhysique): self
     {
-        $this->activite_physique = $activite_physique;
+        $this->activitePhysique = $activitePhysique;
 
         return $this;
     }

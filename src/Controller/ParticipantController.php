@@ -366,8 +366,8 @@ class ParticipantController extends AbstractController
             $participantId = $request->request->get('participantId');
             $fieldId = $request->request->get('fieldId');
             $message = $request->request->get('message');
-            dump($fieldId, $participantId, $message);
-            // $this->addErreur($participantId, $fieldId, 'info', $message, true);
+            $this->addErreur(intval($participantId), $fieldId, 'info', $message, true);
+            return new JsonResponse($participantId . ' ' . $fieldId . ' ' . $message);
         }
     }
 
@@ -418,10 +418,13 @@ class ParticipantController extends AbstractController
             if (is_array($value) && !array_key_exists('timestamp', $value) && !array_key_exists('reponse', $value) && 'alimentation' !== $key) {
                 $this->generateErreur($participantId, $form, $array[$start], $key, $path . '_' . $this->formatKey($key));
             }
-            $erreur = $em->getRepository(Erreur::class)->getLastErreur($participantId, $path . '_' . $this->formatKey($key));
-            if ($erreur /* && $erreur->getEtat() === 'error' */) {
+            if (is_array($value) && array_key_exists('reponse', $value))
+                $key = $key . '_reponse';
+
+            if (substr($key, -1) !== '_')
+                $erreur = $em->getRepository(Erreur::class)->getLastErreur($participantId, $path . '_' . $this->formatKey($key));
+            if ($erreur && $erreur->getEtat() === 'error') {
                 $split = explode('_', $path . '_' . $key);
-                dump($split, $key);
                 $formGet = $form;
                 foreach(array_slice($split, 1) as $s) {
                     $formGet = $formGet->get($s);
@@ -462,9 +465,9 @@ class ParticipantController extends AbstractController
         $erreur->setFieldId($fieldId);
         $erreur->setUtilisateur($user ? $this->security->getUser()->getEmail() : 'Système');
 
+        $participant->addErreur($erreur);
         $em->persist($erreur);
         $em->flush();
-        $participant->addErreur($erreur);
     }
 
     /**
@@ -589,8 +592,9 @@ class ParticipantController extends AbstractController
 
         $donnee = $participant->getDonnee();
         $formDonnee = $this->createForm(DonneeType::class, $donnee);
-                        
+
         /* GENERATE ERREUR */
+        // $formDonnee->get('facteurs')->get('qcm')->get(0)->get('reponse')->addError(new FormError('HEYA'));
         $this->generateErreur($participant->getId(), $formDonnee, $oldArray, 'donnee', 'donnee');
 
         $formDonnee->handleRequest($request);
