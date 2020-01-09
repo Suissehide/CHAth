@@ -61,8 +61,8 @@ class ErreurRepository extends ServiceEntityRepository
             ->leftJoin('e.participant', 'p')
             ->andWhere('p.id = :participantId')
             ->setParameters(['participantId' => $participantId])
+            ->groupBy('e.id', 'e.fieldId')
             ->orderBy('e.date', 'DESC')
-            ->groupBy('e.fieldId')
             ->getQuery()
             ->getResult();
         return $qb;
