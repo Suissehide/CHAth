@@ -113,7 +113,7 @@ class ParticipantController extends AbstractController
                     $participant->setCode('ERROR');
                 else {
                     $id = count($em->getRepository(Participant::class)->findAll()) == 0 ? '1' : $em->getRepository(Participant::class)->findOneBy([], ['id' => 'desc'])->getId() + 1;
-                    $participant->setCode($participant->getCode() . $id);
+                    $participant->setCode(strtoupper($participant->getCode()) . $id);
                 }
 
                 $this->verification_create($participant, $participant->getVerification()->getDate());
@@ -123,6 +123,8 @@ class ParticipantController extends AbstractController
 
                 $em->persist($participant);
                 $em->flush();
+
+                $this->addErreur($participant->getId(), $participant->getCode() , 'notice', 'Création du participant ' . $participant->getCode(), true);
             }
             return $this->redirectToRoute('participant_view', ['id' => $participant->getId()]);
         }
@@ -414,8 +416,8 @@ class ParticipantController extends AbstractController
             $participantId = $request->request->get('participantId');
             $fieldId = $request->request->get('fieldId');
             $message = $request->request->get('message');
-            $this->addErreur(intval($participantId), $fieldId, 'info', $message, true);
-            return new JsonResponse($participantId . ' ' . $fieldId . ' ' . $message);
+            $this->addErreur(intval($participantId), $this->formatKey($fieldId), 'info', $message, true);
+            return new JsonResponse('Done.');
         }
     }
 
@@ -472,13 +474,16 @@ class ParticipantController extends AbstractController
                 $key = $key . '_reponse';
 
             foreach($erreurs as $erreur) {
-                if ($erreur->getFieldId() === $path . '_' . $this->formatKey($key) && $erreur->getEtat() === 'error') {
+                if ($erreur->getFieldId() === $path . '_' . $this->formatKey($key)) {
+                    if ($erreur->getEtat() !== 'error')
+                        break;
                     $split = explode('_', $path . '_' . $key);
                     $formGet = $form;
                     foreach(array_slice($split, 1) as $s) {
                         $formGet = $formGet->get($s);
                     }
                     $formGet->addError(new FormError($erreur->getMessage()));
+                    break;
                 }
             }
         }
