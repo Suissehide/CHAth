@@ -25,15 +25,25 @@
 						<input class="tgl tgl-skewed" id="cb0" type="checkbox" disabled/>
 						<label class="tgl-btn" data-tg-off="NON" data-tg-on="OUI" for="cb0"></label>
 					</div>
+                    <div class="eligible">
+						<h1>Validé</h1>
+						<input class="tgl tgl-skewed" id="cb1" type="checkbox" disabled/>
+						<label class="tgl-btn" data-tg-off="NON" data-tg-on="OUI" for="cb1"></label>
+					</div>
 				</div>
 
 				<div class="button-block">
 					<a href="{{ path('index_participant') }}" class="form-btn btn-default">
 						<i aria-hidden="true" class="fa fa-arrow-left"></i>Retour</a>
 					{% if is_granted('ROLE_SUPER_ADMIN') %}
-						<button class="form-btn" data-target="#save-modal" data-toggle="modal" type="button">
-							<i aria-hidden="true" class="fa fa-check"></i>Valider le participant</button>
-					{% endif %}
+                        {% if participant.validation != true %}
+                            <button class="form-btn" data-target="#save-modal" data-toggle="modal" type="button">
+                                <i aria-hidden="true" class="fa fa-check"></i>Valider le participant</button>
+                        {% else %}
+                            <button class="form-btn js-validate" type="button">
+                                <i aria-hidden="true" class="fa fa-redo"></i>Réactiver la modification</button>
+                        {% endif %}
+                    {% endif %}
 					{{ include('participant/_delete_form.html.twig') }}
 				</div>
 			</div>
@@ -201,7 +211,7 @@
 					{% endfor %}
 				</div>
 
-				{{ form_row(formVerification.save, {'attr': {'class': 'form-btn btn-save'} }) }}
+				{{ form_row(formVerification.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
 			</section>
 
@@ -254,7 +264,7 @@
                     }}
 				</div>
 
-				{{ form_row(formGeneral.save, {'attr': {'class': 'form-btn btn-save'} }) }}
+				{{ form_row(formGeneral.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
 			</section>
 
@@ -272,9 +282,12 @@
 				<h1 id="cardiovasculaire">Données cardiovasculaires</h1>
 
 				<h3 id="risque">Facteurs de risque cardiovasculaire</h3>
-				{{ form_row(formCardiovasculaire.tabac, {'attr': {'class': 'input'} }) }}
-				{{ form_row(formCardiovasculaire.activitePhysique, {'attr': {'class': 'input'} }) }}
-				{{ form_row(formCardiovasculaire.alimentation, {'attr': {'class': 'input'} }) }}
+                <div class="form-space">
+                    {{ form_row(formCardiovasculaire.tabac, {'attr': {'class': 'input'} }) }}
+                    {{ form_row(formCardiovasculaire.activitePhysique, {'attr': {'class': 'input'} }) }}
+                    {{ form_row(formCardiovasculaire.alimentation, {'attr': {'class': 'input radio-row alimentation-js'} }) }}
+                    <div class="alimentation"></div>
+                </div>
 				<div class="qcm">
 					{% for qcm in formCardiovasculaire.facteurs.qcm %}
 						<div class="qcm-row">
@@ -306,7 +319,7 @@
 					{% endfor %}
 				</div>
 
-				{{ form_row(formCardiovasculaire.save, {'attr': {'class': 'form-btn btn-save'} }) }}
+				{{ form_row(formCardiovasculaire.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
 			</section>
 
@@ -432,7 +445,7 @@
                     })
                 }}
 
-				{{ form_row(formInformation.save, {'attr': {'class': 'form-btn btn-save'} }) }}
+				{{ form_row(formInformation.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
 			</section>
 
@@ -477,8 +490,8 @@
 				<div class="form-space">
 					{{ form_row(formDonnee.tabac, {'attr': {'class': 'input'} }) }}
 					{{ form_row(formDonnee.activite, {'attr': {'class': 'input'} }) }}
-					{{ form_row(formDonnee.alimentation, {'attr': {'class': 'input radio-row'} }) }}
-					<div id="alimentation"></div>
+					{{ form_row(formDonnee.alimentation, {'attr': {'class': 'input radio-row alimentation-js'} }) }}
+					<div class="alimentation"></div>
 				</div>
 
 				<div class="qcm">
@@ -661,7 +674,7 @@
 					</div>
 				</div>
 
-				{{ form_row(formDonnee.save, {'attr': {'class': 'form-btn btn-save'} }) }}
+				{{ form_row(formDonnee.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
 			</section>
 
@@ -692,7 +705,7 @@
 				{{ form_row(formDeces.causeSecondaire, {'attr': {'class': 'input '} }) }}
 				{{ form_row(formDeces.codageSecondaire, {'attr': {'class': 'input '} }) }}
 
-				{{ form_row(formDeces.save, {'attr': {'class': 'form-btn btn-save'} }) }}
+				{{ form_row(formDeces.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
 			</section>
 
@@ -706,19 +719,25 @@
 				<i aria-hidden="true" class="fa fa-arrow-left"></i>
 			</a>
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
-				<a class="cd-btn btn-check" data-target="#save-modal" data-toggle="modal">
-					<i aria-hidden="true" class="fa fa-check"></i>
-				</a>
+                {% if participant.validation != true %}
+                    <button class="cd-btn btn-check" data-target="#save-modal" data-toggle="modal">
+                        <i aria-hidden="true" class="fa fa-check"></i>
+                    </button>
+                {% else %}
+                    <button class="cd-btn btn-redo js-validate">
+					    <i aria-hidden="true" class="fa fa-redo"></i>
+				    </button>
+                {% endif %}
 			{% endif %}
-			<a class="cd-btn btn-delete">
+			<button class="cd-btn btn-delete">
 				<i aria-hidden="true" class="fa fa-trash"></i>
-			</a>
+			</button>
 			<a class="cd-btn btn-top" href="#0">
 				<i aria-hidden="true" class="fa fa-chevron-up"></i>
 			</a>
 		</div>
 
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
+		{% if is_granted('ROLE_SUPER_ADMIN') and participant.validation != true %}
 			<!-- Modal -->
 			<div aria-hidden="true" aria-labelledby="save" class="modal fade" id="save-modal" role="dialog" tabindex="-1">
 				<div class="modal-dialog modal-dialog-centered" role="document">
@@ -731,7 +750,7 @@
 						</div>
 						<div class="modal-body">
 							<p>&emsp;&emsp;Je, soussigné(e) Pr/Dr
-								<span>{{ app.user.nom }}</span>, confirme que le suivi du participant a eu lieu sous ma responsabilité conformément au protocole d’étude clinique ; toutes les données contenues dans ce cahier d’observation sont complètes et exactes.</p>
+								<span>{{ app.user.prenom }} {{ app.user.nom }}</span>, confirme que le suivi du participant a eu lieu sous ma responsabilité conformément au protocole d’étude clinique; toutes les données contenues dans ce cahier d’observation sont complètes et exactes.</p>
 							<div class="flex-row user-data">
 								<div class="date">Date:</br>
 								<span>{{ date }}</span>
@@ -744,7 +763,7 @@
 					<div class="button-block space-between">
 						<button class="form-btn btn-default" data-dismiss="modal" type="button">
 							<i aria-hidden="true" class="fa fa-times"></i>Fermer</button>
-						<button class="form-btn" type="submit">
+						<button class="form-btn js-validate" type="submit">
 							<i aria-hidden="true" class="fa fa-check"></i>Valider</button>
 					</div>
 				</div>
@@ -766,7 +785,46 @@
     </script>
 
     <script>
+        var validate = {% if participant.validation == true %} true {% else %} false {% endif %};
 
+        /* Validate */
+        $('#cb1').prop('checked', validate);
+
+        $('.js-validate').click(function(event) {
+            event.preventDefault();
+            let participantId = '{{ participant.id }}';
+            $.ajax({
+                type: "POST",
+                url: "{{ path('participant_validate') }}",
+                data: {
+                    'validate': !validate,
+                    'participantId': participantId,
+                },
+                success: function(response) {
+                    location.reload();
+                },
+            });
+        });
+    </script>
+
+    <script>
+        $('.error-list li').each(function() {
+            $(this).html($(this).text().replace(/\[(.*?)\]/g, "<b>$1</b>"));
+        })
+
+        /* Erreur badges */
+        $('.slide').each(function() {
+            let count = $(this).find('.error-container').length;
+            let id = $(this).attr('id').split('-')[1];
+            if (count > 0) $(".toc a[href$='#" + id + "']").append(`<span class="badge badge-spe">` + count + `</span>`);
+        });
+        $('h3').each(function() {
+            let count = $(this).nextUntil('h3').find('.error-container').length;
+            let id = $(this).attr('id');
+            if (count > 0) $(".toc a[href$='#" + id + "']").append(`<span class="badge badge-spe">` + count + `</span>`);
+        });
+
+        /* Tab history */
         var url = "{{ path('history_list') }}";
 
         var grid = $("#data-grid").bootgrid({
@@ -808,6 +866,10 @@
             let message = $(this).parent().find('.js-error-input').val();
             let participantId = '{{ participant.id }}';
             let fieldId = $(this).parents('.wrap-input').find('.input').attr('id');
+            if (message == '') {
+                $(this).parent().find('.js-error-input').attr('placeholder', 'Veuillez entrer un message.');
+                return
+            }
             $.ajax({
                 type: "POST",
                 url: "{{ path('erreur_add_info') }}",
@@ -883,20 +945,22 @@
         {# $('#general_age').val(getAge($('#general_dateNaissance').val())); #}
 
         /* Alimentation */
-        function alimentation() {
-            let nb = $('input[type=checkbox][name="donnee[alimentation][]"]:checked').length;
-            $('#alimentation').empty();
+        function alimentation(nb, item) {
+            ali = item.parents('.wrap-input').next();
+            ali.empty();
             if (nb >= 4)
-                $('#alimentation').append('<span class="green">Recommandée (4-5)</span');
+                ali.append('<span class="green">Recommandée (4-5)</span');
             else if (nb >= 2)
-                $('#alimentation').append('<span class="orange">Intermédiaire (2-3)</span');
+                ali.append('<span class="orange">Intermédiaire (2-3)</span');
             else
-                $('#alimentation').append('<span class="red">Faible (0-1)</span');
+                ali.append('<span class="red">Faible (0-1)</span');
         }
 
-        alimentation();
-        $('input[type=checkbox][name="donnee[alimentation][]"]').on('change', function () {
-            alimentation()
+        $('.alimentation-js').each(function() {
+            alimentation($(this).find('input:checked').length, $(this));
+        })
+        $('.alimentation-js input').on('change', function () {
+            alimentation($(this).parents('.alimentation-js').find('input:checked').length, $(this).parents('.alimentation-js'));
         });
 
         /* Eligibilite */

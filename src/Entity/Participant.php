@@ -59,9 +59,14 @@ class Participant
     private $donnee;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Erreur", mappedBy="participant")
+     * @ORM\OneToMany(targetEntity="App\Entity\Erreur", mappedBy="participant", cascade={"remove"})
      */
     private $erreurs;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $validation;
 
     public function __construct()
     {
@@ -211,6 +216,18 @@ class Participant
                 $erreur->setParticipant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getValidation(): ?bool
+    {
+        return $this->validation;
+    }
+
+    public function setValidation(?bool $validation): self
+    {
+        $this->validation = $validation;
 
         return $this;
     }

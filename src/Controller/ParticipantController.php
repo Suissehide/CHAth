@@ -51,6 +51,28 @@ class ParticipantController extends AbstractController
     }
 
     /**
+     * @Route("/participant/validate", name="participant_validate")
+     */
+    public function validate(Request $request): Response
+    {
+        // $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $validate = $request->request->get('validate');
+            $participantId = $request->request->get('participantId');
+            $participant = $em->getRepository(Participant::class)->find($participantId);
+            $participant->setValidation($validate === 'true' ? true : false);
+            if ($validate === 'true')
+                $this->addErreur($participant->getId(), $participant->getCode(), 'notice', 'Validation du participant ' . $participant->getCode(), true);
+            else
+                $this->addErreur($participant->getId(), $participant->getCode(), 'notice', 'Réactivation des modifications', true);
+            $em->flush();
+            return new JsonResponse('Done.');
+        }
+    }
+
+    /**
      * @Route("/participant/history", name="history_list")
      */
     public function history(ErreurRepository $erreurRepository, Request $request): Response
@@ -108,7 +130,7 @@ class ParticipantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('validation')->isClicked()) {
                 $participant = $form->getData();
-
+                $participant->setValidation(false);
                 if ($participant->getCode() == '')
                     $participant->setCode('ERROR');
                 else {
@@ -124,7 +146,7 @@ class ParticipantController extends AbstractController
                 $em->persist($participant);
                 $em->flush();
 
-                $this->addErreur($participant->getId(), $participant->getCode() , 'notice', 'Création du participant ' . $participant->getCode(), true);
+                $this->addErreur($participant->getId(), $participant->getCode(), 'notice', 'Création du participant ' . $participant->getCode(), true);
             }
             return $this->redirectToRoute('participant_view', ['id' => $participant->getId()]);
         }
@@ -416,6 +438,8 @@ class ParticipantController extends AbstractController
             $participantId = $request->request->get('participantId');
             $fieldId = $request->request->get('fieldId');
             $message = $request->request->get('message');
+            if ($message === '')
+                return new JsonResponse('Error: Empty message');
             $this->addErreur(intval($participantId), $this->formatKey($fieldId), 'info', $message, true);
             return new JsonResponse('Done.');
         }
@@ -440,24 +464,46 @@ class ParticipantController extends AbstractController
         return json_decode($serialized, true);
     }
 
+    private function checkEmpty($x)
+    {
+        if (is_array($x)) {
+            $err = '';
+            $num = count($x);
+            $i = 0;
+            foreach($x as $key) {
+                $err .= $key;
+                if (++$i != $num)
+                    $err .= ', ';
+            }
+            return $num > 0 ? $err : '(vide)';
+        }
+        return isset($x) ? $x : '(vide)';
+    }
+
     private function searchDiff(Participant $participant, $oldArray, $newArray, $start, $path)
     {
         // dump($newArray);
         foreach ($newArray as $key => $value) {
             if (is_array($value) && array_key_exists('timestamp', $value) && $oldArray[$start][$key]['timestamp'] !== $value['timestamp']) {
-                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification des données', true);
+                if (!isset($oldArray[$start][$key]['timestamp']))
+                    $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [(vide)] en [' . date('d/m/Y', $value['timestamp']) . ']', true);
+                else
+                    $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [' . date('d/m/Y', $oldArray[$start][$key]['timestamp']) . '] en [' . date('d/m/Y', $value['timestamp']) . ']', true);
+            }
+            else if (is_array($oldArray[$start][$key]) && array_key_exists('timestamp', $oldArray[$start][$key]) && !is_array($value)) {
+                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [' . date('d/m/Y', $oldArray[$start][$key]['timestamp']) . '] en [(vide)]', true);
             }
             else if (is_array($value) && array_key_exists('reponse', $value) && $oldArray[$start][$key]['reponse'] !== $value['reponse']) {
-                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) . '_reponse' , 'notice', 'Modification des données', true);
+                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) . '_reponse' , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [' . $this->checkEmpty($oldArray[$start][$key]['reponse']) . '] en [' . $this->checkEmpty($value['reponse']) . ']', true);
             }
             else if (is_array($value) && 'alimentation' === $key && !empty(array_diff($oldArray[$start][$key], $value))) {
-                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification des données', true);
+                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [' . $this->checkEmpty($oldArray[$start][$key]) . '] en [' . $this->checkEmpty($value) . ']', true);
             }
             else if (is_array($value) && !array_key_exists('timestamp', $value) && !array_key_exists('reponse', $value) && 'alimentation' !== $key) {
                 $this->searchDiff($participant, $oldArray[$start], $newArray[$key], $key, $path . '_' . $this->formatKey($key));
             }
             else if ($oldArray[$start][$key] !== $value)
-                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification des données', true);
+                $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [' . $this->checkEmpty($oldArray[$start][$key]) . '] en [' . $this->checkEmpty($value) . ']', true);
         }
     }
 
@@ -487,25 +533,6 @@ class ParticipantController extends AbstractController
                 }
             }
         }
-    }
-
-    private function generateJson(FormInterface $form)
-    {
-        $fields = ['fields' => []];
-
-        foreach ($form->all() as $field) {
-            $name = $field->getName();
-            $value = $field->getViewData();
-            $type = $field->getConfig()->getType()->getBlockPrefix();
-            // if ($field->getChildren())
-                // $this->generateJson($field->getChildren());
-            $fields['fields'][$name] = [
-                'value' => $value,
-                'type' => $type,
-            ];
-        }
-        // dump(json_encode($fields, JSON_PRETTY_PRINT));
-        return $fields;
     }
 
     private function addErreur($participantId, $fieldId, $etat, $message, bool $user) {
@@ -542,7 +569,7 @@ class ParticipantController extends AbstractController
 
         $formVerification->handleRequest($request);
         if ($formVerification->isSubmitted() && $formVerification->isValid()) {
-            if ($formVerification->get('save')->isClicked()) {
+            if ($formVerification->get('save')->isClicked() && $participant->getValidation() != true) {
                 
                 /* SERIALISATION */
                 $verificationArray = $this->serializeEntity($formVerification->getData());
@@ -566,7 +593,7 @@ class ParticipantController extends AbstractController
 
         $formGeneral->handleRequest($request);
         if ($formGeneral->isSubmitted() && $formGeneral->isValid()) {
-            if ($formGeneral->get('save')->isClicked()) {
+            if ($formGeneral->get('save')->isClicked() && $participant->getValidation() != true) {
 
                 /* SERIALISATION */
                 $generalArray = $this->serializeEntity($formGeneral->getData());
@@ -594,7 +621,7 @@ class ParticipantController extends AbstractController
 
         $formCardiovasculaire->handleRequest($request);
         if ($formCardiovasculaire->isSubmitted() && $formCardiovasculaire->isValid()) {
-            if ($formCardiovasculaire->get('save')->isClicked()) {
+            if ($formCardiovasculaire->get('save')->isClicked() && $participant->getValidation() != true) {
                                 
                 /* SERIALISATION */
                 $cardiovasculaireArray = $this->serializeEntity($formCardiovasculaire->getData());
@@ -618,7 +645,7 @@ class ParticipantController extends AbstractController
 
         $formInformation->handleRequest($request);
         if ($formInformation->isSubmitted() && $formInformation->isValid()) {
-            if ($formInformation->get('save')->isClicked()) {
+            if ($formInformation->get('save')->isClicked() && $participant->getValidation() != true) {
                                                 
                 /* SERIALISATION */
                 $informationArray = $this->serializeEntity($formInformation->getData());
@@ -642,7 +669,7 @@ class ParticipantController extends AbstractController
 
         $formDonnee->handleRequest($request);
         if ($formDonnee->isSubmitted() && $formDonnee->isValid()) {
-            if ($formDonnee->get('save')->isClicked()) {
+            if ($formDonnee->get('save')->isClicked() && $participant->getValidation() != true) {
                                                                 
                 /* SERIALISATION */
                 $donneeArray = $this->serializeEntity($formDonnee->getData());
@@ -667,7 +694,7 @@ class ParticipantController extends AbstractController
 
         $formDeces->handleRequest($request);
         if ($formDeces->isSubmitted() && $formDeces->isValid()) {
-            if ($formDeces->get('save')->isClicked()) {
+            if ($formDeces->get('save')->isClicked() && $participant->getValidation() != true) {
                                                                                 
                 /* SERIALISATION */
                 $decesArray = $this->serializeEntity($formDeces->getData());
@@ -752,7 +779,7 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="participant_delete", methods="DELETE")
+     * @Route("/participant/{id}", name="participant_delete", methods="DELETE")
      */
     public function delete(Request $request, Participant $participant) : Response
     {

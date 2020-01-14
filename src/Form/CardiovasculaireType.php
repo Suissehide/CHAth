@@ -39,6 +39,8 @@ class CardiovasculaireType extends AbstractType
             ->add('alimentation', ChoiceType::class, array(
                 'label' => 'Alimentation',
                 'placeholder' => '',
+                'multiple' => true,
+                'expanded' => true,
                 'choices' => array(
                     '≥ 4 ou 5 fruits et légumes/jours' => '≥ 4 ou 5 fruits et légumes/jours',
                     '≥ 2 portions de poisson/semaine' => '≥  2 portions de poisson/semaine',

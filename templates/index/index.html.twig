@@ -27,12 +27,12 @@
                     <table cellspacing="0" class="table table-condensed table-hover table-striped" id="data-grid">
                         <thead>
                             <tr>
-                                <th data-column-id="observ" data-formatter="observ" data-sortable="false" data-width="28px"></th>
                                 <th data-column-id="id" data-identifier="true" data-searchable="false" data-type="numeric" data-visible="false">Id</th>
                                 <th data-column-id="code">Code</th>
                                 <th data-column-id="consentement">Date de consentement</th>
                                 <th data-column-id="evenement">Date de l'événement</th>
                                 <th data-column-id="inclusion">Date de l'inclusion</th>
+                                <th data-column-id="error" data-formatter="error" data-sortable="false" data-width="50px"></th>
                                 {# <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">Actions</th> #}
                                 <th data-column-id="status" data-searchable="false" data-visible="false">Status</th>
                             </tr>
@@ -72,11 +72,9 @@
             },
             url: "{{ path('index_participant') }}",
             formatters: {
-                "observ": function (column, row) {
-                    if (row.observ) 
-                        return "<div class=\"pastille\"></div>";
-                    
-
+                "error": function (column, row) {
+                    if (row.error) 
+                        return "<div class=\"badge-spe badge-tab\">" + row[column.id] + "</div>";
                 },
                 "commands": function (column, row) {
                     return "<button type=\"button\" class=\"btn btn-xs btn-default command-view\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-eye\"></i></button> " + "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-pencil-alt\"></i></button> " + "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-trash-alt\"></i></button>";

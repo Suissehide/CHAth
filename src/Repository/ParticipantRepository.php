@@ -55,7 +55,7 @@ class ParticipantRepository extends ServiceEntityRepository
                     $qb->orderBy('p.' . $key, $value);
             }
         } else {
-            $qb->orderBy('p.code', 'ASC');
+            $qb->orderBy('p.id', 'DESC');
         }
         return $qb;
     }

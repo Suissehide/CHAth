@@ -117,6 +117,7 @@ td .btn-default {
 .table-condensed>thead>tr>td,
 .table-condensed>thead>tr>th {
     padding: 10px;
+    white-space: normal;
 }
 
 .table-wrapper {
@@ -753,6 +754,7 @@ main h3 {
 }
 
 .toc ul li a {
+    position: relative;
     display: flex;
     justify-content: space-between;
     background: #1d699c;
@@ -772,18 +774,33 @@ main h3 {
     margin-right: 5px;
 }
 
-.toc ul li a .badge {
-    display: inline-block;
-    background: #fff;
-    /* IE Fallback */
-    background: rgba(255, 255, 255, 0.2);
+.toc ul li a .fa-caret-down {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge-spe {
+    position: absolute;
+    font-family: Ubuntu-Bold;
+    background: #D74C53;
     padding: 3px 7px;
+    text-align: center;
+    border-radius: 10px;
     color: #fff;
     font-size: 12px;
-    font-weight: 800;
+    font-weight: bold;
+    right: 43px;
+    top: 12px;
+}
+
+.badge-tab {
+    display: inherit;
+    position: unset;
 }
 
 .toc ul li ul li a {
+    position: relative;
     color: #808080;
     background: #e6e6e6;
     border-left: 4px solid transparent;
@@ -860,11 +877,11 @@ main h3 {
     font-weight: bold;
 }
 
-#alimentation {
+.alimentation {
     margin-top: 20px;
 }
 
-#alimentation span {
+.alimentation span {
     color: #808080;
     font-size: 16px;
     font-weight: bold;
@@ -872,17 +889,17 @@ main h3 {
     border-left: 2px #333 solid;
 }
 
-#alimentation span.green {
+.alimentation span.green {
     border-color: #55D6BE;
     color:#55D6BE;
 }
 
-#alimentation span.orange {
+.alimentation span.orange {
     border-color: orange;
     color: orange;
 }
 
-#alimentation span.red {
+.alimentation span.red {
     border-color: #D63B53;
     color: #D63B53;
 }

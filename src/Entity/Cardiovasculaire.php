@@ -27,9 +27,9 @@ class Cardiovasculaire
     private $activitePhysique;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
-    private $alimentation;
+    private $alimentation = [];
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
@@ -70,12 +70,12 @@ class Cardiovasculaire
         return $this;
     }
 
-    public function getAlimentation(): ?string
+    public function getAlimentation(): ?array
     {
         return $this->alimentation;
     }
 
-    public function setAlimentation(?string $alimentation): self
+    public function setAlimentation(?array $alimentation): self
     {
         $this->alimentation = $alimentation;
 

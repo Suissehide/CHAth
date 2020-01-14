@@ -940,6 +940,28 @@ input[type="radio"]:checked+label span {
     color: white;
 }
 
+.btn-check {
+    background: #2892D7cc;
+}
+
+.btn-check:hover {
+    background: #2892D7;
+    color: white;
+}
+
+.btn-redo {
+    background: #2892D7cc;
+}
+
+.btn-redo .fa {
+    left: -6px;
+}
+
+.btn-redo:hover {
+    background: #2892D7;
+    color: white;
+}
+
 .btn-bar {
     display: flex;
 }
@@ -1150,6 +1172,11 @@ input[type="radio"]:checked+label span {
 .error-list {
     /* flex: 1; */
     margin: 5px 20px 5px 0;
+    font-weight: normal;
+}
+
+.error-list b {
+    font-family: Ubuntu-Bold;
 }
 
 .error-input {

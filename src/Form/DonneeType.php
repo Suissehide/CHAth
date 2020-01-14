@@ -50,7 +50,7 @@ class DonneeType extends AbstractType
                 'required' => false,
             ))
             ->add('type', ChoiceType::class, array(
-                'label' => 'Activité physique',
+                'label' => 'Type d\'événement',
                 'placeholder' => '',
                 'choices' => array(
                     'Infarctus du myocarde' => 'Infarctus du myocarde',
@@ -104,11 +104,11 @@ class DonneeType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => array(
-                    '≥ 4 ou 5 fruits et légumes / jours' => '≥ 4 ou 5 fruits et légumes / jours',
-                    '≥ 2 portions de poisson / semaine' => '≥ 2 portions de poisson / semaine',
-                    '≥ 3 portions de céréales ou fibres / semaine' => '≥ 3 portions de céréales ou fibres / semaine',
-                    '< 15g de sel / jour' => '< 15g de sel / jour',
-                    '≤ 1 boisson sucrée / semaine' => '≤ 1 boisson sucrée / semaine',
+                    '≥ 4 ou 5 fruits et légumes/jours' => '≥ 4 ou 5 fruits et légumes/jours',
+                    '≥ 2 portions de poisson/semaine' => '≥  2 portions de poisson/semaine',
+                    '≥ 3 portions de céréales ou fibres/semaine' => '≥ 3 portions de céréales ou fibres/semaine',
+                    '< 15g de sel/jour' => '< 15g de sel/jour',
+                    '≤ 1 boisson sucrée/semaine' => '≤ 1 boisson sucrée/semaine',
                 ),
                 'required' => false,
             ))

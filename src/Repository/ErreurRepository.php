@@ -19,6 +19,27 @@ class ErreurRepository extends ServiceEntityRepository
         parent::__construct($registry, Erreur::class);
     }
 
+    public function countAllErreur($participantId)
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        $qb
+            ->leftJoin('e.participant', 'p')
+            ->andWhere('p.id = :participantId')
+            ->setParameter('participantId', $participantId)
+
+            ->select('COUNT(e.fieldId) AS erreurs, MAX(e.date) AS HIDDEN max_date')
+            // ->andWhere('e.etat = :etat')
+            // ->setParameter('etat', 'error')
+            ->groupBy('e.fieldId')
+            
+            // ->getSingleScalarResult()
+            // ->getScalarResult()
+            ;
+
+        return $qb->getQuery()->getScalarResult();
+    }
+
     public function getCountAll($participantId)
     {
         return $this->createQueryBuilder('e')

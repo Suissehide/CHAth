@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Participant;
+use App\Repository\ErreurRepository;
 use App\Repository\ParticipantRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +16,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/index", name="index_participant")
      */
-    public function index(ParticipantRepository $participantRepository, Request $request): Response
+    public function index(ParticipantRepository $participantRepository, ErreurRepository $erreurRepository, Request $request): Response
     {
         if ($request->isXmlHttpRequest()) {
             $current = $request->request->get('current');
@@ -39,7 +39,19 @@ class IndexController extends AbstractController
             $rows = array();
             foreach ($participants as $participant) {
                 // $observ = $participant->getNumero() ? 1 : 0;
-                $observ = 0;
+                // $error = $erreurRepository->countAllErreur($participant->getId());
+
+                $em = $this->getDoctrine()->getManager();
+                $RAW_QUERY = 'SELECT f.field_id
+                from (
+                   SELECT field_id, max(date) AS maxdate, etat
+                   FROM erreur GROUP BY field_id
+                ) AS x 
+                INNER JOIN erreur AS f ON f.etat = "error" AND f.field_id = x.field_id AND f.date = x.maxdate;';
+                $statement = $em->getConnection()->prepare($RAW_QUERY);
+                $statement->execute();
+                $error = $statement->fetchAll();
+
                 $sortie = 0;
                 if ($participant->getCode())
                     $sortie = 1;
@@ -50,7 +62,7 @@ class IndexController extends AbstractController
                     "evenement" => $participant->getInformation()->getDateSurvenue() ? $participant->getInformation()->getDateSurvenue()->format('d/m/Y') : '',
                     "inclusion" => $participant->getDonnee()->getDateVisite() ? $participant->getDonnee()->getDateVisite()->format('d/m/Y') : '',
                     "status" => $sortie,
-                    "observ" => $observ,
+                    "error" => count($error),
                 );
                 array_push($rows, $row);
             }
