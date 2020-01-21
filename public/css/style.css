@@ -778,7 +778,7 @@ input[type="radio"]:checked+label span {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-self: center;
+    align-items: center;
     margin-right: 15px;
 }
 
@@ -788,6 +788,15 @@ input[type="radio"]:checked+label span {
 
 .radio-container label {
     margin: 0;
+}
+
+.alimentation-js {
+    flex-flow: row wrap;
+    height: auto !important;
+}
+
+.alimentation-js .radio-container {
+    height: 42px;
 }
 
 /* ====== */

@@ -145,7 +145,7 @@ class DonneeType extends AbstractType
                 'label' => 'Leucocytes',
                 'scale' => 1,
                 'attr' => array(
-                    'unity' => 'g/L',
+                    'unity' => 'G/L',
                     'data-min' => 1,
                     'data-max' => 30,
                     'step' => 0.1,
@@ -156,7 +156,7 @@ class DonneeType extends AbstractType
                 'label' => 'PNN',
                 'scale' => 1,
                 'attr' => array(
-                    'unity' => 'g/L',
+                    'unity' => 'G/L',
                     'data-min' => 1,
                     'data-max' => 30,
                     'step' => 0.1,
@@ -167,7 +167,7 @@ class DonneeType extends AbstractType
                 'label' => 'Plaquettes',
                 'scale' => 1,
                 'attr' => array(
-                    'unity' => 'g/L',
+                    'unity' => 'G/L',
                     'data-min' => 1,
                     'data-max' => 30,
                     'step' => 0.1,

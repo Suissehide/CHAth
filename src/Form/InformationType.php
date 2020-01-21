@@ -72,7 +72,7 @@ class InformationType extends AbstractType
                 'label' => 'Leucocytes',
                 'scale' => 1,
                 'attr' => array(
-                    'unity' => 'g/L',
+                    'unity' => 'G/L',
                     'data-min' => 0,
                     'data-max' => 100,
                     'step' => 0.1,
@@ -83,7 +83,7 @@ class InformationType extends AbstractType
                 'label' => 'PNN',
                 'scale' => 1,
                 'attr' => array(
-                    'unity' => 'g/L',
+                    'unity' => 'G/L',
                     'data-min' => 0,
                     'data-max' => 100,
                     'step' => 0.1,
@@ -94,7 +94,7 @@ class InformationType extends AbstractType
                 'label' => 'Plaquettes',
                 'scale' => 1,
                 'attr' => array(
-                    'unity' => 'g/L',
+                    'unity' => 'G/L',
                     'data-min' => 0,
                     'data-max' => 100,
                     'step' => 0.1,

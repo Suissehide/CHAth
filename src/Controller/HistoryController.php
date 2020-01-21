@@ -16,7 +16,7 @@ class HistoryController extends AbstractController
         $formatter = new \IntlDateFormatter(
             \Locale::getDefault(),
             \IntlDateFormatter::MEDIUM,
-            \IntlDateFormatter::SHORT,
+            \IntlDateFormatter::SHORT
         );
         return $formatter->format($date);
     }
