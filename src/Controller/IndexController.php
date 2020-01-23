@@ -45,7 +45,7 @@ class IndexController extends AbstractController
                 $RAW_QUERY = 'SELECT f.field_id
                 from (
                    SELECT field_id, max(date) AS maxdate, etat
-                   FROM erreur GROUP BY field_id
+                   FROM erreur GROUP BY field_id, id
                 ) AS x 
                 INNER JOIN erreur AS f ON f.etat = "error" AND f.field_id = x.field_id AND f.date = x.maxdate;';
                 $statement = $em->getConnection()->prepare($RAW_QUERY);
