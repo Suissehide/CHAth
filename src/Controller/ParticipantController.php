@@ -99,6 +99,7 @@ class ParticipantController extends AbstractController
             foreach ($erreurs as $erreur) {
                 $row = array(
                     "id" => $erreur->getId(),
+                    "fieldId" => $erreur->getFieldId(),
                     "date" => $this->formatDate($erreur->getDate()),
                     "utilisateur" => $erreur->getUtilisateur(),
                     "message" => $erreur->getMessage(),

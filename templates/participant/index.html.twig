@@ -156,6 +156,7 @@
                             <thead>
                                 <tr>
                                     <th data-column-id="id" data-identifier="true" data-searchable="false" data-type="numeric" data-visible="false">Id</th>
+                                    <th data-column-id="fieldId" data-searchable="false" data-visible="false">Id</th>
                                     <th data-column-id="etat" data-width="10%" data-formatter="etat" data-searchable="false">Etat</th>
                                     <th data-column-id="date" data-width="20%">Date</th>
                                     <th data-column-id="utilisateur" data-width="20%">Utilisateur</th>
@@ -854,8 +855,19 @@
             }
         }).on('click.rs.jquery.bootgrid', function (e, cols, row, target) {
             if (typeof row != "undefined")
-                redirect(row.utilisateur);
+                redirect(row.fieldId);
         });
+
+        function redirect(id) {
+            if (id == undefined) 
+                return;
+    
+            let pathArray = window.location.pathname.split("/");
+            let url = window.location.protocol + "//" + window.location.host;
+            for (let i = 0; i < pathArray.length - 1; i++) 
+                url += pathArray[i] + "/";
+            window.location.assign(url + {{ participant.id }} + "/history/" + id);
+        };
 
         /* Add error info */
         $('.js-error-button').click(function(event) {
