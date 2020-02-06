@@ -170,12 +170,12 @@
 
 			{#========== VERIFICATION ==========#}
 
-			{{ form_start(formVerification, {'attr': {'class': 'form validate-form'} }) }}
-			{{ form_errors(formVerification) }}
-
-			{% form_theme formVerification 'form-theme.html.twig' %}
-
 			<section class="slide" id="tab-verification">
+                {{ form_start(formVerification, {'attr': {'class': 'form< validate-form'} }) }}
+                {{ form_errors(formVerification) }}
+
+                {% form_theme formVerification 'form-theme.html.twig' %}>
+
 				<h1 id="verification">Vérification des critères d'éligibilité</h1>
 
 				<h3 id="inclusion">Critères d'inclusion</h3>
@@ -214,19 +214,18 @@
 
 				{{ form_row(formVerification.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
+                {{ form_row(formVerification._token) }}
+                {{ form_end(formVerification, {'render_rest' : false}) }}
 			</section>
-
-			{{ form_row(formVerification._token) }}
-			{{ form_end(formVerification, {'render_rest' : false}) }}
 
 			{#========== GENERAL ==========#}
 
-			{{ form_start(formGeneral, {'attr': {'class': 'form validate-form'} }) }}
-			{{ form_errors(formGeneral) }}
-
-			{% form_theme formGeneral 'form-theme.html.twig' %}
-
 			<section class="slide" id="tab-general">
+                {{ form_start(formGeneral, {'attr': {'class': 'form validate-form'} }) }}
+                {{ form_errors(formGeneral) }}
+
+                {% form_theme formGeneral 'form-theme.html.twig' %}
+
 				<h1 id="general">Informations générales</h1>
 
 				<h3 id="info">Informations générales</h3>
@@ -267,19 +266,18 @@
 
 				{{ form_row(formGeneral.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
+                {{ form_row(formGeneral._token) }}
+                {{ form_end(formGeneral, {'render_rest' : false}) }}
 			</section>
-
-			{{ form_row(formGeneral._token) }}
-			{{ form_end(formGeneral, {'render_rest' : false}) }}
 
 			{#========== CARDIOVASCULAIRE ==========#}
 
-			{{ form_start(formCardiovasculaire, {'attr': {'class': 'form validate-form'} }) }}
-			{{ form_errors(formCardiovasculaire) }}
-
-			{% form_theme formCardiovasculaire 'form-theme.html.twig' %}
-
 			<section class="slide" id="tab-cardiovasculaire">
+                {{ form_start(formCardiovasculaire, {'attr': {'class': 'form validate-form'} }) }}
+                {{ form_errors(formCardiovasculaire) }}
+
+                {% form_theme formCardiovasculaire 'form-theme.html.twig' %}
+
 				<h1 id="cardiovasculaire">Données cardiovasculaires</h1>
 
 				<h3 id="risque">Facteurs de risque cardiovasculaire</h3>
@@ -322,19 +320,19 @@
 
 				{{ form_row(formCardiovasculaire.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
+                {{ form_row(formCardiovasculaire._token) }}
+                {{ form_end(formCardiovasculaire, {'render_rest' : false}) }}
 			</section>
-
-			{{ form_row(formCardiovasculaire._token) }}
-			{{ form_end(formCardiovasculaire, {'render_rest' : false}) }}
 
 			{#========== INFORMATIONS ==========#}
 
-			{{ form_start(formInformation, {'attr': {'class': 'form validate-form'} }) }}
-			{{ form_errors(formInformation) }}
-
-			{% form_theme formInformation 'form-theme.html.twig' %}
-
 			<section class="slide" id="tab-information">
+
+                {{ form_start(formInformation, {'attr': {'class': 'form validate-form'} }) }}
+                {{ form_errors(formInformation) }}
+
+                {% form_theme formInformation 'form-theme.html.twig' %}
+
 				<h1 id="information">Informations sur l’évènement cardiovasculaire</h1>
 
 				{{ form_row(formInformation.dateSurvenue, {'attr': {'class': 'input js-datepicker'} }) }}
@@ -448,19 +446,18 @@
 
 				{{ form_row(formInformation.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
+                {{ form_row(formInformation._token) }}
+                {{ form_end(formInformation, {'render_rest' : false}) }}
 			</section>
-
-			{{ form_row(formInformation._token) }}
-			{{ form_end(formInformation, {'render_rest' : false}) }}
 
 			{#========== DONNEES ==========#}
 
-			{{ form_start(formDonnee, {'attr': {'class': 'form validate-form'} }) }}
-			{{ form_errors(formDonnee) }}
-
-			{% form_theme formDonnee 'form-theme.html.twig' %}
-
 			<section class="slide" id="tab-evenement">
+                {{ form_start(formDonnee, {'attr': {'class': 'form validate-form'} }) }}
+                {{ form_errors(formDonnee) }}
+
+                {% form_theme formDonnee 'form-theme.html.twig' %}
+
 				<h1 id="evenement">Données à 3 mois (± 1 mois) de l'événement</h1>
 				<div class="form-space">
 					{{ form_row(formDonnee.dateVisite, {'attr': {'class': 'input js-datepicker'} }) }}
@@ -677,19 +674,18 @@
 
 				{{ form_row(formDonnee.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
+                {{ form_row(formDonnee._token) }}
+                {{ form_end(formDonnee, {'render_rest' : false}) }}
 			</section>
-
-			{{ form_row(formDonnee._token) }}
-			{{ form_end(formDonnee, {'render_rest' : false}) }}
 
 			{#========== DECES ==========#}
 
-			{{ form_start(formDeces, {'attr': {'class': 'form validate-form'} }) }}
-			{{ form_errors(formDeces) }}
-
-			{% form_theme formDeces 'form-theme.html.twig' %}
-
 			<section class="slide" id="tab-deces">
+                {{ form_start(formDeces, {'attr': {'class': 'form validate-form'} }) }}
+                {{ form_errors(formDeces) }}
+
+                {% form_theme formDeces 'form-theme.html.twig' %}
+
 				<h1 id="deces">Fiche Décès</h1>
 
 				{{ form_row(formDeces.date, {'attr': {'class': 'input js-datepicker'} }) }}
@@ -708,10 +704,9 @@
 
 				{{ form_row(formDeces.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
+                {{ form_row(formDeces._token) }}
+                {{ form_end(formDeces, {'render_rest' : false}) }}
 			</section>
-
-			{{ form_row(formDeces._token) }}
-			{{ form_end(formDeces, {'render_rest' : false}) }}
 
 		</main>
 
@@ -1009,8 +1004,11 @@
             $('.slide').each(function(i, e) {
                 let id = 'tab-' + page.substring(1);
                 $(this).hide();
-                if ($(this).attr('id') == id)
+                $(this).removeClass('slide-active');
+                if ($(this).attr('id') == id) {
                     $(this).show();
+                    $(this).addClass('slide-active');
+                }
             })
         }
 
@@ -1093,6 +1091,17 @@
                 width: "toggle"
             }, {duration: 500});
         })
+
+        /* On key "ENTER" pressed */
+        $(document).keypress(function(event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode == '13') {
+                event.preventDefault();
+                if (validate == false) {
+                    $(this).find('.slide-active form').submit();
+                }
+            }
+        });
     </script>
 
 {% endblock %}
