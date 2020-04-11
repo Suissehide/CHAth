@@ -263,6 +263,10 @@ input[readonly]:focus {
     filter: invert(31%) sepia(84%) saturate(450%) hue-rotate(160deg) brightness(99%) contrast(97%);
 }
 
+.history-markup {
+    color: #1a535c;
+}
+
 .form-btn-container {
     padding-top: 15px;
     display: flex;

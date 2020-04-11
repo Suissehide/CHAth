@@ -27,9 +27,9 @@ class Information
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      */
-    private $traitement;
+    private $traitementPhaseAigue = [];
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
@@ -37,9 +37,9 @@ class Information
     private $complications;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
-    private $CRP;
+    private $crp;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
@@ -115,14 +115,14 @@ class Information
         return $this;
     }
 
-    public function getTraitement(): ?string
+    public function getTraitementPhaseAigue(): ?array
     {
-        return $this->traitement;
+        return $this->traitementPhaseAigue;
     }
 
-    public function setTraitement(?string $traitement): self
+    public function setTraitementPhaseAigue(?array $traitementPhaseAigue): self
     {
-        $this->traitement = $traitement;
+        $this->traitementPhaseAigue = $traitementPhaseAigue;
 
         return $this;
     }
@@ -139,14 +139,14 @@ class Information
         return $this;
     }
 
-    public function getCRP(): ?int
+    public function getCrp(): ?float
     {
-        return $this->CRP;
+        return $this->crp;
     }
 
-    public function setCRP(?int $CRP): self
+    public function setCrp(?float $crp): self
     {
-        $this->CRP = $CRP;
+        $this->crp = $crp;
 
         return $this;
     }

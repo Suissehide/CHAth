@@ -62,7 +62,7 @@ class Donnee
     private $traitement;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $crp;
 

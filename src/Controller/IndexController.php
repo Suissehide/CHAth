@@ -42,15 +42,32 @@ class IndexController extends AbstractController
                 // $error = $erreurRepository->countAllErreur($participant->getId());
 
                 $em = $this->getDoctrine()->getManager();
-                $RAW_QUERY = 'SELECT f.field_id
+
+
+                $RAW_QUERY = 'SELECT f.field_id, f.participant_id
                 from (
                    SELECT field_id, max(date) AS maxdate, etat
                    FROM erreur GROUP BY field_id, id
                 ) AS x 
-                INNER JOIN erreur AS f ON f.etat = "error" AND f.field_id = x.field_id AND f.date = x.maxdate;';
+                INNER JOIN erreur AS f ON f.etat = "error" AND f.field_id = x.field_id AND f.date = x.maxdate AND f.participant_id = ' . $participant->getId() . ';';
                 $statement = $em->getConnection()->prepare($RAW_QUERY);
                 $statement->execute();
+                // dump($statement->fetchAll());
                 $error = $statement->fetchAll();
+
+                // $RAW = 'SELECT CONCAT(
+                //     \'SELECT * FROM `db_chath`.`participant` WHERE CONCAT(\',
+                //     (SELECT GROUP_CONCAT(COLUMN_NAME)
+                //         FROM `information_schema`.`COLUMNS`
+                //         WHERE `TABLE_SCHEMA` = \'db_chath\' AND
+                //         `TABLE_NAME` = \'participant\'
+                //         AND `IS_NULLABLE` = \'YES\'),
+                //     \') IS NOT NULL\');';
+                // $st = $em->getConnection()->prepare($RAW);
+                // $st->execute();
+                // dump($st->fetchAll());
+
+                // dump($participantRepository->test());
 
                 $sortie = 0;
                 if ($participant->getCode())
@@ -61,8 +78,8 @@ class IndexController extends AbstractController
                     "consentement" => $participant->getVerification()->getDate() ? $participant->getVerification()->getDate()->format('d/m/Y') : '',
                     "evenement" => $participant->getInformation()->getDateSurvenue() ? $participant->getInformation()->getDateSurvenue()->format('d/m/Y') : '',
                     "inclusion" => $participant->getDonnee()->getDateVisite() ? $participant->getDonnee()->getDateVisite()->format('d/m/Y') : '',
+                    "error" => count($error) / 2,
                     "status" => $sortie,
-                    "error" => count($error),
                 );
                 array_push($rows, $row);
             }

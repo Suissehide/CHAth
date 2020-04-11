@@ -5,8 +5,10 @@
 
 {% block body %}
     <div class="container-login">
-        <div class="wrap-login">
 
+        <h1 class="login-title">CHATh</h1>
+
+        <div class="wrap-login">
             <form action="{{ path('login') }}" class="login-form validate-form" method="post">
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

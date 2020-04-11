@@ -158,7 +158,7 @@ class ParticipantController extends AbstractController
         ]);
     }
 
-    private function verification_create(Participant $participant, DateTime $date)
+    private function verification_create(Participant $participant, ?DateTime $date)
     {
         $em = $this->getDoctrine()->getManager();
         $verification = new Verification();
@@ -168,7 +168,7 @@ class ParticipantController extends AbstractController
         $pack = new Pack();
 
         $qcm = new Qcm();
-        $qcm->setQuestion("Patients (homme ou femme) âgés de plus de 80 ans");
+        $qcm->setQuestion("Patients (homme ou femme) âgés de plus de 75 ans");
         $qcm->setReponse("Oui");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
@@ -201,7 +201,7 @@ class ParticipantController extends AbstractController
         $qcm->setReponse("Non");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
-        $qcm->setQuestion("Patient ayant présenté un ou plusieurs ECV avant 80 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse");
+        $qcm->setQuestion("Patient ayant présenté un ou plusieurs ECV avant 75 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse");
         $qcm->setReponse("Non");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
@@ -298,12 +298,14 @@ class ParticipantController extends AbstractController
         $qcm->setQuestion("Latéral");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
-        $qcm->setQuestion("Inférieur");
+        $qcm->setQuestion("Inférieur / Postérieur");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Sans territoire");
         $pack->addQcm($qcm);
     
+        $qcm = new Qcm();
+        $qcm->setQuestion("TC");
         $qcm = new Qcm();
         $qcm->setQuestion("IVA");
         $pack->addQcm($qcm);
@@ -484,6 +486,7 @@ class ParticipantController extends AbstractController
     {
         // dump($newArray);
         foreach ($newArray as $key => $value) {
+            // dump($key, $value);
             if (is_array($value) && array_key_exists('timestamp', $value) && $oldArray[$start][$key]['timestamp'] !== $value['timestamp']) {
                 if (!isset($oldArray[$start][$key]['timestamp']))
                     $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [(vide)] en [' . date('d/m/Y', $value['timestamp']) . ']', true);
@@ -496,10 +499,10 @@ class ParticipantController extends AbstractController
             else if (is_array($value) && array_key_exists('reponse', $value) && $oldArray[$start][$key]['reponse'] !== $value['reponse']) {
                 $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) . '_reponse' , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [' . $this->checkEmpty($oldArray[$start][$key]['reponse']) . '] en [' . $this->checkEmpty($value['reponse']) . ']', true);
             }
-            else if (is_array($value) && 'alimentation' === $key && !empty(array_diff($oldArray[$start][$key], $value))) {
+            else if (is_array($value) && ('alimentation' === $key || 'traitementPhaseAigue' === $key) && !empty(array_diff($oldArray[$start][$key], $value))) {
                 $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [' . $this->checkEmpty($oldArray[$start][$key]) . '] en [' . $this->checkEmpty($value) . ']', true);
             }
-            else if (is_array($value) && !array_key_exists('timestamp', $value) && !array_key_exists('reponse', $value) && 'alimentation' !== $key) {
+            else if (is_array($value) && !array_key_exists('timestamp', $value) && !array_key_exists('reponse', $value) && ('alimentation' !== $key && 'traitementPhaseAigue' !== $key)) {
                 $this->searchDiff($participant, $oldArray[$start], $newArray[$key], $key, $path . '_' . $this->formatKey($key));
             }
             else if ($oldArray[$start][$key] !== $value)
@@ -513,7 +516,7 @@ class ParticipantController extends AbstractController
         $erreurs = $em->getRepository(Erreur::class)->getLastErreur($participantId);
 
         foreach ($array[$start] as $key => $value) {
-            if (is_array($value) && !array_key_exists('timestamp', $value) && !array_key_exists('reponse', $value) && 'alimentation' !== $key) {
+            if (is_array($value) && !array_key_exists('timestamp', $value) && !array_key_exists('reponse', $value) && ('alimentation' !== $key && 'traitementPhaseAigue' !== $key)) {
                 $this->generateErreur($participantId, $form, $array[$start], $key, $path . '_' . $this->formatKey($key));
             }
             if (is_array($value) && array_key_exists('reponse', $value))
@@ -553,7 +556,7 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/participant/{id}", name="participant_view")
+     * @Route("/participant/{id}", name="participant_view", methods="GET|POST")
      */
     public function index(Participant $participant, Request $request): Response
     {
@@ -569,7 +572,7 @@ class ParticipantController extends AbstractController
 
         $formVerification->handleRequest($request);
         if ($formVerification->isSubmitted() && $formVerification->isValid()) {
-            if ($formVerification->get('save')->isClicked() && $participant->getValidation() != true) {
+            if ($participant->getValidation() != true) {
                 
                 /* SERIALISATION */
                 $verificationArray = $this->serializeEntity($formVerification->getData());
@@ -581,6 +584,8 @@ class ParticipantController extends AbstractController
 
                 $participant = $formVerification->getData();
                 $em->flush();
+
+                $this->addFlash('notice', 'Vos modifications ont été enregistré avec succès');
             }
             return $this->redirect($request->getUri());
         }
@@ -593,7 +598,7 @@ class ParticipantController extends AbstractController
 
         $formGeneral->handleRequest($request);
         if ($formGeneral->isSubmitted() && $formGeneral->isValid()) {
-            if ($formGeneral->get('save')->isClicked() && $participant->getValidation() != true) {
+            if ($participant->getValidation() != true) {
 
                 /* SERIALISATION */
                 $generalArray = $this->serializeEntity($formGeneral->getData());
@@ -609,6 +614,8 @@ class ParticipantController extends AbstractController
 
                 $participant = $formGeneral->getData();
                 $em->flush();
+
+                $this->addFlash('notice', 'Vos modifications ont été enregistré avec succès');
             }
             return $this->redirect($request->getUri());
         }
@@ -621,7 +628,7 @@ class ParticipantController extends AbstractController
 
         $formCardiovasculaire->handleRequest($request);
         if ($formCardiovasculaire->isSubmitted() && $formCardiovasculaire->isValid()) {
-            if ($formCardiovasculaire->get('save')->isClicked() && $participant->getValidation() != true) {
+            if ($participant->getValidation() != true) {
                                 
                 /* SERIALISATION */
                 $cardiovasculaireArray = $this->serializeEntity($formCardiovasculaire->getData());
@@ -633,6 +640,8 @@ class ParticipantController extends AbstractController
 
                 $participant = $formCardiovasculaire->getData();
                 $em->flush();
+
+                $this->addFlash('notice', 'Vos modifications ont été enregistré avec succès');
             }
             return $this->redirect($request->getUri());
         }
@@ -645,7 +654,7 @@ class ParticipantController extends AbstractController
 
         $formInformation->handleRequest($request);
         if ($formInformation->isSubmitted() && $formInformation->isValid()) {
-            if ($formInformation->get('save')->isClicked() && $participant->getValidation() != true) {
+            if ($participant->getValidation() != true) {
                                                 
                 /* SERIALISATION */
                 $informationArray = $this->serializeEntity($formInformation->getData());
@@ -657,6 +666,8 @@ class ParticipantController extends AbstractController
 
                 $participant = $formInformation->getData();
                 $em->flush();
+
+                $this->addFlash('notice', 'Vos modifications ont été enregistré avec succès');
             }
             return $this->redirect($request->getUri());
         }
@@ -669,7 +680,7 @@ class ParticipantController extends AbstractController
 
         $formDonnee->handleRequest($request);
         if ($formDonnee->isSubmitted() && $formDonnee->isValid()) {
-            if ($formDonnee->get('save')->isClicked() && $participant->getValidation() != true) {
+            if ($participant->getValidation() != true) {
                                                                 
                 /* SERIALISATION */
                 $donneeArray = $this->serializeEntity($formDonnee->getData());
@@ -681,6 +692,8 @@ class ParticipantController extends AbstractController
 
                 $participant = $formDonnee->getData();
                 $em->flush();
+
+                $this->addFlash('notice', 'Vos modifications ont été enregistré avec succès');
             }
             return $this->redirect($request->getUri());
         }
@@ -694,7 +707,7 @@ class ParticipantController extends AbstractController
 
         $formDeces->handleRequest($request);
         if ($formDeces->isSubmitted() && $formDeces->isValid()) {
-            if ($formDeces->get('save')->isClicked() && $participant->getValidation() != true) {
+            if ($participant->getValidation() != true) {
                                                                                 
                 /* SERIALISATION */
                 $decesArray = $this->serializeEntity($formDeces->getData());
@@ -706,6 +719,8 @@ class ParticipantController extends AbstractController
 
                 $participant = $formDeces->getData();
                 $em->flush();
+
+                $this->addFlash('notice', 'Vos modifications ont été enregistré avec succès');
             }
             return $this->redirect($request->getUri());
         }
@@ -787,6 +802,8 @@ class ParticipantController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->remove($participant);
             $em->flush();
+
+            $this->addFlash('notice', 'Le participant a été supprimé avec succès');
         }
 
         return $this->redirectToRoute('index_participant');
