@@ -305,8 +305,6 @@ class ParticipantController extends AbstractController
         $pack->addQcm($qcm);
     
         $qcm = new Qcm();
-        $qcm->setQuestion("TC");
-        $qcm = new Qcm();
         $qcm->setQuestion("IVA");
         $pack->addQcm($qcm);
         $qcm = new Qcm();
@@ -323,6 +321,9 @@ class ParticipantController extends AbstractController
         $pack->addQcm($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Pontage");
+        $pack->addQcm($qcm);
+        $qcm = new Qcm();
+        $qcm->setQuestion("Tronc commun");
         $pack->addQcm($qcm);
 
         $information->setType($pack);
