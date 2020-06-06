@@ -32,13 +32,15 @@ class InformationType extends AbstractType
                 'label' => 'Type d\'infarctus du Myocarde'
             ))
             
-            ->add('traitement', ChoiceType::class, array(
-                'label' => ' ',
+            ->add('traitementPhaseAigue', ChoiceType::class, array(
+                'label' => 'Alimentation',
                 'placeholder' => '',
+                'multiple' => true,
+                'expanded' => true,
                 'choices' => array(
-                    'Angioplastie seule' => 'Angioplastie seule',
-                    'Fibrinolyse seule' => 'Fibrinolyse seule',
-                    'Fibrinolyse + Angioplastie' => 'Fibrinolyse + Angioplastie',
+                    'Angioplastie' => 'Angioplastie',
+                    'Fibrinolyse' => 'Fibrinolyse',
+                    'Pontage' => 'Pontage',
                     'Traitement médical' => 'Traitement médical',
                 ),
                 'required' => false,
@@ -48,12 +50,13 @@ class InformationType extends AbstractType
                 'label' => 'Type d\'infarctus du Myocarde'
             ))
 
-            ->add('CRP', IntegerType::class, array(
+            ->add('crp', NumberType::class, array(
                 'label' => 'CRP ultra-sensible',
                 'attr' => array(
                     'unity' => 'mg/L',
                     'data-min' => 0,
                     'data-max' => 100,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))

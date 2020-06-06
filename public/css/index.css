@@ -263,6 +263,10 @@ input[readonly]:focus {
     filter: invert(31%) sepia(84%) saturate(450%) hue-rotate(160deg) brightness(99%) contrast(97%);
 }
 
+.history-markup {
+    color: #1a535c;
+}
+
 .form-btn-container {
     padding-top: 15px;
     display: flex;
@@ -781,22 +785,47 @@ main h3 {
 }
 
 .badge-spe {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     font-family: Ubuntu-Bold;
+    border: 2px solid #D74C53;
     background: #D74C53;
-    padding: 3px 7px;
+    width: 25px;
+    height: 25px;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 50%;
     color: #fff;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     right: 43px;
     top: 12px;
 }
 
 .badge-tab {
-    display: inherit;
-    position: unset;
+    position: initial;
+    margin-right: 10px;
+}
+
+.badge-tab:last-child {
+    margin-right: 0;
+}
+
+.badge-completed {
+    background-color: #55d6be;
+    border-color: #55d6be;
+}
+
+.badge-unfinished {
+    background-color: transparent;
+    color: #333333;
+    border-color: #ccc;
+}
+
+.badge-error {
+    background-color: #D74C53;
+    border-color: #D74C53;
 }
 
 .toc ul li ul li a {

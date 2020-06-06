@@ -121,12 +121,13 @@ class DonneeType extends AbstractType
                 'label' => 'Traitement mis en place suite à l\'événement cardiovasculaire'
             ))
 
-            ->add('crp', IntegerType::class, array(
+            ->add('crp', NumberType::class, array(
                 'label' => 'CRP ultra-sensible',
                 'attr' => array(
                     'unity' => 'mg/L',
                     'data-min' => 1,
-                    'data-max' => 30,
+                    'data-max' => 100,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
@@ -136,7 +137,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => 'g/dL',
                     'data-min' => 1,
-                    'data-max' => 30,
+                    'data-max' => 100,
                     'step' => 0.1,
                 ),
                 'required' => false,
@@ -147,7 +148,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => 'G/L',
                     'data-min' => 1,
-                    'data-max' => 30,
+                    'data-max' => 100,
                     'step' => 0.1,
                 ),
                 'required' => false,
@@ -158,7 +159,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => 'G/L',
                     'data-min' => 1,
-                    'data-max' => 30,
+                    'data-max' => 100,
                     'step' => 0.1,
                 ),
                 'required' => false,
@@ -169,7 +170,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => 'G/L',
                     'data-min' => 1,
-                    'data-max' => 30,
+                    'data-max' => 100,
                     'step' => 0.1,
                 ),
                 'required' => false,
@@ -180,7 +181,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => 'g/L',
                     'data-min' => 1,
-                    'data-max' => 30,
+                    'data-max' => 100,
                     'step' => 0.01,
                 ),
                 'required' => false,
@@ -191,7 +192,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => 'g/L',
                     'data-min' => 1,
-                    'data-max' => 30,
+                    'data-max' => 100,
                     'step' => 0.01,
                 ),
                 'required' => false,
@@ -202,7 +203,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => 'g/L',
                     'data-min' => 1,
-                    'data-max' => 30,
+                    'data-max' => 100,
                     'step' => 0.01,
                 ),
                 'required' => false,
@@ -213,7 +214,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => '%',
                     'data-min' => 1,
-                    'data-max' => 30,
+                    'data-max' => 100,
                     'step' => 0.1,
                 ),
                 'required' => false,
@@ -240,7 +241,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => '',
                     'data-min' => 0,
-                    'data-max' => 30,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
@@ -249,7 +250,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => '',
                     'data-min' => 0,
-                    'data-max' => 30,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
@@ -258,7 +259,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => '',
                     'data-min' => 0,
-                    'data-max' => 30,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
@@ -267,7 +268,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => '',
                     'data-min' => 0,
-                    'data-max' => 30,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))
@@ -276,7 +277,7 @@ class DonneeType extends AbstractType
                 'attr' => array(
                     'unity' => '%',
                     'data-min' => 0,
-                    'data-max' => 30,
+                    'data-max' => 100,
                 ),
                 'required' => false,
             ))

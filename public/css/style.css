@@ -32,9 +32,9 @@
     font-family: "FontAwesome";
     font-weight: normal;
     font-style: normal;
-    src: url("https://maxcdn.bootstrapcdn.com/font-awesome/5.8.1/fonts/fontawesome-webfont.eot?v=5.8.1");
-    src: url("https://maxcdn.bootstrapcdn.com/font-awesome/5.8.1/fonts/fontawesome-webfont.eot?#iefix&v=5.8.1") format("embedded-opentype"),
-        url("https://maxcdn.bootstrapcdn.com/font-awesome/5.8.1/fonts/fontawesome-webfont.svg?v=5.8.1#fontawesomeregular") format("svg");
+    src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/webfonts/fa-regular-400.eot");
+    src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/webfonts/fa-regular-400.eot") format("embedded-opentype"),
+        url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/sprites/regular.svg") format("svg");
 }
 
 * {
@@ -68,11 +68,11 @@ button:focus {
 }
 
 ::-moz-selection {
-    background: white;
+    background: #d63b53;
 }
 
 ::selection {
-    background: white;
+    background: #d63b53;
 }
 
 /*---------------------------------------------*/
@@ -249,12 +249,20 @@ iframe {
     position: absolute;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     padding: 15px;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.login-title {
+    font-family: Ubuntu-Bold;
+    font-size: 42px;
+    color: #fff;
+    text-transform: uppercase;
 }
 
 .wrap-login {
@@ -820,7 +828,7 @@ input[type="radio"]:checked+label span {
     cursor: pointer;
     padding: 0px 14px;
     line-height: 34px;
-    user-select: none;
+    /* user-select: none; */
     font-size: 14px;
     color: #555;
     background-color: #fff;
@@ -1198,16 +1206,16 @@ input[type="radio"]:checked+label span {
 
 .error-input:after {
     content: "\f12a";
-    font-family: "FontAwesome";
+    font-family: Font Awesome\ 5 Free;
     font-style: normal;
-    font-weight: normal;
+    font-weight: 900;
     text-decoration: inherit;
 
     color: #E40C2B;
-    font-size: 20px;
+    font-size: 18px;
     position: absolute;
-    top: 8px;
-    right: 50px;
+    top: 9px;
+    right: 55px;
 }
 
 .container-form .error-input .focus-input {

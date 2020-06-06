@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InformationRepository")
@@ -18,71 +19,85 @@ class Information
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"advancement"})
      */
     private $dateSurvenue;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="array", nullable=true)
+     * @Groups({"advancement"})
      */
-    private $traitement;
+    private $traitementPhaseAigue = [];
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $complications;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement"})
      */
-    private $CRP;
+    private $crp;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $hemoglobine;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $leucocytes;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $PNN;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $plaquettes;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement"})
      */
     private $cholesterol;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement"})
      */
     private $LDLC;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement"})
      */
     private $HDLC;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $HbA1c;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $creatininemie;
 
@@ -115,14 +130,14 @@ class Information
         return $this;
     }
 
-    public function getTraitement(): ?string
+    public function getTraitementPhaseAigue(): ?array
     {
-        return $this->traitement;
+        return $this->traitementPhaseAigue;
     }
 
-    public function setTraitement(?string $traitement): self
+    public function setTraitementPhaseAigue(?array $traitementPhaseAigue): self
     {
-        $this->traitement = $traitement;
+        $this->traitementPhaseAigue = $traitementPhaseAigue;
 
         return $this;
     }
@@ -139,14 +154,14 @@ class Information
         return $this;
     }
 
-    public function getCRP(): ?int
+    public function getCrp(): ?float
     {
-        return $this->CRP;
+        return $this->crp;
     }
 
-    public function setCRP(?int $CRP): self
+    public function setCrp(?float $crp): self
     {
-        $this->CRP = $CRP;
+        $this->crp = $crp;
 
         return $this;
     }

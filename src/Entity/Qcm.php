@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QcmRepository")
@@ -23,6 +24,7 @@ class Qcm
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement"})
      */
     private $reponse;
 

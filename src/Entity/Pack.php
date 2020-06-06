@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PackRepository")
@@ -20,11 +21,13 @@ class Pack
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Qcm", mappedBy="pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $qcm;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Gene", mappedBy="pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $genes;
 

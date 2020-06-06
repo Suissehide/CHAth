@@ -26,7 +26,7 @@
 
         <div class="container-form">
 
-            {{ form_start(form, {'attr': {'class': 'form validate-form', 'autocomplete' : 'off'} }) }}
+            {{ form_start(form, {'attr': {'class': 'form validate-form'} }) }}
             {{ form_errors(form) }}
 
             <main class="slide" style="display: block">
@@ -36,7 +36,7 @@
                 <div id="inclusion-qcm" class="qcm">
                     <div class="qcm-row">
                         <div class="qcm-question">
-                            Patients (homme ou femme) âgés de plus de 80 ans
+                            Patients (homme ou femme) âgés de plus de 75 ans
                         </div>
                         <div class="qcm-response">
                             <div class="wrap-input">
@@ -217,7 +217,7 @@
                     <div class="margin-space"></div>
                     <div class="row">
                         <div class="col-md-6">
-                            {{ form_row(form.verification.date, {'attr': {'class': 'input js-datepicker', 'autocomplete' : 'off'} }) }}
+                            {{ form_row(form.verification.date, {'attr': {'class': 'input js-datepicker'} }) }}
                         </div>
                     </div>
                 </div>
@@ -296,7 +296,7 @@
                     </div>
                     <div class="qcm-row">
                         <div class="qcm-question">
-                            Patient ayant présenté un ou plusieurs ECV avant 80 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse
+                            Patient ayant présenté un ou plusieurs ECV avant 75 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse
                         </div>
                         <div class="qcm-response">
                             <div class="wrap-input">
@@ -560,7 +560,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        {{ form_row(form.code, {'attr': {'class': 'input', 'autocomplete' : 'off'} }) }}
+                        {{ form_row(form.code, {'attr': {'class': 'input'} }) }}
                     </div>
                 </div>
 
@@ -624,6 +624,26 @@
             });
         });
 
+        function isValidDate(dateString) {
+            if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
+                return false;
+
+            var parts = dateString.split("/");
+            var day = parseInt(parts[0], 10);
+            var month = parseInt(parts[1], 10);
+            var year = parseInt(parts[2], 10);
+
+            if(year < 1000 || year > 3000 || month == 0 || month > 12)
+                return false;
+
+            var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+            if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+                monthLength[1] = 29;
+
+            return day > 0 && day <= monthLength[month - 1];
+        };
+
         function isValid() {
             let inclusion = 1;
             let non_inclusion = 1;
@@ -643,14 +663,14 @@
                     return;
                 }
             });
-            if (! inclusion || ! non_inclusion || $('#verification_date').val() == '') {
+            console.log(isValidDate($('#participant_verification_date').val()));
+            if (! inclusion || ! non_inclusion || ! isValidDate($('#participant_verification_date').val())) {
                 $('#cb0').prop('checked', false);
                 $('section').css({'display': 'none'});
             }
         }
         isValid();
-        $('main .qcm-row input').change(function () {
-            isValid();
-        });
+        $('main .qcm-row input').change(function () { isValid(); });
+        $('#participant_verification_date').on('keyup', function () { isValid(); });
     </script>
 {% endblock %}

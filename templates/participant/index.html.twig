@@ -365,7 +365,7 @@
 
 				<h3 id="aigue">Traitement à la phase aiguë</h3>
 				<div class="form-space">
-					{{ form_row(formInformation.traitement, {'attr': {'class': 'input '} }) }}
+					{{ form_row(formInformation.traitementPhaseAigue, {'attr': {'class': 'input radio-row'} }) }}
 				</div>
 
 				{#========== <div class="margin-space"></div> ==========#}
@@ -388,7 +388,7 @@
 
 				<h3 id="biologie1">Biologie</h3>
 				<h5>Inflammation</h5>
-				{{ form_row(formInformation.CRP, {
+				{{ form_row(formInformation.crp, {
                         'attr': {'class': 'input'},
                         'useStyle': true,
                     })
@@ -804,6 +804,14 @@
     </script>
 
     <script>
+
+		$('.btn-save').click(function(event) {
+			event.preventDefault();
+			$('.btn-save').prop("disabled", true);
+			$('.btn-save').text("En cours d'enregistrement...")
+			$(this).parents('.form').submit();
+		})
+
         $('.error-list li').each(function() {
             $(this).html($(this).text().replace(/\[(.*?)\]/g, "<b>$1</b>"));
         })
@@ -850,8 +858,12 @@
             }
         }).on('click.rs.jquery.bootgrid', function (e, cols, row, target) {
             if (typeof row != "undefined")
-                redirect(row.fieldId);
-        });
+                redirect(row.utilisateur);
+        }).on("loaded.rs.jquery.bootgrid", function() {
+            $('table tr td:nth-child(4)').each(function() {
+                $(this).html($(this).text().replace(/\[(.*?)\]/g, "<b class='history-markup'>$1</b>"));
+            })
+        });;
 
         function redirect(id) {
             if (id == undefined) 

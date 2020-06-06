@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GeneRepository")
@@ -23,16 +24,19 @@ class Gene
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement"})
      */
     private $statut;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement"})
      */
     private $mutation;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"advancement"})
      */
     private $frequence;
 

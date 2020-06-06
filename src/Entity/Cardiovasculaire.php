@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CardiovasculaireRepository")
@@ -18,26 +19,31 @@ class Cardiovasculaire
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement"})
      */
     private $tabac;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement"})
      */
     private $activitePhysique;
 
     /**
      * @ORM\Column(type="array", nullable=true)
+     * @Groups({"advancement"})
      */
     private $alimentation = [];
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $facteurs;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $traitement;
 

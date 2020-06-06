@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DonneeRepository")
@@ -18,138 +19,165 @@ class Donnee
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"advancement"})
      */
     private $dateVisite;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement"})
      */
     private $recidive;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"advancement"})
      */
     private $dateSurvenue;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"advancement"})
      */
     private $dyspnee;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"advancement"})
      */
     private $douleur;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement"})
      */
     private $tabac;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement"})
      */
     private $activite;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     * @Groups({"advancement"})
+     */
+    private $alimentation = [];
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
+     */
+    private $facteurs;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $traitement;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement"})
      */
     private $crp;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $hemoglobine;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $leucocytes;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $pnn;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $plaquettes;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement"})
      */
     private $cholesterol;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement"})
      */
     private $ldl;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement"})
      */
     private $hdl;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"advancement"})
      */
     private $hba1c;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement"})
      */
     private $hematopoiese;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"advancement"})
      */
     private $carotideCommuneDroite;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"advancement"})
      */
     private $carotideCommuneGauche;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"advancement"})
      */
     private $carotideInterneDroite;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"advancement"})
      */
     private $carotideInterneGauche;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"advancement"})
      */
     private $fraction;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $genes;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
-     */
-    private $facteurs;
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $alimentation = [];
 
     public function getId(): ?int
     {

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
@@ -15,6 +16,7 @@ class Participant
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"advancement"})
      */
     private $id;
 
@@ -29,34 +31,40 @@ class Participant
     private $utilisateurs;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Verification", cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="App\Entity\Verification", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $verification;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\General", cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="App\Entity\General", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $general;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $cardiovasculaire;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Information", cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="App\Entity\Information", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $information;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Deces", cascade={"persist", "remove"}, fetch="EAGER")
-     */
-    private $deces;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Donnee", cascade={"persist", "remove"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="App\Entity\Donnee", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $donnee;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Deces", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
+     */
+    private $deces;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Erreur", mappedBy="participant", cascade={"remove"})

@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VerificationRepository")
@@ -20,16 +19,19 @@ class Verification
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"advancement"})
      */
     private $date;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $inclusion;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"advancement"})
      */
     private $non_inclusion;
 
