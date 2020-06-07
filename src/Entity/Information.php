@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -24,8 +26,12 @@ class Information
     private $dateSurvenue;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
      * @Groups({"advancement"})
+     * @ORM\JoinTable(name="information_qcm_type",
+     *      joinColumns={@ORM\JoinColumn(name="type_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
+     *      )
      */
     private $type;
 
@@ -36,8 +42,12 @@ class Information
     private $traitementPhaseAigue = [];
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
      * @Groups({"advancement"})
+     * @ORM\JoinTable(name="information_qcm_complications",
+     *      joinColumns={@ORM\JoinColumn(name="complications_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
+     *      )
      */
     private $complications;
 
@@ -101,6 +111,12 @@ class Information
      */
     private $creatininemie;
 
+    public function __construct()
+    {
+        $this->complications = new ArrayCollection();
+        $this->type = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -118,14 +134,28 @@ class Information
         return $this;
     }
 
-    public function getType(): ?Pack
+    /**
+     * @return Collection|Qcm[]
+     */
+    public function getType(): Collection
     {
         return $this->type;
     }
 
-    public function setType(?Pack $type): self
+    public function addType(Qcm $type): self
     {
-        $this->type = $type;
+        if (!$this->type->contains($type)) {
+            $this->type[] = $type;
+        }
+
+        return $this;
+    }
+
+    public function removeType(Qcm $type): self
+    {
+        if ($this->type->contains($type)) {
+            $this->type->removeElement($type);
+        }
 
         return $this;
     }
@@ -142,14 +172,28 @@ class Information
         return $this;
     }
 
-    public function getComplications(): ?Pack
+        /**
+     * @return Collection|Qcm[]
+     */
+    public function getComplications(): Collection
     {
         return $this->complications;
     }
 
-    public function setComplications(?Pack $complications): self
+    public function addComplication(Qcm $complication): self
     {
-        $this->complications = $complications;
+        if (!$this->complications->contains($complication)) {
+            $this->complications[] = $complication;
+        }
+
+        return $this;
+    }
+
+    public function removeComplication(Qcm $complication): self
+    {
+        if ($this->complications->contains($complication)) {
+            $this->complications->removeElement($complication);
+        }
 
         return $this;
     }

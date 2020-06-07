@@ -40,11 +40,6 @@ class Gene
      */
     private $frequence;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Pack", inversedBy="genes")
-     */
-    private $pack;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -94,18 +89,6 @@ class Gene
     public function setFrequence(?int $frequence): self
     {
         $this->frequence = $frequence;
-
-        return $this;
-    }
-
-    public function getPack(): ?Pack
-    {
-        return $this->pack;
-    }
-
-    public function setPack(?Pack $pack): self
-    {
-        $this->pack = $pack;
 
         return $this;
     }

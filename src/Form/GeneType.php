@@ -24,6 +24,7 @@ class GeneType extends AbstractType
             //     ),
             //     'required' => false,
             // ))
+            
             ->add('statut', ChoiceType::class, array(
                 'label' => ' ',
                 'expanded' => true,
@@ -35,10 +36,12 @@ class GeneType extends AbstractType
                 ),
                 'required' => false,
             ))
+            
             ->add('mutation', TextAreaType::class, array(
                 'label' => ' ',
                 'required' => false,
             ))
+            
             ->add('frequence', NumberType::class, array(
                 'label' => ' ',
                 'attr' => array(

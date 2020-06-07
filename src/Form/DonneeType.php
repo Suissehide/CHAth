@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class DonneeType extends AbstractType
 {
@@ -113,12 +114,18 @@ class DonneeType extends AbstractType
                 'required' => false,
             ))
 
-            ->add('facteurs', PackType::class, array(
-                'label' => 'Facteurs de risque cardiovasculaire'
+            ->add('facteurs', CollectionType::class, array(
+                'entry_type' => QcmType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
             ))
 
-            ->add('traitement', PackType::class, array(
-                'label' => 'Traitement mis en place suite à l\'événement cardiovasculaire'
+            ->add('traitement', CollectionType::class, array(
+                'entry_type' => QcmType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
             ))
 
             ->add('crp', NumberType::class, array(
@@ -231,10 +238,13 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('genes', PackType::class, array(
-                'label' => 'Gènes'
-            ))
 
+            ->add('genes', CollectionType::class, array(
+                'entry_type' => GeneType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
+            ))
 
             ->add('carotideCommuneDroite', IntegerType::class, array(
                 'label' => 'Volume athérome carotide commune droite',

@@ -632,6 +632,7 @@ main h3 {
     font-weight: bold;
     margin: 0;
     padding-top: 5px;
+    padding-right: 5px;
 }
 
 .qcm-question input[readonly],

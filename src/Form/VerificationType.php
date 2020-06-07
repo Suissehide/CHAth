@@ -4,31 +4,36 @@ namespace App\Form;
 
 use App\Entity\Verification;
 use App\Form\QcmType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+
 
 class VerificationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // ->add('inclusion', CollectionType::class, array(
-            //     'entry_type' => QcmType::class,
-            //     'entry_options' => array('label' => false),
-            //     'allow_add' => true,
-            //     'by_reference' => false,
+            // ->add('inclusion', PackType::class, array(
+            //     'label' => 'Inclusion'
             // ))
 
-            ->add('inclusion', PackType::class, array(
-                'label' => 'Inclusion'
+            ->add('inclusion', CollectionType::class, array(
+                'entry_type' => QcmType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
             ))
 
-            ->add('non_inclusion', PackType::class, array(
-                'label' => 'Non inclusion'
+            ->add('nonInclusion', CollectionType::class, array(
+                'entry_type' => QcmType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
             ))
 
             ->add('date', DateType::class, array(

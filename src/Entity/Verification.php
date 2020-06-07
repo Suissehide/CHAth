@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -24,20 +26,29 @@ class Verification
     private $date;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
      * @Groups({"advancement"})
+     * @ORM\JoinTable(name="verification_qcm_inclusion",
+     *      joinColumns={@ORM\JoinColumn(name="inclusion_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
+     *      )
      */
     private $inclusion;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
      * @Groups({"advancement"})
+     * @ORM\JoinTable(name="verification_qcm_nonInclusion",
+     *      joinColumns={@ORM\JoinColumn(name="nonInclusion_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
+     *      )
      */
-    private $non_inclusion;
+    private $nonInclusion;
 
     public function __construct()
     {
-
+        $this->inclusion = new ArrayCollection();
+        $this->nonInclusion = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,26 +68,54 @@ class Verification
         return $this;
     }
 
-    public function getInclusion(): ?Pack
+    /**
+     * @return Collection|Qcm[]
+     */
+    public function getInclusion(): Collection
     {
         return $this->inclusion;
     }
 
-    public function setInclusion(?Pack $inclusion): self
+    public function addInclusion(Qcm $inclusion): self
     {
-        $this->inclusion = $inclusion;
+        if (!$this->inclusion->contains($inclusion)) {
+            $this->inclusion[] = $inclusion;
+        }
 
         return $this;
     }
 
-    public function getNonInclusion(): ?Pack
+    public function removeInclusion(Qcm $inclusion): self
     {
-        return $this->non_inclusion;
+        if ($this->inclusion->contains($inclusion)) {
+            $this->inclusion->removeElement($inclusion);
+        }
+
+        return $this;
     }
 
-    public function setNonInclusion(?Pack $non_inclusion): self
+    /**
+     * @return Collection|Qcm[]
+     */
+    public function getNonInclusion(): Collection
     {
-        $this->non_inclusion = $non_inclusion;
+        return $this->nonInclusion;
+    }
+
+    public function addNonInclusion(Qcm $nonInclusion): self
+    {
+        if (!$this->nonInclusion->contains($nonInclusion)) {
+            $this->nonInclusion[] = $nonInclusion;
+        }
+
+        return $this;
+    }
+
+    public function removeNonInclusion(Qcm $nonInclusion): self
+    {
+        if ($this->nonInclusion->contains($nonInclusion)) {
+            $this->nonInclusion->removeElement($nonInclusion);
+        }
 
         return $this;
     }

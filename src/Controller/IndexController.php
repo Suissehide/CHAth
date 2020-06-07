@@ -131,7 +131,6 @@ class IndexController extends AbstractController
             'json',
             ['groups' => ['advancement']]
         );
-        dump($res['donnee']['facteurs']);
         return $res;
     }
 }

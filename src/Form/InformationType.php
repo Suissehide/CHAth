@@ -9,8 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class InformationType extends AbstractType
 {
@@ -28,8 +28,11 @@ class InformationType extends AbstractType
                 'required' => false,
             ))
 
-            ->add('type', PackType::class, array(
-                'label' => 'Type d\'infarctus du Myocarde'
+            ->add('type', CollectionType::class, array(
+                'entry_type' => QcmType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
             ))
             
             ->add('traitementPhaseAigue', ChoiceType::class, array(
@@ -45,9 +48,12 @@ class InformationType extends AbstractType
                 ),
                 'required' => false,
             ))
-            
-            ->add('complications', PackType::class, array(
-                'label' => 'Type d\'infarctus du Myocarde'
+
+            ->add('complications', CollectionType::class, array(
+                'entry_type' => QcmType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
             ))
 
             ->add('crp', NumberType::class, array(

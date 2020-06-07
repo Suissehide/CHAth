@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -72,14 +74,22 @@ class Donnee
     private $alimentation = [];
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
      * @Groups({"advancement"})
+     * @ORM\JoinTable(name="donnee_qcm_facteurs",
+     *      joinColumns={@ORM\JoinColumn(name="facteurs_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
+     *      )
      */
     private $facteurs;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
      * @Groups({"advancement"})
+     * @ORM\JoinTable(name="donnee_qcm_traitement",
+     *      joinColumns={@ORM\JoinColumn(name="traitement_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
+     *      )
      */
     private $traitement;
 
@@ -144,6 +154,12 @@ class Donnee
     private $hematopoiese;
 
     /**
+     * @ORM\ManyToMany(targetEntity=Gene::class, cascade={"persist"})
+     * @Groups({"advancement"})
+     */
+    private $genes;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"advancement"})
      */
@@ -173,11 +189,12 @@ class Donnee
      */
     private $fraction;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
-     * @Groups({"advancement"})
-     */
-    private $genes;
+    public function __construct()
+    {
+        $this->facteurs = new ArrayCollection();
+        $this->traitement = new ArrayCollection();
+        $this->genes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -280,14 +297,66 @@ class Donnee
         return $this;
     }
 
-    public function getTraitement(): ?Pack
+    public function getAlimentation(): ?array
+    {
+        return $this->alimentation;
+    }
+
+    public function setAlimentation(?array $alimentation): self
+    {
+        $this->alimentation = $alimentation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Qcm[]
+     */
+    public function getFacteurs(): Collection
+    {
+        return $this->facteurs;
+    }
+
+    public function addFacteur(Qcm $facteur): self
+    {
+        if (!$this->facteurs->contains($facteur)) {
+            $this->facteurs[] = $facteur;
+        }
+
+        return $this;
+    }
+
+    public function removeFacteur(Qcm $facteur): self
+    {
+        if ($this->facteurs->contains($facteur)) {
+            $this->facteurs->removeElement($facteur);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Qcm[]
+     */
+    public function getTraitement(): Collection
     {
         return $this->traitement;
     }
 
-    public function setTraitement(?Pack $traitement): self
+    public function addTraitement(Qcm $traitement): self
     {
-        $this->traitement = $traitement;
+        if (!$this->traitement->contains($traitement)) {
+            $this->traitement[] = $traitement;
+        }
+
+        return $this;
+    }
+
+    public function removeTraitement(Qcm $traitement): self
+    {
+        if ($this->traitement->contains($traitement)) {
+            $this->traitement->removeElement($traitement);
+        }
 
         return $this;
     }
@@ -412,6 +481,32 @@ class Donnee
         return $this;
     }
 
+    /**
+     * @return Collection|Gene[]
+     */
+    public function getGenes(): Collection
+    {
+        return $this->genes;
+    }
+
+    public function addGene(Gene $gene): self
+    {
+        if (!$this->genes->contains($gene)) {
+            $this->genes[] = $gene;
+        }
+
+        return $this;
+    }
+
+    public function removeGene(Gene $gene): self
+    {
+        if ($this->genes->contains($gene)) {
+            $this->genes->removeElement($gene);
+        }
+
+        return $this;
+    }
+
     public function getCarotideCommuneDroite(): ?float
     {
         return $this->carotideCommuneDroite;
@@ -468,42 +563,6 @@ class Donnee
     public function setFraction(?float $fraction): self
     {
         $this->fraction = $fraction;
-
-        return $this;
-    }
-
-    public function getGenes(): ?Pack
-    {
-        return $this->genes;
-    }
-
-    public function setGenes(?Pack $genes): self
-    {
-        $this->genes = $genes;
-
-        return $this;
-    }
-
-    public function getFacteurs(): ?Pack
-    {
-        return $this->facteurs;
-    }
-
-    public function setFacteurs(?Pack $facteurs): self
-    {
-        $this->facteurs = $facteurs;
-
-        return $this;
-    }
-
-    public function getAlimentation(): ?array
-    {
-        return $this->alimentation;
-    }
-
-    public function setAlimentation(?array $alimentation): self
-    {
-        $this->alimentation = $alimentation;
 
         return $this;
     }

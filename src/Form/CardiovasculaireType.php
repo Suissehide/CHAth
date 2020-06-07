@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class CardiovasculaireType extends AbstractType
 {
@@ -51,11 +52,18 @@ class CardiovasculaireType extends AbstractType
                 'required' => false,
             ))
 
-            ->add('facteurs', PackType::class, array(
-                'label' => 'Facteurs de risque cardiovasculaire'
+            ->add('facteurs', CollectionType::class, array(
+                'entry_type' => QcmType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
             ))
-            ->add('traitement', PackType::class, array(
-                'label' => 'Traitement au moment de l\'évènement'
+
+            ->add('traitement', CollectionType::class, array(
+                'entry_type' => QcmType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+                'by_reference' => false,
             ))
 
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder'))

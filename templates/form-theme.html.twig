@@ -118,49 +118,49 @@
 
 
 
-{% block _donnee_genes_genes_entry_mutation_widget %}
+{% block _donnee_genes_entry_mutation_widget %}
     <div class="flex{% if errors is not empty %} error-input{% endif %}">
         {{ block('textarea_widget') }}
         <button class="history"><div class="history-icon"></div></button>
     </div>
     {{ form_errors(form) }}
-{% endblock _donnee_genes_genes_entry_mutation_widget %}
+{% endblock _donnee_genes_entry_mutation_widget %}
 
-{% block _donnee_genes_genes_entry_statut_widget %}
+{% block _donnee_genes_entry_statut_widget %}
     {{ block('qcm_widget') }}
-{% endblock _donnee_genes_genes_entry_statut_widget %}
+{% endblock _donnee_genes_entry_statut_widget %}
 
-{% block _donnee_traitement_qcm_entry_reponse_widget %}
+{% block _donnee_traitement_entry_reponse_widget %}
     {{ block('qcm_widget') }}
-{% endblock _donnee_traitement_qcm_entry_reponse_widget %}
+{% endblock _donnee_traitement_entry_reponse_widget %}
 
-{% block _donnee_facteurs_qcm_entry_reponse_widget %}
+{% block _donnee_facteurs_entry_reponse_widget %}
     {{ block('qcm_widget') }}
-{% endblock _donnee_facteurs_qcm_entry_reponse_widget %}
+{% endblock _donnee_facteurs_entry_reponse_widget %}
 
-{% block _information_type_qcm_entry_reponse_widget %}
+{% block _information_type_entry_reponse_widget %}
     {{ block('qcm_widget') }}
-{% endblock _information_type_qcm_entry_reponse_widget %}
+{% endblock _information_type_entry_reponse_widget %}
 
-{% block _information_complications_qcm_entry_reponse_widget %}
+{% block _information_complications_entry_reponse_widget %}
     {{ block('qcm_widget') }}
-{% endblock _information_complications_qcm_entry_reponse_widget %}
+{% endblock _information_complications_entry_reponse_widget %}
 
-{% block _cardiovasculaire_traitement_qcm_entry_reponse_widget %}
+{% block _cardiovasculaire_traitement_entry_reponse_widget %}
     {{ block('qcm_widget') }}
-{% endblock _cardiovasculaire_traitement_qcm_entry_reponse_widget %}
+{% endblock _cardiovasculaire_traitement_entry_reponse_widget %}
 
-{% block _cardiovasculaire_facteurs_qcm_entry_reponse_widget %}
+{% block _cardiovasculaire_facteurs_entry_reponse_widget %}
     {{ block('qcm_widget') }}
-{% endblock _cardiovasculaire_facteurs_qcm_entry_reponse_widget %}
+{% endblock _cardiovasculaire_facteurs_entry_reponse_widget %}
 
-{% block _verification_non_inclusion_qcm_entry_reponse_widget %}
+{% block _verification_nonInclusion_entry_reponse_widget %}
     {{ block('qcm_widget') }}
-{% endblock _verification_non_inclusion_qcm_entry_reponse_widget %}
+{% endblock _verification_nonInclusion_entry_reponse_widget %}
 
-{% block _verification_inclusion_qcm_entry_reponse_widget %}
+{% block _verification_inclusion_entry_reponse_widget %}
     {{ block('qcm_widget') }}
-{% endblock _verification_inclusion_qcm_entry_reponse_widget %}
+{% endblock _verification_inclusion_entry_reponse_widget %}
 
 {% block qcm_widget %}
     <div class="flex">

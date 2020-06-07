@@ -16,7 +16,6 @@ class Participant
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"advancement"})
      */
     private $id;
 

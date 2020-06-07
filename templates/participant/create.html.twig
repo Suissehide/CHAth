@@ -1,579 +1,585 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}
-    Ajout d'un participant
+	Ajout d'un participant
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
-    <style>
-        .slide {
-            min-height: auto;
-            position: relative;
-            padding: 0;
-        }
-    </style>
+	<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+	<style>
+		.slide {
+			min-height: auto;
+			position: relative;
+			padding: 0;
+		}
+	</style>
 {% endblock %}
 
 {% form_theme form 'form-theme.html.twig' %}
 
 {% block page_content %}
-    <div class="container-fluid">
+	<div class="container-fluid">
 
-        <div class="title-wrapper">
-            Ajouter un participant
-        </div>
+		<div class="title-wrapper">
+			Ajouter un participant
+		</div>
 
-        <div class="container-form">
+		<div class="container-form">
 
-            {{ form_start(form, {'attr': {'class': 'form validate-form'} }) }}
-            {{ form_errors(form) }}
+			{{ form_start(form, {'attr': {'class': 'form validate-form'} }) }}
+			{{ form_errors(form) }}
 
-            <main class="slide" style="display: block">
-                <h1>Vérification des critères d'éligibilité</h1>
+			<main class="slide" style="display: block">
 
-                <h3>Critères d'inclusion</h3>
-                <div id="inclusion-qcm" class="qcm">
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Patients (homme ou femme) âgés de plus de 75 ans
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_inclusion_qcm_0_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_0_reponse_0" name="verification[inclusion][qcm][0][reponse]" value="Oui">
-                                        <label for="verification_inclusion_qcm_0_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
+				<h1 id="verification">Vérification des critères d'éligibilité</h1>
 
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_0_reponse_1" name="verification[inclusion][qcm][0][reponse]" value="Non">
-                                        <label for="verification_inclusion_qcm_0_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
+				<h3 id="inclusion">Critères d'inclusion</h3>
+				<div id="inclusion-qcm" class="qcm">
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Patients (homme ou femme) âgés de plus de 75 ans
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_inclusion_0_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_0_reponse_0" name="verification[inclusion][0][reponse]" value="Oui">
+										<label for="verification_inclusion_0_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
 
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_0_reponse_2" name="verification[inclusion][qcm][0][reponse]" value="Non précisé">
-                                        <label for="verification_inclusion_qcm_0_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_0_reponse_1" name="verification[inclusion][0][reponse]" value="Non">
+										<label for="verification_inclusion_0_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
 
-                                    </div>
-                                </div>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_0_reponse_2" name="verification[inclusion][0][reponse]" value="Non précisé">
+										<label for="verification_inclusion_0_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_inclusion_qcm_1_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_1_reponse_0" name="verification[inclusion][qcm][1][reponse]" value="Oui">
-                                        <label for="verification_inclusion_qcm_1_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
+									</div>
+								</div>
 
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_1_reponse_1" name="verification[inclusion][qcm][1][reponse]" value="Non">
-                                        <label for="verification_inclusion_qcm_1_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_inclusion_1_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_1_reponse_0" name="verification[inclusion][1][reponse]" value="Oui">
+										<label for="verification_inclusion_1_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
 
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_1_reponse_2" name="verification[inclusion][qcm][1][reponse]" value="Non précisé">
-                                        <label for="verification_inclusion_qcm_1_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_1_reponse_1" name="verification[inclusion][1][reponse]" value="Non">
+										<label for="verification_inclusion_1_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
 
-                                    </div>
-                                </div>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_1_reponse_2" name="verification[inclusion][1][reponse]" value="Non précisé">
+										<label for="verification_inclusion_1_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Absence de preuve pour une hémopathie maligne avérée (connue ou révélée sur les résultats de NFS)
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_inclusion_qcm_2_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_2_reponse_0" name="verification[inclusion][qcm][2][reponse]" value="Oui">
-                                        <label for="verification_inclusion_qcm_2_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
+									</div>
+								</div>
 
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_2_reponse_1" name="verification[inclusion][qcm][2][reponse]" value="Non">
-                                        <label for="verification_inclusion_qcm_2_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Absence de preuve pour une hémopathie maligne avérée (connue ou révélée sur les résultats de NFS)
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_inclusion_2_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_2_reponse_0" name="verification[inclusion][2][reponse]" value="Oui">
+										<label for="verification_inclusion_2_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
 
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_2_reponse_2" name="verification[inclusion][qcm][2][reponse]" value="Non précisé">
-                                        <label for="verification_inclusion_qcm_2_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_2_reponse_1" name="verification[inclusion][2][reponse]" value="Non">
+										<label for="verification_inclusion_2_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
 
-                                    </div>
-                                </div>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_2_reponse_2" name="verification[inclusion][2][reponse]" value="Non précisé">
+										<label for="verification_inclusion_2_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Sujet affilié ou bénéficiaire d’un régime de sécurité sociale
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_inclusion_qcm_3_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_3_reponse_0" name="verification[inclusion][qcm][3][reponse]" value="Oui">
-                                        <label for="verification_inclusion_qcm_3_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
+									</div>
+								</div>
 
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_3_reponse_1" name="verification[inclusion][qcm][3][reponse]" value="Non">
-                                        <label for="verification_inclusion_qcm_3_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Sujet affilié ou bénéficiaire d’un régime de sécurité sociale
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_inclusion_3_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_3_reponse_0" name="verification[inclusion][3][reponse]" value="Oui">
+										<label for="verification_inclusion_3_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
 
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_3_reponse_2" name="verification[inclusion][qcm][3][reponse]" value="Non précisé">
-                                        <label for="verification_inclusion_qcm_3_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_3_reponse_1" name="verification[inclusion][3][reponse]" value="Non">
+										<label for="verification_inclusion_3_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
 
-                                    </div>
-                                </div>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_3_reponse_2" name="verification[inclusion][3][reponse]" value="Non précisé">
+										<label for="verification_inclusion_3_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Signature du consentement éclairé
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_inclusion_qcm_4_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_4_reponse_0" name="verification[inclusion][qcm][4][reponse]" value="Oui">
-                                        <label for="verification_inclusion_qcm_4_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
+									</div>
+								</div>
 
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_4_reponse_1" name="verification[inclusion][qcm][4][reponse]" value="Non">
-                                        <label for="verification_inclusion_qcm_4_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Signature du consentement éclairé
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_inclusion_4_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_4_reponse_0" name="verification[inclusion][4][reponse]" value="Oui">
+										<label for="verification_inclusion_4_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
 
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_inclusion_qcm_4_reponse_2" name="verification[inclusion][qcm][4][reponse]" value="Non précisé">
-                                        <label for="verification_inclusion_qcm_4_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_4_reponse_1" name="verification[inclusion][4][reponse]" value="Non">
+										<label for="verification_inclusion_4_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
 
-                                    </div>
-                                </div>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_inclusion_4_reponse_2" name="verification[inclusion][4][reponse]" value="Non précisé">
+										<label for="verification_inclusion_4_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="margin-space"></div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            {{ form_row(form.verification.date, {'attr': {'class': 'input js-datepicker'} }) }}
-                        </div>
-                    </div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
                 </div>
 
-                <h3>Critères de non inclusion</h3>
-                <div id="non-inclusion-qcm" class="qcm">
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Patient ayant présenté un ECV d’origine non-athéromateuse (dissection, embolique, ...)
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_non_inclusion_qcm_0_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_0_reponse_0" name="verification[non_inclusion][qcm][0][reponse]" value="Oui">
-                                        <label for="verification_non_inclusion_qcm_0_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_0_reponse_1" name="verification[non_inclusion][qcm][0][reponse]" value="Non">
-                                        <label for="verification_non_inclusion_qcm_0_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_0_reponse_2" name="verification[non_inclusion][qcm][0][reponse]" value="Non précisé">
-                                        <label for="verification_non_inclusion_qcm_0_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Patient présentant un diabète mal équilibré (HbA1c &gt; 10%)
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_non_inclusion_qcm_1_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_1_reponse_0" name="verification[non_inclusion][qcm][1][reponse]" value="Oui">
-                                        <label for="verification_non_inclusion_qcm_1_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_1_reponse_1" name="verification[non_inclusion][qcm][1][reponse]" value="Non">
-                                        <label for="verification_non_inclusion_qcm_1_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_1_reponse_2" name="verification[non_inclusion][qcm][1][reponse]" value="Non précisé">
-                                        <label for="verification_non_inclusion_qcm_1_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Patient ayant présenté un ou plusieurs ECV avant 75 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_non_inclusion_qcm_2_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_2_reponse_0" name="verification[non_inclusion][qcm][2][reponse]" value="Oui">
-                                        <label for="verification_non_inclusion_qcm_2_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_2_reponse_1" name="verification[non_inclusion][qcm][2][reponse]" value="Non">
-                                        <label for="verification_non_inclusion_qcm_2_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_2_reponse_2" name="verification[non_inclusion][qcm][2][reponse]" value="Non précisé">
-                                        <label for="verification_non_inclusion_qcm_2_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Patient présentant une hémopathie maligne manifeste (connue ou révélée sur les résultats de NFS)
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_non_inclusion_qcm_3_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_3_reponse_0" name="verification[non_inclusion][qcm][3][reponse]" value="Oui">
-                                        <label for="verification_non_inclusion_qcm_3_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_3_reponse_1" name="verification[non_inclusion][qcm][3][reponse]" value="Non">
-                                        <label for="verification_non_inclusion_qcm_3_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_3_reponse_2" name="verification[non_inclusion][qcm][3][reponse]" value="Non précisé">
-                                        <label for="verification_non_inclusion_qcm_3_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Patient présentant une maladie inflammatoire chronique (cancer, vascularite, rhumatismale, hépato-gastro-intestinales)
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_non_inclusion_qcm_4_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_4_reponse_0" name="verification[non_inclusion][qcm][4][reponse]" value="Oui">
-                                        <label for="verification_non_inclusion_qcm_4_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_4_reponse_1" name="verification[non_inclusion][qcm][4][reponse]" value="Non">
-                                        <label for="verification_non_inclusion_qcm_4_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_4_reponse_2" name="verification[non_inclusion][qcm][4][reponse]" value="Non précisé">
-                                        <label for="verification_non_inclusion_qcm_4_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Patient traité par anti-inflammatoire au long cours (Corticoïdes, Anti-inflammatoires non stéroïdiens, Aspirine &gt; 325mg/jour, Inhibiteurs de la cyclo-oxygénase II)
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_non_inclusion_qcm_5_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_5_reponse_0" name="verification[non_inclusion][qcm][5][reponse]" value="Oui">
-                                        <label for="verification_non_inclusion_qcm_5_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_5_reponse_1" name="verification[non_inclusion][qcm][5][reponse]" value="Non">
-                                        <label for="verification_non_inclusion_qcm_5_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_5_reponse_2" name="verification[non_inclusion][qcm][5][reponse]" value="Non précisé">
-                                        <label for="verification_non_inclusion_qcm_5_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Personne placée sous sauvegarde de justice, tutelle ou curatelle
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_non_inclusion_qcm_6_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_6_reponse_0" name="verification[non_inclusion][qcm][6][reponse]" value="Oui">
-                                        <label for="verification_non_inclusion_qcm_6_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_6_reponse_1" name="verification[non_inclusion][qcm][6][reponse]" value="Non">
-                                        <label for="verification_non_inclusion_qcm_6_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_6_reponse_2" name="verification[non_inclusion][qcm][6][reponse]" value="Non précisé">
-                                        <label for="verification_non_inclusion_qcm_6_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Personne étant dans l’incapacité de donner son consentement
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_non_inclusion_qcm_7_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_7_reponse_0" name="verification[non_inclusion][qcm][7][reponse]" value="Oui">
-                                        <label for="verification_non_inclusion_qcm_7_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_7_reponse_1" name="verification[non_inclusion][qcm][7][reponse]" value="Non">
-                                        <label for="verification_non_inclusion_qcm_7_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_7_reponse_2" name="verification[non_inclusion][qcm][7][reponse]" value="Non précisé">
-                                        <label for="verification_non_inclusion_qcm_7_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="qcm-row">
-                        <div class="qcm-question">
-                            Sujet non coopérant
-                        </div>
-                        <div class="qcm-response">
-                            <div class="wrap-input">
-                                <div id="verification_non_inclusion_qcm_8_reponse" class="input radio-row">
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_8_reponse_0" name="verification[non_inclusion][qcm][8][reponse]" value="Oui">
-                                        <label for="verification_non_inclusion_qcm_8_reponse_0">
-                                            <span></span>
-                                            <em>Oui</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_8_reponse_1" name="verification[non_inclusion][qcm][8][reponse]" value="Non">
-                                        <label for="verification_non_inclusion_qcm_8_reponse_1">
-                                            <span></span>
-                                            <em>Non</em>
-                                        </label>
-
-                                    </div>
-                                    <div class="radio-container">
-                                        <input type="radio" id="verification_non_inclusion_qcm_8_reponse_2" name="verification[non_inclusion][qcm][8][reponse]" value="Non précisé">
-                                        <label for="verification_non_inclusion_qcm_8_reponse_2">
-                                            <span></span>
-                                            <em>Non précisé</em>
-                                        </label>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex-block">
-                    <h3>Éligibilité</h3>
-                    <input class="tgl tgl-skewed" id="cb0" type="checkbox" disabled/>
-                    <label class="tgl-btn" data-tg-off="NON" data-tg-on="OUI" for="cb0"></label>
-                </div>
-            </main>
-
-            <section class="slide">
-                <h1>Informations générales</h1>
-
+				<div class="margin-space"></div>
                 <div class="row">
                     <div class="col-md-6">
-                        {{ form_row(form.code, {'attr': {'class': 'input'} }) }}
+                        {{ form_row(form.verification.date, {'attr': {'class': 'input js-datepicker'} }) }}
                     </div>
                 </div>
+				<div class="margin-space"></div>
 
-                <div class="container-form-btn">
-                    {{ form_widget(form.validation, {'attr': {'class': 'form-btn'} }) }}
-                </div>
+				<h3 id="non-inclusion">Critères de non inclusion</h3>
+				<div id="non-inclusion-qcm" class="qcm">
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Patient ayant présenté un ECV d’origine non-athéromateuse (dissection, embolique, ...)
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_nonInclusion_0_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_0_reponse_0" name="verification[nonInclusion][0][reponse]" value="Oui">
+										<label for="verification_nonInclusion_0_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
 
-            </section>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_0_reponse_1" name="verification[nonInclusion][0][reponse]" value="Non">
+										<label for="verification_nonInclusion_0_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
 
-            {{ form_row(form._token) }}
-            {{ form_end(form, {'render_rest' : false}) }}
-        </div>
-    </div>
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_0_reponse_2" name="verification[nonInclusion][0][reponse]" value="Non précisé">
+										<label for="verification_nonInclusion_0_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Patient présentant un diabète mal équilibré (HbA1c &gt; 10%)
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_nonInclusion_1_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_1_reponse_0" name="verification[nonInclusion][1][reponse]" value="Oui">
+										<label for="verification_nonInclusion_1_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_1_reponse_1" name="verification[nonInclusion][1][reponse]" value="Non">
+										<label for="verification_nonInclusion_1_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_1_reponse_2" name="verification[nonInclusion][1][reponse]" value="Non précisé">
+										<label for="verification_nonInclusion_1_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Patient ayant présenté un ou plusieurs ECV avant 75 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_nonInclusion_2_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_2_reponse_0" name="verification[nonInclusion][2][reponse]" value="Oui">
+										<label for="verification_nonInclusion_2_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_2_reponse_1" name="verification[nonInclusion][2][reponse]" value="Non">
+										<label for="verification_nonInclusion_2_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_2_reponse_2" name="verification[nonInclusion][2][reponse]" value="Non précisé">
+										<label for="verification_nonInclusion_2_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Patient présentant une hémopathie maligne manifeste (connue ou révélée sur les résultats de NFS)
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_nonInclusion_3_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_3_reponse_0" name="verification[nonInclusion][3][reponse]" value="Oui">
+										<label for="verification_nonInclusion_3_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_3_reponse_1" name="verification[nonInclusion][3][reponse]" value="Non">
+										<label for="verification_nonInclusion_3_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_3_reponse_2" name="verification[nonInclusion][3][reponse]" value="Non précisé">
+										<label for="verification_nonInclusion_3_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Patient présentant une maladie inflammatoire chronique (cancer, vascularite, rhumatismale, hépato-gastro-intestinales)
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_nonInclusion_4_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_4_reponse_0" name="verification[nonInclusion][4][reponse]" value="Oui">
+										<label for="verification_nonInclusion_4_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_4_reponse_1" name="verification[nonInclusion][4][reponse]" value="Non">
+										<label for="verification_nonInclusion_4_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_4_reponse_2" name="verification[nonInclusion][4][reponse]" value="Non précisé">
+										<label for="verification_nonInclusion_4_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Patient traité par anti-inflammatoire au long cours (Corticoïdes, Anti-inflammatoires non stéroïdiens, Aspirine &gt; 325mg/jour, Inhibiteurs de la cyclo-oxygénase II)
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_nonInclusion_5_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_5_reponse_0" name="verification[nonInclusion][5][reponse]" value="Oui">
+										<label for="verification_nonInclusion_5_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_5_reponse_1" name="verification[nonInclusion][5][reponse]" value="Non">
+										<label for="verification_nonInclusion_5_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_5_reponse_2" name="verification[nonInclusion][5][reponse]" value="Non précisé">
+										<label for="verification_nonInclusion_5_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Personne placée sous sauvegarde de justice, tutelle ou curatelle
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_nonInclusion_6_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_6_reponse_0" name="verification[nonInclusion][6][reponse]" value="Oui">
+										<label for="verification_nonInclusion_6_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_6_reponse_1" name="verification[nonInclusion][6][reponse]" value="Non">
+										<label for="verification_nonInclusion_6_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_6_reponse_2" name="verification[nonInclusion][6][reponse]" value="Non précisé">
+										<label for="verification_nonInclusion_6_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Personne étant dans l’incapacité de donner son consentement
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_nonInclusion_7_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_7_reponse_0" name="verification[nonInclusion][7][reponse]" value="Oui">
+										<label for="verification_nonInclusion_7_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_7_reponse_1" name="verification[nonInclusion][7][reponse]" value="Non">
+										<label for="verification_nonInclusion_7_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_7_reponse_2" name="verification[nonInclusion][7][reponse]" value="Non précisé">
+										<label for="verification_nonInclusion_7_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="qcm-row">
+						<div class="qcm-question">
+							Sujet non coopérant
+						</div>
+						<div class="qcm-response">
+							<div class="wrap-input qcm-flex">
+								<div id="verification_nonInclusion_8_reponse" class="input radio-row">
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_8_reponse_0" name="verification[nonInclusion][8][reponse]" value="Oui">
+										<label for="verification_nonInclusion_8_reponse_0">
+											<span></span>
+											<em>Oui</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_8_reponse_1" name="verification[nonInclusion][8][reponse]" value="Non">
+										<label for="verification_nonInclusion_8_reponse_1">
+											<span></span>
+											<em>Non</em>
+										</label>
+
+									</div>
+									<div class="radio-container">
+										<input type="radio" id="verification_nonInclusion_8_reponse_2" name="verification[nonInclusion][8][reponse]" value="Non précisé">
+										<label for="verification_nonInclusion_8_reponse_2">
+											<span></span>
+											<em>Non précisé</em>
+										</label>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="flex-block">
+					<h3>Éligibilité</h3>
+					<input class="tgl tgl-skewed" id="cb0" type="checkbox" disabled/>
+					<label class="tgl-btn" data-tg-off="NON" data-tg-on="OUI" for="cb0"></label>
+				</div>
+			</main>
+
+			<section class="slide">
+				<h1>Informations générales</h1>
+
+				<div class="row">
+					<div class="col-md-6">
+						{{ form_row(form.code, {'attr': {'class': 'input'} }) }}
+					</div>
+				</div>
+
+				<div class="container-form-btn">
+					{{ form_widget(form.validation, {'attr': {'class': 'form-btn'} }) }}
+				</div>
+
+			</section>
+
+			{{ form_row(form._token) }}
+			{{ form_end(form, {'render_rest' : false}) }}
+		</div>
+	</div>
 {% endblock %}
 
 {% block javascripts %}
@@ -624,6 +630,9 @@
             });
         });
 
+        //remove history btn
+        $('#participant_verification_date, #participant_code').parent().find('.history').remove();
+
         function isValidDate(dateString) {
             if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
                 return false;
@@ -663,7 +672,6 @@
                     return;
                 }
             });
-            console.log(isValidDate($('#participant_verification_date').val()));
             if (! inclusion || ! non_inclusion || ! isValidDate($('#participant_verification_date').val())) {
                 $('#cb0').prop('checked', false);
                 $('section').css({'display': 'none'});

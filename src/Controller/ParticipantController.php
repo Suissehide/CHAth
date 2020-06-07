@@ -132,6 +132,7 @@ class ParticipantController extends AbstractController
             if ($form->get('validation')->isClicked()) {
                 $participant = $form->getData();
                 $participant->setValidation(false);
+
                 if ($participant->getCode() == '')
                     $participant->setCode('ERROR');
                 else {
@@ -166,71 +167,65 @@ class ParticipantController extends AbstractController
 
         $verification->setDate($date);
 
-        $pack = new Pack();
-
+        //Inclusion
         $qcm = new Qcm();
         $qcm->setQuestion("Patients (homme ou femme) âgés de plus de 75 ans");
         $qcm->setReponse("Oui");
-        $pack->addQcm($qcm);
+        $verification->addInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)");
         $qcm->setReponse("Oui");
-        $pack->addQcm($qcm);
+        $verification->addInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Absence de preuve pour une hémopathie maligne avérée (connue ou révélée sur les résultats de NFS)");
         $qcm->setReponse("Oui");
-        $pack->addQcm($qcm);
+        $verification->addInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Sujet affilié ou bénéficiaire d’un régime de sécurité sociale");
         $qcm->setReponse("Oui");
-        $pack->addQcm($qcm);
+        $verification->addInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Signature du consentement éclairé");
         $qcm->setReponse("Oui");
-        $pack->addQcm($qcm);
+        $verification->addInclusion($qcm);
 
-        $verification->setInclusion($pack);
-
-        $pack = new Pack();
-
+        //Non inclusion
         $qcm = new Qcm();
         $qcm->setQuestion("Patient ayant présenté un ECV d’origine non-athéromateuse (dissection, embolique, ...)");
         $qcm->setReponse("Non");
-        $pack->addQcm($qcm);
+        $verification->addNonInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient présentant un diabète mal équilibré (HbA1c > 10%)");
         $qcm->setReponse("Non");
-        $pack->addQcm($qcm);
+        $verification->addNonInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient ayant présenté un ou plusieurs ECV avant 75 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse");
         $qcm->setReponse("Non");
-        $pack->addQcm($qcm);
+        $verification->addNonInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient présentant une hémopathie maligne manifeste (connue ou révélée sur les résultats de NFS)");
         $qcm->setReponse("Non");
-        $pack->addQcm($qcm);
+        $verification->addNonInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient présentant une maladie inflammatoire chronique (cancer, vascularite, rhumatismale, hépato-gastro-intestinales)");
         $qcm->setReponse("Non");
-        $pack->addQcm($qcm);
+        $verification->addNonInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Patient traité par anti-inflammatoire au long cours (Corticoïdes, Anti-inflammatoires non stéroïdiens, Aspirine > 325mg/jour, Inhibiteurs de la cyclo-oxygénase II)");
         $qcm->setReponse("Non");
-        $pack->addQcm($qcm);
+        $verification->addNonInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Personne placée sous sauvegarde de justice, tutelle ou curatelle");
         $qcm->setReponse("Non");
-        $pack->addQcm($qcm);
+        $verification->addNonInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Personne étant dans l’incapacité de donner son consentement");
         $qcm->setReponse("Non");
-        $pack->addQcm($qcm);
+        $verification->addNonInclusion($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Sujet non coopérant");
         $qcm->setReponse("Non");
-        $pack->addQcm($qcm);
-
-        $verification->setNonInclusion($pack);
+        $verification->addNonInclusion($qcm);
 
         $em->persist($verification);
         $em->flush();
@@ -242,36 +237,30 @@ class ParticipantController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $cardiovasculaire = new Cardiovasculaire();
 
-        $pack = new Pack();
-
+        //Facteur
         $qcm = new Qcm();
         $qcm->setQuestion("Diabète");
-        $pack->addQcm($qcm);
+        $cardiovasculaire->addFacteur($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Hypertension artérielle");
-        $pack->addQcm($qcm);
+        $cardiovasculaire->addFacteur($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Dyslipidémie");
-        $pack->addQcm($qcm);
+        $cardiovasculaire->addFacteur($qcm);
 
-        $cardiovasculaire->setFacteurs($pack);
-
-        $pack = new Pack();
-
+        //Traitement
         $qcm = new Qcm();
         $qcm->setQuestion("Hypocholestérolémiant");
-        $pack->addQcm($qcm);
+        $cardiovasculaire->addTraitement($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Antihypertenseur");
-        $pack->addQcm($qcm);
+        $cardiovasculaire->addTraitement($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Antidiabétique");
-        $pack->addQcm($qcm);
+        $cardiovasculaire->addTraitement($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Antiagrégant");
-        $pack->addQcm($qcm);
-
-        $cardiovasculaire->setTraitement($pack);
+        $cardiovasculaire->addTraitement($qcm);
 
         $em->persist($cardiovasculaire);
         $em->flush();
@@ -283,68 +272,62 @@ class ParticipantController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $information = new Information();
 
-        $pack = new Pack();
-
+        //Type
         $qcm = new Qcm();
         $qcm->setQuestion("Sus-décalage du segment ST");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
 
         $qcm = new Qcm();
         $qcm->setQuestion("Antérieur");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Septo-apical");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Latéral");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Inférieur / Postérieur");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Sans territoire");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
     
         $qcm = new Qcm();
         $qcm->setQuestion("IVA");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("CD");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Cx");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Marginale");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Diagonale");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Pontage");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Tronc commun");
-        $pack->addQcm($qcm);
+        $information->addType($qcm);
 
-        $information->setType($pack);
-
-        $pack = new Pack();
-
+        //Complication
         $qcm = new Qcm();
         $qcm->setQuestion("Trouble du rythme ventriculaire");
-        $pack->addQcm($qcm);
+        $information->addComplication($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Insuffisance cardiaque");
-        $pack->addQcm($qcm);
+        $information->addComplication($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Péricardite");
-        $pack->addQcm($qcm);
+        $information->addComplication($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Complication mécanique");
-        $pack->addQcm($qcm);
-
-        $information->setComplications($pack);
+        $information->addComplication($qcm);
 
         $em->persist($information);
         $em->flush();
@@ -356,77 +339,68 @@ class ParticipantController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $donnee = new Donnee();
 
-        $pack = new Pack();
-
+        //Facteur
         $qcm = new Qcm();
         $qcm->setQuestion("Diabète");
-        $pack->addQcm($qcm);
+        $donnee->addFacteur($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Hypertension artérielle");
-        $pack->addQcm($qcm);
+        $donnee->addFacteur($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Dyslipidémie");
-        $pack->addQcm($qcm);
+        $donnee->addFacteur($qcm);
 
-        $donnee->setFacteurs($pack);
-
-        $pack = new Pack();
-
+        //Traitement
         $qcm = new Qcm();
         $qcm->setQuestion("Bêta-bloquant");
-        $pack->addQcm($qcm);
+        $donnee->addTraitement($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Aspirine");
-        $pack->addQcm($qcm);
+        $donnee->addTraitement($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Inhibiteur du récepteur P2Y12");
-        $pack->addQcm($qcm);
+        $donnee->addTraitement($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Statine");
-        $pack->addQcm($qcm);
+        $donnee->addTraitement($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Inhibiteur de l’Enzyme de Conversion");
-        $pack->addQcm($qcm);
+        $donnee->addTraitement($qcm);
         $qcm = new Qcm();
         $qcm->setQuestion("Antagoniste du récepteur de l’angiotensine 2");
-        $pack->addQcm($qcm);
+        $donnee->addTraitement($qcm);
 
-        $donnee->setTraitement($pack);
-
-        $pack = new Pack();
-
+        //Gene
         $gene = new Gene();
         $gene->setNom("TET2");
-        $pack->addGene($gene);
+        $donnee->addGene($gene);
         $gene = new Gene();
         $gene->setNom("ASXL1");
-        $pack->addGene($gene);
+        $donnee->addGene($gene);
         $gene = new Gene();
         $gene->setNom("DNMT3A");
-        $pack->addGene($gene);
+        $donnee->addGene($gene);
         $gene = new Gene();
         $gene->setNom("SF3B1");
-        $pack->addGene($gene);
+        $donnee->addGene($gene);
         $gene = new Gene();
         $gene->setNom("TP53");
-        $pack->addGene($gene);
+        $donnee->addGene($gene);
         $gene = new Gene();
         $gene->setNom("CBL");
-        $pack->addGene($gene);
+        $donnee->addGene($gene);
         $gene = new Gene();
         $gene->setNom("SRSF2");
-        $pack->addGene($gene);
+        $donnee->addGene($gene);
         $gene = new Gene();
         $gene->setNom("PPM1D");
-        $pack->addGene($gene);
+        $donnee->addGene($gene);
         $gene = new Gene();
         $gene->setNom("GNB1");
-        $pack->addGene($gene);
+        $donnee->addGene($gene);
         $gene = new Gene();
         $gene->setNom("JAK2V617F");
-        $pack->addGene($gene);
-
-        $donnee->setGenes($pack);
+        $donnee->addGene($gene);
 
         $em->persist($donnee);
         $em->flush();

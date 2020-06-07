@@ -28,11 +28,6 @@ class Qcm
      */
     private $reponse;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Pack", inversedBy="qcm")
-     */
-    private $pack;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -58,18 +53,6 @@ class Qcm
     public function setReponse(?string $reponse): self
     {
         $this->reponse = $reponse;
-
-        return $this;
-    }
-
-    public function getPack(): ?Pack
-    {
-        return $this->pack;
-    }
-
-    public function setPack(?Pack $pack): self
-    {
-        $this->pack = $pack;
 
         return $this;
     }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -36,16 +38,30 @@ class Cardiovasculaire
     private $alimentation = [];
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
      * @Groups({"advancement"})
+     * @ORM\JoinTable(name="cardiovasculaire_qcm_facteurs",
+     *      joinColumns={@ORM\JoinColumn(name="facteurs_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
+     *      )
      */
     private $facteurs;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
      * @Groups({"advancement"})
+     * @ORM\JoinTable(name="cardiovasculaire_qcm_traitement",
+     *      joinColumns={@ORM\JoinColumn(name="traitement_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
+     *      )
      */
     private $traitement;
+
+    public function __construct()
+    {
+        $this->facteurs = new ArrayCollection();
+        $this->traitement = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -88,26 +104,54 @@ class Cardiovasculaire
         return $this;
     }
 
-    public function getFacteurs(): ?Pack
+    /**
+     * @return Collection|Qcm[]
+     */
+    public function getFacteurs(): Collection
     {
         return $this->facteurs;
     }
 
-    public function setFacteurs(?Pack $facteurs): self
+    public function addFacteur(Qcm $facteur): self
     {
-        $this->facteurs = $facteurs;
+        if (!$this->facteurs->contains($facteur)) {
+            $this->facteurs[] = $facteur;
+        }
 
         return $this;
     }
 
-    public function getTraitement(): ?Pack
+    public function removeFacteur(Qcm $facteur): self
+    {
+        if ($this->facteurs->contains($facteur)) {
+            $this->facteurs->removeElement($facteur);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Qcm[]
+     */
+    public function getTraitement(): Collection
     {
         return $this->traitement;
     }
 
-    public function setTraitement(?Pack $traitement): self
+    public function addTraitement(Qcm $traitement): self
     {
-        $this->traitement = $traitement;
+        if (!$this->traitement->contains($traitement)) {
+            $this->traitement[] = $traitement;
+        }
+
+        return $this;
+    }
+
+    public function removeTraitement(Qcm $traitement): self
+    {
+        if ($this->traitement->contains($traitement)) {
+            $this->traitement->removeElement($traitement);
+        }
 
         return $this;
     }
