@@ -19,7 +19,7 @@ class Erreur
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date;
+    private $dateCreation;
 
     /**
      * @ORM\Column(type="string", length=1023, nullable=true)
@@ -51,14 +51,14 @@ class Erreur
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDateCreation(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->dateCreation;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDateCreation(\DateTimeInterface $dateCreation): self
     {
-        $this->date = $date;
+        $this->dateCreation = $dateCreation;
 
         return $this;
     }

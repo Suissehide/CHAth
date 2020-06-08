@@ -793,8 +793,8 @@ main h3 {
     font-family: Ubuntu-Bold;
     border: 2px solid #D74C53;
     background: #D74C53;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     text-align: center;
     border-radius: 50%;
     color: #fff;
@@ -807,6 +807,8 @@ main h3 {
 .badge-tab {
     position: initial;
     margin-right: 10px;
+    width: 25px;
+    height: 25px;
 }
 
 .badge-tab:last-child {

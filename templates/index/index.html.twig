@@ -73,13 +73,7 @@
             url: "{{ path('index_participant') }}",
             formatters: {
                 "error": function (column, row) {
-                    fetchAdvancement(row.id)
-                    //let listErr = '';
-                    //for (i = 0; i < 6; i++) {
-                      //  listErr += '<div class="badge-spe badge-tab badge-' + $.parseJSON(row.error[i])['state'] + '">' + $.parseJSON(row.error[i])['number'] + '</div>';
-                    //}
-                    //return (listErr);
-                    return '';
+                    fetchAdvancement(row.id);
                 },
                 "commands": function (column, row) {
                     return "<button type=\"button\" class=\"btn btn-xs btn-default command-view\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-eye\"></i></button> " + "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-pencil-alt\"></i></button> " + "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><i class=\"fa fa-trash-alt\"></i></button>";

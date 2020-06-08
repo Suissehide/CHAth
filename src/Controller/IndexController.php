@@ -39,36 +39,6 @@ class IndexController extends AbstractController
             $participants = $participants->getQuery()->getResult();
             $rows = array();
             foreach ($participants as $participant) {
-                // $observ = $participant->getNumero() ? 1 : 0;
-                // $error = $erreurRepository->countAllErreur($participant->getId());
-
-                $em = $this->getDoctrine()->getManager();
-
-                $RAW_QUERY = 'SELECT f.field_id, f.participant_id
-                from (
-                   SELECT field_id, max(date) AS maxdate, etat
-                   FROM erreur GROUP BY field_id, id
-                ) AS x
-                INNER JOIN erreur AS f ON f.etat = "error" AND f.field_id = x.field_id AND f.date = x.maxdate AND f.participant_id = ' . $participant->getId() . ';';
-                $statement = $em->getConnection()->prepare($RAW_QUERY);
-                $statement->execute();
-                // dump($statement->fetchAll());
-                $error = $statement->fetchAll();
-
-                // $RAW = 'SELECT CONCAT(
-                //     \'SELECT * FROM `db_chath`.`participant` WHERE CONCAT(\',
-                //     (SELECT GROUP_CONCAT(COLUMN_NAME)
-                //         FROM `information_schema`.`COLUMNS`
-                //         WHERE `TABLE_SCHEMA` = \'db_chath\' AND
-                //         `TABLE_NAME` = \'participant\'
-                //         AND `IS_NULLABLE` = \'YES\'),
-                //     \') IS NOT NULL\');';
-                // $st = $em->getConnection()->prepare($RAW);
-                // $st->execute();
-                // dump($st->fetchAll());
-
-                // dump($participantRepository->test());
-
                 $sortie = 0;
                 if ($participant->getCode()) {
                     $sortie = 1;
@@ -80,7 +50,7 @@ class IndexController extends AbstractController
                     "consentement" => $participant->getVerification()->getDate() ? $participant->getVerification()->getDate()->format('d/m/Y') : '',
                     "evenement" => $participant->getInformation()->getDateSurvenue() ? $participant->getInformation()->getDateSurvenue()->format('d/m/Y') : '',
                     "inclusion" => $participant->getDonnee()->getDateVisite() ? $participant->getDonnee()->getDateVisite()->format('d/m/Y') : '',
-                    "error" => count($error) / 2,
+                    "error" => '',
                     "status" => $sortie,
                 );
                 array_push($rows, $row);
@@ -111,17 +81,58 @@ class IndexController extends AbstractController
         }
         $id = $request->request->get('id');
         $participant = $this->getDoctrine()->getRepository(Participant::class)->find($id);
-        $this->serializeEntity($participant);
+        $json = $this->serializeEntity($participant);
 
+
+        $RAW_QUERY = 'SELECT f.field_id, f.date_creation
+        FROM (
+           SELECT field_id, max(date_creation) AS maxdate, etat
+           FROM erreur
+           GROUP BY field_id, participant_id
+        ) AS x
+        INNER JOIN erreur AS f ON f.etat = "error" AND f.field_id = x.field_id AND f.date_creation = x.maxdate AND f.participant_id = ' . $participant->getId() . ';';
+
+        $em = $this->getDoctrine()->getManager();
+        $statement = $em->getConnection()->prepare($RAW_QUERY);
+        $statement->execute();
+        $errors = $statement->fetchAll();
+        dump($errors);
+
+        
         $arr = array();
-        for ($i = 0; $i < 6; $i++) {
-
-            array_push($arr, '{"state": "completed", "number": 0}');
+        $iter = 0;
+        foreach($json as $item) {
+            if (($i = $this->isError($iter, $errors)) != 0)
+                array_push($arr, '{"state": "error", "number": "' . $i . '"}');
+            else if (($i = $this->isCompleted($item, 0)) == 0)
+                array_push($arr, '{"state": "completed", "number": "&nbsp;"}');
+            else
+                array_push($arr, '{"state": "unfinished", "number": "' . $i . '"}');
+            $iter += 1;
         }
-        // array_push($arr, '{"state": "completed", "number": 1}');
-        // array_push($arr, '{"state": "unfinished", "number": "&nbsp;"}');
-        // array_push($arr, '{"state": "error", "number": 3}');
         return new JsonResponse($arr);
+    }
+
+    private function isError($iter, $errors)
+    {
+        $err = 0;
+        $list = ['verification', 'general', 'cardiovasculaire', 'information', 'donnee', 'deces'];
+        foreach ($errors as $error) {
+            if (explode('_', $error['field_id'])[0] == $list[$iter])
+                 $err++;
+        }
+        return $err;
+    }
+
+    private function isCompleted($data, $i)
+    {
+        foreach($data as $item) {
+            if (is_array($item))
+                $i = $this->isCompleted($item, $i);
+            if ($item === null)
+                $i += 1;
+        }
+        return $i;
     }
 
     private function serializeEntity($data)

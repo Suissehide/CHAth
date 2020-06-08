@@ -100,7 +100,7 @@ class ParticipantController extends AbstractController
                 $row = array(
                     "id" => $erreur->getId(),
                     "fieldId" => $erreur->getFieldId(),
-                    "date" => $this->formatDate($erreur->getDate()),
+                    "date" => $this->formatDate($erreur->getDateCreation()),
                     "utilisateur" => $erreur->getUtilisateur(),
                     "message" => $erreur->getMessage(),
                     "etat" => $erreur->getEtat(),
@@ -520,7 +520,7 @@ class ParticipantController extends AbstractController
         $createdAt = new DateTime("now", new DateTimeZone('Europe/Paris'));
 
         $erreur = new Erreur();
-        $erreur->setDate($createdAt);
+        $erreur->setDateCreation($createdAt);
         $erreur->setEtat($etat);
         $erreur->setMessage($message);
         $erreur->setFieldId($fieldId);

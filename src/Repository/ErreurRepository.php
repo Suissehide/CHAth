@@ -28,7 +28,7 @@ class ErreurRepository extends ServiceEntityRepository
             ->andWhere('p.id = :participantId')
             ->setParameter('participantId', $participantId)
 
-            ->select('COUNT(e.fieldId) AS erreurs, MAX(e.date) AS HIDDEN max_date')
+            ->select('COUNT(e.fieldId) AS erreurs, MAX(e.dateCreation) AS HIDDEN max_date')
             // ->andWhere('e.etat = :etat')
             // ->setParameter('etat', 'error')
             ->groupBy('e.fieldId')
@@ -62,7 +62,7 @@ class ErreurRepository extends ServiceEntityRepository
             $qb->andWhere('
                     e.utilisateur LIKE :search
                     OR e.message LIKE :search
-                    OR e.date LIKE :search
+                    OR e.dateCreation LIKE :search
                 ')
                 ->setParameter('search', '%' . $searchPhrase . '%');
         }
@@ -71,7 +71,7 @@ class ErreurRepository extends ServiceEntityRepository
                 $qb->orderBy('e.' . $key, $value);
             }
         } else {
-            $qb->orderBy('e.date', 'DESC');
+            $qb->orderBy('e.dateCreation', 'DESC');
         }
         return $qb;
     }
@@ -83,7 +83,7 @@ class ErreurRepository extends ServiceEntityRepository
             ->andWhere('p.id = :participantId')
             ->setParameters(['participantId' => $participantId])
             ->groupBy('e.id', 'e.fieldId')
-            ->orderBy('e.date', 'DESC')
+            ->orderBy('e.dateCreation', 'DESC')
             ->getQuery()
             ->getResult();
         return $qb;
@@ -113,7 +113,7 @@ class ErreurRepository extends ServiceEntityRepository
             $qb->andWhere('
                     e.utilisateur LIKE :search
                     OR e.message LIKE :search
-                    OR e.date LIKE :search
+                    OR e.dateCreation LIKE :search
                 ')
                 ->setParameter('search', '%' . $searchPhrase . '%');
         }
@@ -122,7 +122,7 @@ class ErreurRepository extends ServiceEntityRepository
                 $qb->orderBy('e.' . $key, $value);
             }
         } else {
-            $qb->orderBy('e.date', 'DESC');
+            $qb->orderBy('e.dateCreation', 'DESC');
         }
         return $qb;
     }
