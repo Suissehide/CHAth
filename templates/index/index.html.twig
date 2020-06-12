@@ -59,7 +59,7 @@
     <script>
         var grid = $("#data-grid").bootgrid({
             rowCount: [
-                5, 20, 50, -1
+                20, 50, -1
             ],
             columnSelection: false,
             ajax: true,
@@ -105,26 +105,20 @@
         function fetchAdvancement(participantId) {
             let url = '{{ path("advancement") }}';
 
-            fetch(url, {
-                method: "POST",
-                headers: { 
-                    "Content-Type": 'application/json',
-                    "Accept": 'application/json'
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "id": participantId
                 },
-                body: JSON.stringify({
-                        "id": participantId
-                }),
-            }).then((response) => {
-                return response.json();
-            }).then((json) => {
-                console.log("Then: ", json);
-                let listErr = '';
-                for (i = 0; i < 6; i++) {
-                    listErr += '<div class="badge-spe badge-tab badge-' + $.parseJSON(json[i])['state'] + '">' + $.parseJSON(json[i])['number'] + '</div>';
-                };
-                $('#data-grid tr[data-row-id=' + participantId + '] td:nth-child(5)').append(listErr);
-            }).catch(err => {
-                console.log("Error Reading data " + err);
+                success: function (json) {
+                    let listErr = '';
+                    for (i = 0; i < 6; i++) {
+                        listErr += '<div class="badge-spe badge-tab badge-' + $.parseJSON(json[i])['state'] + '">' + $.parseJSON(json[i])['number'] + '</div>';
+                    };
+                    $('#data-grid tr[data-row-id=' + participantId + '] td:nth-child(5)').append(listErr);
+                }
             });
         };
     </script>
