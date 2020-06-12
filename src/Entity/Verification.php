@@ -38,8 +38,8 @@ class Verification
     /**
      * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
      * @Groups({"advancement"})
-     * @ORM\JoinTable(name="verification_qcm_nonInclusion",
-     *      joinColumns={@ORM\JoinColumn(name="nonInclusion_id", referencedColumnName="id", onDelete="CASCADE")},
+     * @ORM\JoinTable(name="verification_qcm_non_inclusion",
+     *      joinColumns={@ORM\JoinColumn(name="non_inclusion_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
      *      )
      */
