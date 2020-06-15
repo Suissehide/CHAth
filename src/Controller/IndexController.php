@@ -79,9 +79,9 @@ class IndexController extends AbstractController
             $id = $request->request->get('id');
             $participant = $this->getDoctrine()->getRepository(Participant::class)->find($id);
 
-            $RAW_QUERY = 'SELECT f.field_id, f.date_creation
+            $RAW_QUERY = 'SELECT f.field_id
             FROM (
-                SELECT field_id, max(date_creation) AS maxdate, etat
+                SELECT field_id, max(date_creation) AS maxdate
                 FROM erreur
                 GROUP BY field_id, participant_id
             ) AS x

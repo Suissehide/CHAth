@@ -33,7 +33,7 @@ class UtilisateurFixtures extends Fixture
 
         $roles[] = 'ROLE_SUPER_ADMIN';
         $utilisateur = new Utilisateur();
-        $utilisateur->setEmail("thierry.couffinhal@free.fr");
+        $utilisateur->setEmail("thierry.couffinhal@inserm.fr");
         $utilisateur->setNom("Couffinhal");
         $utilisateur->setPrenom("Thierry");
         $utilisateur->setPassword($this->passwordEncoder->encodePassword(
