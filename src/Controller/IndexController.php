@@ -38,9 +38,9 @@ class IndexController extends AbstractController
             $participants = $participants->getQuery()->getResult();
             $rows = array();
             foreach ($participants as $participant) {
-                $sortie = 0;
-                if ($participant->getCode()) {
-                    $sortie = 1;
+                $validation = 0;
+                if ($participant->getValidation()) {
+                    $validation = 1;
                 }
 
                 $row = array(
@@ -50,7 +50,7 @@ class IndexController extends AbstractController
                     "evenement" => $participant->getInformation()->getDateSurvenue() ? $participant->getInformation()->getDateSurvenue()->format('d/m/Y') : '',
                     "inclusion" => $participant->getDonnee()->getDateVisite() ? $participant->getDonnee()->getDateVisite()->format('d/m/Y') : '',
                     "error" => '',
-                    "status" => $sortie,
+                    "status" => $validation,
                 );
                 array_push($rows, $row);
             }
