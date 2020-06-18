@@ -17,8 +17,10 @@
 
         <div class="container-form">
             <div class="btn-bar">
-                <a href="#" class="form-btn btn-check">
-                    <i aria-hidden="true" class="fa fa-file-download"></i>Exporter</a>
+                <a href="{{ path('export_csv') }}" class="form-btn btn-check"download>
+                    <i aria-hidden="true" class="fa fa-file-download"></i>
+                    Exporter
+                </a>
                 <a href="{{ path('participant_add') }}" class="form-btn btn-check">
                     <i aria-hidden="true" class="fa fa-plus"></i>Ajouter un participant</a>
             </div>

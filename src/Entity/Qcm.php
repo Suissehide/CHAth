@@ -24,7 +24,7 @@ class Qcm
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $reponse;
 

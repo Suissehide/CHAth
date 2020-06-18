@@ -21,6 +21,7 @@ class Participant
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $code;
 
@@ -31,37 +32,37 @@ class Participant
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Verification", cascade={"persist", "remove"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $verification;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\General", cascade={"persist", "remove"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $general;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", cascade={"persist", "remove"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $cardiovasculaire;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Information", cascade={"persist", "remove"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $information;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Donnee", cascade={"persist", "remove"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $donnee;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Deces", cascade={"persist", "remove"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $deces;
 
@@ -72,6 +73,7 @@ class Participant
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"export"})
      */
     private $validation;
 

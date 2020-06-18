@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 class IndexController extends AbstractController
 {
     /**
@@ -159,5 +163,29 @@ class IndexController extends AbstractController
             ['groups' => ['advancement']]
         );
         return $res;
+    }
+
+    /**
+     * @Route("/", name="export_csv", methods="GET")
+     */
+    public function generateCsvAction(ParticipantRepository $participantRepository)
+    {
+        $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
+
+        $res = $this->get('serializer')->normalize(
+            $participantRepository->findAll(),
+            'json',
+            ['groups' => ['export']]
+        );
+        $data = $serializer->encode($res, 'csv');
+
+        $data = str_replace(",", ";", $data);
+        $fileName = "export_participant_" . date("d_m_Y") . ".csv";
+        $response = new Response($data);
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=UTF-8; application/excel');
+        $response->headers->set('Content-Disposition', 'attachment; filename=' . $fileName);
+        echo "\xEF\xBB\xBF"; // UTF-8 with BOM
+        return $response;
     }
 }

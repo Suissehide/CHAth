@@ -19,49 +19,49 @@ class General
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $sexe;
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $dateNaissance;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $taille;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $poids;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $imc;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $systolique;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $diastolique;
 

@@ -24,19 +24,19 @@ class Gene
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $statut;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $mutation;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $frequence;
 

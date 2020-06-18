@@ -21,13 +21,13 @@ class Verification
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $date;
 
     /**
      * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      * @ORM\JoinTable(name="verification_qcm_inclusion",
      *      joinColumns={@ORM\JoinColumn(name="inclusion_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
@@ -37,7 +37,7 @@ class Verification
 
     /**
      * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      * @ORM\JoinTable(name="verification_qcm_non_inclusion",
      *      joinColumns={@ORM\JoinColumn(name="non_inclusion_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}

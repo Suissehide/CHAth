@@ -19,31 +19,31 @@ class Deces
 
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $causePrincipale;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $codagePrincipal;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $causeSecondaire;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $codageSecondaire;
 

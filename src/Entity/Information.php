@@ -21,13 +21,13 @@ class Information
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $dateSurvenue;
 
     /**
      * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      * @ORM\JoinTable(name="information_qcm_type",
      *      joinColumns={@ORM\JoinColumn(name="type_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
@@ -37,13 +37,13 @@ class Information
 
     /**
      * @ORM\Column(type="array", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $traitementPhaseAigue = [];
 
     /**
      * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      * @ORM\JoinTable(name="information_qcm_complications",
      *      joinColumns={@ORM\JoinColumn(name="complications_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
@@ -53,61 +53,61 @@ class Information
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $crp;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $hemoglobine;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $leucocytes;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $PNN;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $plaquettes;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $cholesterol;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $LDLC;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $HDLC;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $HbA1c;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $creatininemie;
 

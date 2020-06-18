@@ -21,25 +21,25 @@ class Cardiovasculaire
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $tabac;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $activitePhysique;
 
     /**
      * @ORM\Column(type="array", nullable=true)
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      */
     private $alimentation = [];
 
     /**
      * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      * @ORM\JoinTable(name="cardiovasculaire_qcm_facteurs",
      *      joinColumns={@ORM\JoinColumn(name="facteurs_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
@@ -49,7 +49,7 @@ class Cardiovasculaire
 
     /**
      * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement"})
+     * @Groups({"advancement", "export"})
      * @ORM\JoinTable(name="cardiovasculaire_qcm_traitement",
      *      joinColumns={@ORM\JoinColumn(name="traitement_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
