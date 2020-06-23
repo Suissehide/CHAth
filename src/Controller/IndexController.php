@@ -166,7 +166,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/", name="export_csv", methods="GET")
+     * @Route("/export/csv", name="export_csv", methods="GET")
      */
     public function generateCsvAction(ParticipantRepository $participantRepository)
     {
