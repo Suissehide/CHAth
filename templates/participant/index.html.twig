@@ -821,12 +821,12 @@
         $('.slide').each(function() {
             let count = $(this).find('.error-container').length;
             let id = $(this).attr('id').split('-')[1];
-            if (count > 0) $(".toc a[href$='#" + id + "']").append(`<span class="badge badge-spe">` + count + `</span>`);
+            if (count > 0) $(".toc a[href$='#" + id + "']").append('<span class="badge badge-spe">' + count + '</span>');
         });
         $('h3').each(function() {
             let count = $(this).nextUntil('h3').find('.error-container').length;
             let id = $(this).attr('id');
-            if (count > 0) $(".toc a[href$='#" + id + "']").append(`<span class="badge badge-spe">` + count + `</span>`);
+            if (count > 0) $(".toc a[href$='#" + id + "']").append('<span class="badge badge-spe">' + count + '</span>');
         });
 
         /* Tab history */
@@ -1013,7 +1013,7 @@
         /* TOC */
         /* Smooth scroll */
 
-        displaySlide = (page) => {
+        function displaySlide(page) {
             $('.slide').each(function(i, e) {
                 let id = 'tab-' + page.substring(1);
                 $(this).hide();
