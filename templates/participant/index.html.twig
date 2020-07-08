@@ -918,7 +918,7 @@
         });
 
         /* IMC */
-        getIMC = (poids, taille) => {
+        function getIMC(poids, taille) {
             if (poids && taille && taille > 0) {
                 let imc = poids / ((taille * 0.01) * (taille * 0.01));
                 return imc.toFixed(1);
@@ -1031,7 +1031,7 @@
             return false;
         });
 
-        scrollToc = (page) => {
+        function scrollToc(page) {
             var speed = 550;
             $('html, body').animate({
                 scrollTop: $(page).offset().top - 30
