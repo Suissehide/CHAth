@@ -425,7 +425,9 @@ label, .col-label, .row-label {
 }
 
 .invalid-feedback {
+    width: 100%;
     top: 65px;
+    left: 0;
     color: #d63b53;
     position: absolute;
 }
