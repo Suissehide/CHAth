@@ -596,10 +596,7 @@
             if (!$("#participant_validation").is(":disabled")) {
                 $("#participant_validation").prop("disabled", true);
                 $('#participant_code').css({'border-color': '#d63b53'})
-                var msg = `<span class="invalid-feedback">
-                                <span class="initialism badge badge-danger">Error</span>
-                                <span class="form-error-message">Veuillez renseigner la première lettre du nom et du prénom (e.g., LC).</span>
-                            </span>`;
+                var msg = '<span class="invalid-feedback"><span class="initialism badge badge-danger">Error</span><span class="form-error-message">Veuillez renseigner la première lettre du nom et du prénom (e.g., LC).</span></span>';
                 $("#participant_code").addClass('is-invalid').after(msg);
             }
         }

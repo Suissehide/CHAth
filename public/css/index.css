@@ -791,7 +791,7 @@ label, .col-label, .row-label {
 }
 
 .badge-tab {
-    position: initial;
+    position: static;
     margin-right: 10px;
     width: 25px;
     height: 25px;
