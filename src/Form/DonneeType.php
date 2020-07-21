@@ -132,7 +132,7 @@ class DonneeType extends AbstractType
                 'label' => 'CRP ultra-sensible',
                 'attr' => array(
                     'unity' => 'mg/L',
-                    'data-min' => 1,
+                    'data-min' => 0,
                     'data-max' => 100,
                     'step' => 0.01,
                 ),
@@ -143,7 +143,7 @@ class DonneeType extends AbstractType
                 'scale' => 1,
                 'attr' => array(
                     'unity' => 'g/dL',
-                    'data-min' => 1,
+                    'data-min' => 0,
                     'data-max' => 100,
                     'step' => 0.1,
                 ),
@@ -154,9 +154,9 @@ class DonneeType extends AbstractType
                 'scale' => 1,
                 'attr' => array(
                     'unity' => 'G/L',
-                    'data-min' => 1,
+                    'data-min' => 0,
                     'data-max' => 100,
-                    'step' => 0.1,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
@@ -165,9 +165,9 @@ class DonneeType extends AbstractType
                 'scale' => 1,
                 'attr' => array(
                     'unity' => 'G/L',
-                    'data-min' => 1,
+                    'data-min' => 0,
                     'data-max' => 100,
-                    'step' => 0.1,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
@@ -176,7 +176,7 @@ class DonneeType extends AbstractType
                 'scale' => 1,
                 'attr' => array(
                     'unity' => 'G/L',
-                    'data-min' => 1,
+                    'data-min' => 0,
                     'data-max' => 100,
                     'step' => 0.1,
                 ),
@@ -187,7 +187,7 @@ class DonneeType extends AbstractType
                 'scale' => 2,
                 'attr' => array(
                     'unity' => 'g/L',
-                    'data-min' => 1,
+                    'data-min' => 0,
                     'data-max' => 100,
                     'step' => 0.01,
                 ),
@@ -198,7 +198,7 @@ class DonneeType extends AbstractType
                 'scale' => 2,
                 'attr' => array(
                     'unity' => 'g/L',
-                    'data-min' => 1,
+                    'data-min' => 0,
                     'data-max' => 100,
                     'step' => 0.01,
                 ),
@@ -209,23 +209,33 @@ class DonneeType extends AbstractType
                 'scale' => 2,
                 'attr' => array(
                     'unity' => 'g/L',
-                    'data-min' => 1,
+                    'data-min' => 0,
                     'data-max' => 100,
                     'step' => 0.01,
                 ),
                 'required' => false,
             ))
             ->add('hba1c', NumberType::class, array(
-                'label' => ' ',
+                'label' => 'HbA1c',
                 'scale' => 1,
                 'attr' => array(
                     'unity' => '%',
-                    'data-min' => 1,
+                    'data-min' => 0,
                     'data-max' => 100,
                     'step' => 0.1,
                 ),
                 'required' => false,
             ))
+            ->add('creatininemie', IntegerType::class, array(
+                'label' => 'Créatininémie',
+                'attr' => array(
+                    'unity' => 'µmol/L',
+                    'data-min' => 0,
+                    'data-max' => 100,
+                ),
+                'required' => false,
+            ))
+
             ->add('hematopoiese', ChoiceType::class, array(
                 'label' => 'Mise en évidence d’une mutation',
                 'expanded' => true,

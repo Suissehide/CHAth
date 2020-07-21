@@ -106,13 +106,13 @@ class Donnee
     private $hemoglobine;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      * @Groups({"advancement", "export"})
      */
     private $leucocytes;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      * @Groups({"advancement", "export"})
      */
     private $pnn;
@@ -146,6 +146,12 @@ class Donnee
      * @Groups({"advancement", "export"})
      */
     private $hba1c;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $creatininemie;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -465,6 +471,18 @@ class Donnee
     public function setHba1c(?float $hba1c): self
     {
         $this->hba1c = $hba1c;
+
+        return $this;
+    }
+
+    public function getCreatininemie(): ?float
+    {
+        return $this->creatininemie;
+    }
+
+    public function setCreatininemie(?float $creatininemie): self
+    {
+        $this->creatininemie = $creatininemie;
 
         return $this;
     }

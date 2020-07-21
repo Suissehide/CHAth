@@ -572,8 +572,13 @@
                         })
                     }}
 
-					<h5>HbA1c</h5>
-					{{ form_row(formDonnee.hba1c, {
+                    <div class="separator-space"></div>
+                    {{ form_row(formDonnee.hba1c, {
+                            'attr': {'class': 'input'},
+                            'useStyle': true,
+                        })
+                    }}
+                    {{ form_row(formDonnee.creatininemie, {
                             'attr': {'class': 'input'},
                             'useStyle': true,
                         })

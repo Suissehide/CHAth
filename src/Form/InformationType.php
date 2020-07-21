@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -84,7 +85,7 @@ class InformationType extends AbstractType
                     'unity' => 'G/L',
                     'data-min' => 0,
                     'data-max' => 100,
-                    'step' => 0.1,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
@@ -95,7 +96,7 @@ class InformationType extends AbstractType
                     'unity' => 'G/L',
                     'data-min' => 0,
                     'data-max' => 100,
-                    'step' => 0.1,
+                    'step' => 0.01,
                 ),
                 'required' => false,
             ))
@@ -154,14 +155,12 @@ class InformationType extends AbstractType
                 ),
                 'required' => false,
             ))
-            ->add('creatininemie', NumberType::class, array(
+            ->add('creatininemie', IntegerType::class, array(
                 'label' => 'Créatininémie',
-                'scale' => 1,
                 'attr' => array(
-                    'unity' => '%',
+                    'unity' => 'µmol/L',
                     'data-min' => 0,
                     'data-max' => 100,
-                    'step' => 0.1,
                 ),
                 'required' => false,
             ))

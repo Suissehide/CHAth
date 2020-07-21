@@ -64,13 +64,13 @@ class Information
     private $hemoglobine;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      * @Groups({"advancement", "export"})
      */
     private $leucocytes;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      * @Groups({"advancement", "export"})
      */
     private $PNN;
@@ -106,7 +106,7 @@ class Information
     private $HbA1c;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @Groups({"advancement", "export"})
      */
     private $creatininemie;
