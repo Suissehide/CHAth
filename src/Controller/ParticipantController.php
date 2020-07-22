@@ -136,8 +136,10 @@ class ParticipantController extends AbstractController
                 if ($participant->getCode() == '')
                     $participant->setCode('ERROR');
                 else {
-                    $id = count($em->getRepository(Participant::class)->findAll()) == 0 ? '1' : $em->getRepository(Participant::class)->findOneBy([], ['id' => 'desc'])->getId() + 1;
-                    $participant->setCode(strtoupper($participant->getCode()) . $id);
+                    $id = count($em->getRepository(Participant::class)->findAll()) == 0 ? '1' : $em->getRepository(Participant::class)->findOneBy([], ['id' => 'desc'])->getCode();
+                    $id = intval(substr($id, 0, 3)) + 1;
+                    $id = str_pad($id, 3, "0", STR_PAD_LEFT);
+                    $participant->setCode($id . ' ' . strtoupper($participant->getCode()));
                 }
 
                 $this->verification_create($participant, $participant->getVerification()->getDate());

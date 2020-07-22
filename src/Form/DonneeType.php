@@ -216,7 +216,7 @@ class DonneeType extends AbstractType
                 'required' => false,
             ))
             ->add('hba1c', NumberType::class, array(
-                'label' => 'HbA1c',
+                'label' => ' ',
                 'scale' => 1,
                 'attr' => array(
                     'unity' => '%',
@@ -227,7 +227,7 @@ class DonneeType extends AbstractType
                 'required' => false,
             ))
             ->add('creatininemie', IntegerType::class, array(
-                'label' => 'Créatininémie',
+                'label' => ' ',
                 'attr' => array(
                     'unity' => 'µmol/L',
                     'data-min' => 0,

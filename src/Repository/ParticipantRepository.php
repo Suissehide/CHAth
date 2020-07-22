@@ -58,6 +58,8 @@ class ParticipantRepository extends ServiceEntityRepository
                     $qb->orderBy('i.dateSurvenue', $value);
                 else if ($key == 'inclusion')
                     $qb->orderBy('d.dateVisite', $value);
+                else if ($key == 'code')
+                    $qb->orderBy('p.id', $value);
                 else
                     $qb->orderBy('p.' . $key, $value);
             }

@@ -388,33 +388,21 @@
 				</div>
 
 				<h3 id="biologie1">Biologie</h3>
+
+                <h5>Créatininémie</h5>
+                {{ form_row(formInformation.creatininemie, {
+                        'attr': {'class': 'input'},
+                        'useStyle': true,
+                    })
+                }}
+
 				<h5>Inflammation</h5>
 				{{ form_row(formInformation.crp, {
                         'attr': {'class': 'input'},
                         'useStyle': true,
                     })
                 }}
-				<h5>NFS</h5>
-				{{ form_row(formInformation.hemoglobine, {
-                        'attr': {'class': 'input'},
-                        'useStyle': true,
-                    })
-                }}
-				{{ form_row(formInformation.leucocytes, {
-                        'attr': {'class': 'input'},
-                        'useStyle': true,
-                    })
-                }}
-				{{ form_row(formInformation.PNN, {
-                        'attr': {'class': 'input'},
-                        'useStyle': true,
-                    })
-                }}
-				{{ form_row(formInformation.plaquettes, {
-                        'attr': {'class': 'input'},
-                        'useStyle': true,
-                    })
-                }}
+				
 
 				<h5>Bilan lipidique</h5>
 				{{ form_row(formInformation.cholesterol, {
@@ -433,13 +421,30 @@
                     })
                 }}
 
-				<div class="separator-space"></div>
-				{{ form_row(formInformation.HbA1c, {
+                <h5>HbA1c</h5>
+                {{ form_row(formInformation.HbA1c, {
                         'attr': {'class': 'input'},
                         'useStyle': true,
                     })
                 }}
-				{{ form_row(formInformation.creatininemie, {
+
+                <h5>NFS</h5>
+				{{ form_row(formInformation.leucocytes, {
+                        'attr': {'class': 'input'},
+                        'useStyle': true,
+                    })
+                }}
+				{{ form_row(formInformation.hemoglobine, {
+                        'attr': {'class': 'input'},
+                        'useStyle': true,
+                    })
+                }}
+				{{ form_row(formInformation.plaquettes, {
+                        'attr': {'class': 'input'},
+                        'useStyle': true,
+                    })
+                }}
+				{{ form_row(formInformation.PNN, {
                         'attr': {'class': 'input'},
                         'useStyle': true,
                     })
@@ -526,30 +531,14 @@
 
 				<h3 id="biologie2">Biologie</h3>
 				<div class="form-space">
+                    <h5>Créatininémie</h5>
+                    {{ form_row(formDonnee.creatininemie, {
+                            'attr': {'class': 'input'},
+                            'useStyle': true,
+                        })
+                    }}
 					<h5>Inflammation</h5>
 					{{ form_row(formDonnee.crp, {
-                            'attr': {'class': 'input'},
-                            'useStyle': true,
-                        })
-                    }}
-
-					<h5>NFS</h5>
-					{{ form_row(formDonnee.hemoglobine, {
-                            'attr': {'class': 'input'},
-                            'useStyle': true,
-                        })
-                    }}
-					{{ form_row(formDonnee.leucocytes, {
-                            'attr': {'class': 'input'},
-                            'useStyle': true,
-                        })
-                    }}
-					{{ form_row(formDonnee.pnn, {
-                            'attr': {'class': 'input'},
-                            'useStyle': true,
-                        })
-                    }}
-					{{ form_row(formDonnee.plaquettes, {
                             'attr': {'class': 'input'},
                             'useStyle': true,
                         })
@@ -572,13 +561,30 @@
                         })
                     }}
 
-                    <div class="separator-space"></div>
+                    <h5>HbA1c</h5>
                     {{ form_row(formDonnee.hba1c, {
                             'attr': {'class': 'input'},
                             'useStyle': true,
                         })
                     }}
-                    {{ form_row(formDonnee.creatininemie, {
+
+					<h5>NFS</h5>
+					{{ form_row(formDonnee.leucocytes, {
+                            'attr': {'class': 'input'},
+                            'useStyle': true,
+                        })
+                    }}
+					{{ form_row(formDonnee.hemoglobine, {
+                            'attr': {'class': 'input'},
+                            'useStyle': true,
+                        })
+                    }}
+					{{ form_row(formDonnee.plaquettes, {
+                            'attr': {'class': 'input'},
+                            'useStyle': true,
+                        })
+                    }}
+					{{ form_row(formDonnee.pnn, {
                             'attr': {'class': 'input'},
                             'useStyle': true,
                         })
