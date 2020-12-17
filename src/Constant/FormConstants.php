@@ -2,7 +2,8 @@
 
 namespace App\Constant;
 
-class FormConstants {
+class FormConstants
+{
     const INCLUSION = [
         'Patients (homme ou femme) âgés de plus de 75 ans',
         'Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)',
