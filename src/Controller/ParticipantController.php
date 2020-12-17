@@ -20,6 +20,7 @@ use App\Form\DecesType;
 use App\Form\InformationType;
 use App\Form\DonneeType;
 
+use App\Constant\FormConstants;
 
 use App\Repository\ErreurRepository;
 
@@ -170,64 +171,20 @@ class ParticipantController extends AbstractController
         $verification->setDate($date);
 
         //Inclusion
-        $qcm = new Qcm();
-        $qcm->setQuestion("Patients (homme ou femme) âgés de plus de 75 ans");
-        $qcm->setReponse("Oui");
-        $verification->addInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)");
-        $qcm->setReponse("Oui");
-        $verification->addInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Absence de preuve pour une hémopathie maligne avérée (connue ou révélée sur les résultats de NFS)");
-        $qcm->setReponse("Oui");
-        $verification->addInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Sujet affilié ou bénéficiaire d’un régime de sécurité sociale");
-        $qcm->setReponse("Oui");
-        $verification->addInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Signature du consentement éclairé");
-        $qcm->setReponse("Oui");
-        $verification->addInclusion($qcm);
+        foreach (FormConstants::INCLUSION as $name) {
+            $qcm = new Qcm();
+            $qcm->setQuestion($name);
+            $qcm->setReponse("Oui");
+            $verification->addInclusion($qcm);
+        }
 
         //Non inclusion
-        $qcm = new Qcm();
-        $qcm->setQuestion("Patient ayant présenté un ECV d’origine non-athéromateuse (dissection, embolique, ...)");
-        $qcm->setReponse("Non");
-        $verification->addNonInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Patient présentant un diabète mal équilibré (HbA1c > 10%)");
-        $qcm->setReponse("Non");
-        $verification->addNonInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Patient ayant présenté un ou plusieurs ECV avant 75 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse");
-        $qcm->setReponse("Non");
-        $verification->addNonInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Patient présentant une hémopathie maligne manifeste (connue ou révélée sur les résultats de NFS)");
-        $qcm->setReponse("Non");
-        $verification->addNonInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Patient présentant une maladie inflammatoire chronique (cancer, vascularite, rhumatismale, hépato-gastro-intestinales)");
-        $qcm->setReponse("Non");
-        $verification->addNonInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Patient traité par anti-inflammatoire au long cours (Corticoïdes, Anti-inflammatoires non stéroïdiens, Aspirine > 325mg/jour, Inhibiteurs de la cyclo-oxygénase II)");
-        $qcm->setReponse("Non");
-        $verification->addNonInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Personne placée sous sauvegarde de justice, tutelle ou curatelle");
-        $qcm->setReponse("Non");
-        $verification->addNonInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Personne étant dans l’incapacité de donner son consentement");
-        $qcm->setReponse("Non");
-        $verification->addNonInclusion($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Sujet non coopérant");
-        $qcm->setReponse("Non");
-        $verification->addNonInclusion($qcm);
+        foreach (FormConstants::NON_INCLUSION as $name) {
+            $qcm = new Qcm();
+            $qcm->setQuestion($name);
+            $qcm->setReponse("Non");
+            $verification->addNonInclusion($qcm);
+        }
 
         $em->persist($verification);
         $em->flush();
@@ -240,29 +197,18 @@ class ParticipantController extends AbstractController
         $cardiovasculaire = new Cardiovasculaire();
 
         //Facteur
-        $qcm = new Qcm();
-        $qcm->setQuestion("Diabète");
-        $cardiovasculaire->addFacteur($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Hypertension artérielle");
-        $cardiovasculaire->addFacteur($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Dyslipidémie");
-        $cardiovasculaire->addFacteur($qcm);
+        foreach (FormConstants::FACTEUR as $name) {
+            $qcm = new Qcm();
+            $qcm->setQuestion($name);
+            $cardiovasculaire->addFacteur($qcm);
+        }
 
         //Traitement
-        $qcm = new Qcm();
-        $qcm->setQuestion("Hypocholestérolémiant");
-        $cardiovasculaire->addTraitement($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Antihypertenseur");
-        $cardiovasculaire->addTraitement($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Antidiabétique");
-        $cardiovasculaire->addTraitement($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Antiagrégant");
-        $cardiovasculaire->addTraitement($qcm);
+        foreach (FormConstants::CARDIO_TRAITEMENT as $name) {
+            $qcm = new Qcm();
+            $qcm->setQuestion($name);
+            $cardiovasculaire->addTraitement($qcm);
+        }
 
         $em->persist($cardiovasculaire);
         $em->flush();
@@ -275,61 +221,18 @@ class ParticipantController extends AbstractController
         $information = new Information();
 
         //Type
-        $qcm = new Qcm();
-        $qcm->setQuestion("Sus-décalage du segment ST");
-        $information->addType($qcm);
-
-        $qcm = new Qcm();
-        $qcm->setQuestion("Antérieur");
-        $information->addType($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Septo-apical");
-        $information->addType($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Latéral");
-        $information->addType($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Inférieur / Postérieur");
-        $information->addType($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Sans territoire");
-        $information->addType($qcm);
-    
-        $qcm = new Qcm();
-        $qcm->setQuestion("IVA");
-        $information->addType($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("CD");
-        $information->addType($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Cx");
-        $information->addType($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Marginale");
-        $information->addType($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Diagonale");
-        $information->addType($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Pontage");
-        $information->addType($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Tronc commun");
-        $information->addType($qcm);
+        foreach (FormConstants::TYPE as $name) {
+            $qcm = new Qcm();
+            $qcm->setQuestion($name);
+            $information->addType($qcm);
+        }
 
         //Complication
-        $qcm = new Qcm();
-        $qcm->setQuestion("Trouble du rythme ventriculaire");
-        $information->addComplication($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Insuffisance cardiaque");
-        $information->addComplication($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Péricardite");
-        $information->addComplication($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Complication mécanique");
-        $information->addComplication($qcm);
+        foreach (FormConstants::COMPLICATION as $name) {
+            $qcm = new Qcm();
+            $qcm->setQuestion($name);
+            $information->addComplication($qcm);
+        }
 
         $em->persist($information);
         $em->flush();
@@ -342,67 +245,26 @@ class ParticipantController extends AbstractController
         $donnee = new Donnee();
 
         //Facteur
-        $qcm = new Qcm();
-        $qcm->setQuestion("Diabète");
-        $donnee->addFacteur($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Hypertension artérielle");
-        $donnee->addFacteur($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Dyslipidémie");
-        $donnee->addFacteur($qcm);
+        foreach (FormConstants::FACTEUR as $name) {
+            $qcm = new Qcm();
+            $qcm->setQuestion($name);
+            $donnee->addFacteur($qcm);
+        }
 
         //Traitement
-        $qcm = new Qcm();
-        $qcm->setQuestion("Bêta-bloquant");
-        $donnee->addTraitement($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Aspirine");
-        $donnee->addTraitement($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Inhibiteur du récepteur P2Y12");
-        $donnee->addTraitement($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Statine");
-        $donnee->addTraitement($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Inhibiteur de l’Enzyme de Conversion");
-        $donnee->addTraitement($qcm);
-        $qcm = new Qcm();
-        $qcm->setQuestion("Antagoniste du récepteur de l’angiotensine 2");
-        $donnee->addTraitement($qcm);
+        foreach (FormConstants::DONNEE_TRAITEMENT as $name) {
+            $qcm = new Qcm();
+            $qcm->setQuestion($name);
+            $donnee->addTraitement($qcm);
+        }
 
         //Gene
-        $gene = new Gene();
-        $gene->setNom("TET2");
-        $donnee->addGene($gene);
-        $gene = new Gene();
-        $gene->setNom("ASXL1");
-        $donnee->addGene($gene);
-        $gene = new Gene();
-        $gene->setNom("DNMT3A");
-        $donnee->addGene($gene);
-        $gene = new Gene();
-        $gene->setNom("SF3B1");
-        $donnee->addGene($gene);
-        $gene = new Gene();
-        $gene->setNom("TP53");
-        $donnee->addGene($gene);
-        $gene = new Gene();
-        $gene->setNom("CBL");
-        $donnee->addGene($gene);
-        $gene = new Gene();
-        $gene->setNom("SRSF2");
-        $donnee->addGene($gene);
-        $gene = new Gene();
-        $gene->setNom("PPM1D");
-        $donnee->addGene($gene);
-        $gene = new Gene();
-        $gene->setNom("GNB1");
-        $donnee->addGene($gene);
-        $gene = new Gene();
-        $gene->setNom("JAK2V617F");
-        $donnee->addGene($gene);
+        foreach (FormConstants::GENES as $name) {
+            $gene = new Gene();
+            $gene->setStatut("Non muté");
+            $gene->setNom($name);
+            $donnee->addGene($gene);
+        }
 
         $em->persist($donnee);
         $em->flush();

@@ -59,9 +59,9 @@
 					<li>
 						<a href='#history'>
 							<div class="menu-title">
-								<div class='fa fa-user'></div>
-								Participant
-								{{ participant.code }}</div>
+								<i class='fa fa-user'></i>
+								<div>Participant {{ participant.code }}</div>
+                            </div>
 						</a>
 					</li>
 					{# <li>
@@ -74,9 +74,10 @@
 					<li class='sub-menu'>
 						<a href='#verification'>
 							<div class="menu-title">
-								<div class='fa fa-feather-alt'></div>
-								Vérification des critères d'éligibilité</div>
-							<div class='fa fa-caret-down right'></div>
+								<i class='fa fa-feather-alt'></i>
+								<div>Vérification des critères d'éligibilité</div>
+                            </div>
+							<i class='fa fa-caret-down right'></i>
 						</a>
 						<ul>
 							<li><a href='#inclusion'>Critères d'inclusion</a></li>
@@ -86,9 +87,10 @@
 					<li class='sub-menu'>
 						<a href='#general'>
 							<div class="menu-title">
-								<div class='fa fa-stethoscope'></div>
-								Informations générales</div>
-							<div class='fa fa-caret-down right'></div>
+								<i class='fa fa-stethoscope'></i>
+								<div>Informations générales</div>
+                            </div>
+							<i class='fa fa-caret-down right'></i>
 						</a>
 						<ul>
 							<li><a href='#info'>Informations générales</a></li>
@@ -97,9 +99,10 @@
 					<li class='sub-menu'>
 						<a href='#cardiovasculaire'>
 							<div class="menu-title">
-								<div class='fa fa-heartbeat'></div>
-								Données cardiovasculaires</div>
-							<div class='fa fa-caret-down right'></div>
+								<i class='fa fa-heartbeat'></i>
+								<div>Données cardiovasculaires</div>
+                            </div>
+							<i class='fa fa-caret-down right'></i>
 						</a>
 						<ul>
 							<li><a href='#risque'>Facteurs de risque cardiovasculaire</a></li>
@@ -109,9 +112,10 @@
 					<li class='sub-menu'>
 						<a href='#information'>
 							<div class="menu-title">
-								<div class='fa fa-procedures'></div>
-								Informations sur l’évènement cardiovasculaire</div>
-							<div class='fa fa-caret-down right'></div>
+								<i class='fa fa-procedures'></i>
+								<div>Informations sur l’évènement cardiovasculaire</div>
+                            </div>
+							<i class='fa fa-caret-down right'></i>
 						</a>
 						<ul>
 							<li><a href='#type'>Type d’infarctus du Myocarde</a></li>
@@ -123,9 +127,10 @@
 					<li class='sub-menu'>
 						<a href='#evenement'>
 							<div class="menu-title">
-								<div class='fa fa-notes-medical'></div>
-								Données à 3 mois (± 1 mois) de l'événement</div>
-							<div class='fa fa-caret-down right'></div>
+								<i class='fa fa-notes-medical'></i>
+								<div>Données à 3 mois (± 1 mois) de l'événement</div>
+                            </div>
+							<i class='fa fa-caret-down right'></i>
 						</a>
 						<ul>
 							<li><a href='#recidive'>Récidive</a></li>
@@ -140,10 +145,14 @@
 					<li>
 						<a href='#deces'>
 							<div class="menu-title">
-								<div class='fa fa-skull-crossbones'></div>
-								Décès</div>
+								<i class='fa fa-skull-crossbones'></i>
+								<div>Décès</div>
+                            </div>
 						</a>
 					</li>
+                    <li>
+                        <button id="js-reducemenu"><i class="fas fa-arrow-left"></i></button>
+                    </li>
 				</ul>
 			</nav>
 
@@ -595,45 +604,63 @@
 				<div class="form-space">
 					{{ form_row(formDonnee.hematopoiese, {'attr': {'class': 'input radio-row'} }) }}
 
+                    {{ form_row(formDonnee.numberOfMutation, {'attr': {'class': 'input'} }) }}
+
 					<div class="margin-space"></div>
 
 					<div class="row-flex">
-						<div class="col-flex-2 col-flex row-label">
+						<div class="col-flex-1 col-flex row-label">
 							Gène
 						</div>
-						<div class="col-flex-3 col-flex row-label">
+						<div class="col-flex-2 col-flex row-label">
 							Statut
 						</div>
-						<div class="col-flex-4 col-flex row-label">
+						<div class="col-flex-2 col-flex row-label">
 							Mutation
 						</div>
-						<div class="col-flex-3 col-flex row-label">
+						<div class="col-flex-2 col-flex row-label">
 							Fréquence de l’allèle variant
+						</div>
+                        <div class="col-flex-2 col-flex row-label">
+							Classification
+						</div>
+                        <div class="col-flex-2 col-flex row-label">
+							Commentaire
 						</div>
 					</div>
 					{% for gene in formDonnee.genes %}
 						<div class="row-flex">
-							<div class="col-flex-2 col-flex col-label">
+							<div class="col-flex-1 col-flex col-label">
 								<div class="wrap-input">
 									{{ gene.vars.value.nom }}
 								</div>
 							</div>
-							<div class="col-flex-3 col-flex col-input">
+							<div class="col-flex-2 col-flex col-input">
 								<div class="wrap-input">
 									{{ form_widget(gene.statut, {'attr': {'class': 'input radio-row'} }) }}
 								</div>
 							</div>
-							<div class="col-flex-4 col-flex col-input">
+							<div class="col-flex-2 col-flex col-input">
 								<div class="wrap-input">
 									{{ form_widget(gene.mutation, {'attr': {'class': 'input'} }) }}
 								</div>
 							</div>
-							<div class="col-flex-3 col-flex col-input">
+							<div class="col-flex-2 col-flex col-input">
 								{{ form_row(gene.frequence, {
                                         'attr': {'class': 'input'},
                                         'useStyle': true,
                                     })
                                 }}
+							</div>
+                            <div class="col-flex-2 col-flex col-input">
+								<div class="wrap-input">
+									{{ form_widget(gene.classification, {'attr': {'class': 'input'} }) }}
+								</div>
+							</div>
+                            <div class="col-flex-2 col-flex col-input">
+								<div class="wrap-input">
+									{{ form_widget(gene.commentaire, {'attr': {'class': 'input'} }) }}
+								</div>
 							</div>
 						</div>
 					{% endfor %}
@@ -673,6 +700,9 @@
                             }}
 						</div>
 					</div>
+
+                    <div class="separator-space"></div>
+
 					<div class="row">
 						<div class="col-md-6">
 							{{ form_row(formDonnee.fraction, {
@@ -1074,8 +1104,10 @@
                     $(this).removeClass('js-active');
                 });
             }
-            $(this).toggleClass('js-active');
-            toggleMenu($(this));
+            if (!reduce) {
+                $(this).toggleClass('js-active');
+                toggleMenu($(this));
+            }
         });
 
         function toggleMenu(e) {
@@ -1088,7 +1120,7 @@
         });
 
         function onScroll() {
-            let offset = $('.hero-tabs').offset().top + $('.hero-tabs').height() + 50;
+            let offset = $('.hero-tabs').offset().top + $('.hero-tabs').height() + 25;
             if ($(window).scrollTop() > offset) {
                 $('.hero-tabs-container').addClass('hero-tabs-container--top');
                 $('.toc').addClass('toc--top');
@@ -1098,23 +1130,21 @@
             }
         }
 
-        /* Close */
-        $('.toc').on('click', '.toc-close', function () {
-            $('.toc-open, .toc-close').toggle('fast');
-            $('.toc ul').animate({
-                width: "toggle"
-            }, {duration: 500}).promise().then(function () {
-                $('main').addClass('main-close');
+        /* Reduce menu */
+        var reduce = false;
+        $('#js-reducemenu').click(function() {
+            reduce = !reduce;
+
+            $( '.main' ).toggleClass( "reduce" );
+            $( '#js-reducemenu .fas' ).toggleClass( "fa-arrow-left fa-arrow-right" );
+
+            $('.toc > ul > li > a').each(function (i) {
+                if ($(this).hasClass('js-active')) 
+                    toggleMenu($(this));
+                $(this).removeClass('js-active');
             });
         })
-        /* Open */
-        $('.toc').on('click', '.toc-open', function () {
-            $('.toc-open, .toc-close').toggle('fast');
-            $('main').removeClass('main-close');
-            $('.toc ul').animate({
-                width: "toggle"
-            }, {duration: 500});
-        })
+
 
         /* On key "ENTER" pressed */
         $(document).keypress(function(event) {

@@ -40,6 +40,18 @@ class Gene
      */
     private $frequence;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $classification;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $commentaire;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +101,30 @@ class Gene
     public function setFrequence(?int $frequence): self
     {
         $this->frequence = $frequence;
+
+        return $this;
+    }
+
+    public function getClassification(): ?string
+    {
+        return $this->classification;
+    }
+
+    public function setClassification(?string $classification): self
+    {
+        $this->classification = $classification;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }

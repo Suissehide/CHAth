@@ -88,13 +88,13 @@
 
 
 {% block integer_widget %}
-    {%- set type = type|default('number') -%}
+    {% set type = type|default('number') %}
     {% if not useStyle|default(false) %}
         {{ block('form_widget_simple') }}
     {% else %}
-        {%- if type == 'range' or type == 'color' -%}
-            {%- set required = false -%}
-        {%- endif -%}
+        {% if type == 'range' or type == 'color' %}
+            {% set required = false %}
+        {% endif %}
         <div class="form-unity">
             <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}/>
             <span class="focus-input"></span>
@@ -117,6 +117,7 @@
 {% endblock number_widget %}
 
 
+{# GENES #}
 
 {% block _donnee_genes_entry_mutation_widget %}
     <div class="flex{% if errors is not empty %} error-input{% endif %}">
@@ -129,6 +130,43 @@
 {% block _donnee_genes_entry_statut_widget %}
     {{ block('qcm_widget') }}
 {% endblock _donnee_genes_entry_statut_widget %}
+
+{% block _donnee_genes_entry_classification_widget %}
+    <div class="flex">
+        {% if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) %}
+            {% set required = false %}
+        {% endif %}
+        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+            {% if placeholder is not none %}
+                <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+            {% endif %}
+            {% if preferred_choices|length > 0 %}
+                {% set options = preferred_choices %}
+                {% set render_preferred_choices = true %}
+                {{ block('choice_widget_options') }}
+                {% if choices|length > 0 and separator is not none %}
+                    <option disabled="disabled">{{ separator }}</option>
+                {% endif %}
+            {% endif %}
+            {% set options = choices %}
+            {% set render_preferred_choices = false %}
+            {{ block('choice_widget_options') }}
+        </select>
+        <button class="history"><div class="history-icon"></div></button>
+    </div>
+    {{ form_errors(form) }}
+{% endblock _donnee_genes_entry_classification_widget %}
+
+{% block _donnee_genes_entry_commentaire_widget %}
+    <div class="flex{% if errors is not empty %} error-input{% endif %}">
+        {{ block('textarea_widget') }}
+        <button class="history"><div class="history-icon"></div></button>
+    </div>
+    {{ form_errors(form) }}
+{% endblock _donnee_genes_entry_commentaire_widget %}
+
+
+{# QCM #}
 
 {% block _donnee_traitement_entry_reponse_widget %}
     {{ block('qcm_widget') }}

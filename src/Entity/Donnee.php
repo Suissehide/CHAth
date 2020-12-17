@@ -159,6 +159,13 @@ class Donnee
      */
     private $hematopoiese;
 
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $numberOfMutation;
+
     /**
      * @ORM\ManyToMany(targetEntity=Gene::class, cascade={"persist"})
      * @Groups({"advancement", "export"})
@@ -495,6 +502,18 @@ class Donnee
     public function setHematopoiese(?string $hematopoiese): self
     {
         $this->hematopoiese = $hematopoiese;
+
+        return $this;
+    }
+
+    public function getNumberOfMutation(): ?int
+    {
+        return $this->numberOfMutation;
+    }
+
+    public function setNumberOfMutation(?int $numberOfMutation): self
+    {
+        $this->numberOfMutation = $numberOfMutation;
 
         return $this;
     }

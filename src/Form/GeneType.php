@@ -51,6 +51,23 @@ class GeneType extends AbstractType
                 ),
                 'required' => false,
             ))
+
+            ->add('classification', ChoiceType::class, array(
+                'label' => ' ',
+                'placeholder' => false,
+                'choices' => array(
+                    '' => '',
+                    'A' => 'A',
+                    'B' => 'B',
+                    'C' => 'C'
+                ),
+                'required' => false,
+            ))
+
+            ->add('commentaire', TextAreaType::class, array(
+                'label' => ' ',
+                'required' => false,
+            ))
         ;
     }
 

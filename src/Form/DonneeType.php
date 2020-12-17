@@ -249,6 +249,11 @@ class DonneeType extends AbstractType
                 'required' => false,
             ))
 
+            ->add('numberOfMutation', IntegerType::class, array(
+                'label' => 'Nombre de mutation',
+                'required' => false,
+            ))
+
             ->add('genes', CollectionType::class, array(
                 'entry_type' => GeneType::class,
                 'entry_options' => array('label' => false),

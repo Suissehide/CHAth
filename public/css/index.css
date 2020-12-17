@@ -391,16 +391,16 @@ label, .col-label, .row-label {
     padding-right: 0;
 }
 
+.col-flex-1 {
+    flex: 1%;
+}
+
 .col-flex-2 {
     flex: 10%;
 }
 
 .col-flex-3 {
-    flex: 25%;
-}
-
-.col-flex-4 {
-    flex: 30%;
+    flex: 20%;
 }
 
 .row-flex .row-label {
@@ -438,6 +438,11 @@ label, .col-label, .row-label {
     position: relative;
     padding-right: 15px;
     padding-left: calc(30% + 15px);
+    transition: ease 0.2s;
+}
+
+.main.reduce {
+    padding-left: calc(55px + 15px);
 }
 
 .hero-tabs {
@@ -536,7 +541,7 @@ label, .col-label, .row-label {
 .separator-space {
     width: 50px;
     height: 1px;
-    margin: 10px 0 12px 0;
+    margin: 5px 0 16px 0;
     background-color: #55d6be;
 }
 
@@ -744,9 +749,22 @@ label, .col-label, .row-label {
     list-style: none;
     margin: 0;
     padding: 0;
+    transition: width ease;
+    transition-duration: 0.2s;
+    transition-delay: 0.2s;
 }
 
-.toc ul li a {
+.reduce .toc ul {
+    width: 55px;
+}
+
+.toc ul li a .menu-title > div {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.toc ul li a, .toc ul li button {
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -754,23 +772,46 @@ label, .col-label, .row-label {
     padding: 10px 15px;
     color: #fff;
     text-decoration: none;
-    transition: 0.2s linear;
+    transition: 0.5s ease;
 }
 
-.toc ul li a:hover {
+.toc > ul > li > a, .toc > ul > li > button {
+    height: 42px;
+ }
+
+.toc ul li button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 14px;
+}
+
+.toc ul li button .fas {
+    margin-right: 8px;
+}
+
+.toc ul li a:hover, .toc ul li button:hover {
     background: #195781;
 }
 
 .toc ul li a .fa {
-    width: 16px;
-    text-align: center;
-    margin-right: 5px;
+    width: 25px;
+    text-align: left;
 }
 
-.toc ul li a .fa-caret-down {
+.reduce .toc ul li a .fa, .reduce .toc ul li button .fas {
+    text-align: center;
+}
+
+.toc ul li a .fa-caret-down, .toc ul li a .fa-caret-up {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.reduce .toc ul li a .fa-caret-down, .reduce .toc ul li a .fa-caret-up, .reduce .toc ul li a .menu-title > div {
+    display: none;
 }
 
 .badge-spe {
@@ -837,10 +878,17 @@ label, .col-label, .row-label {
 }
 
 .menu-title {
+    flex: 1;
+    display: flex;
+    align-items: center;
     max-width: 80%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.reduce .menu-title {
+    justify-content: center;
 }
 
 /* Float Right/Left */
