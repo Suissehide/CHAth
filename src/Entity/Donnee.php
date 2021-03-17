@@ -168,6 +168,7 @@ class Donnee
 
     /**
      * @ORM\ManyToMany(targetEntity=Gene::class, cascade={"persist"})
+     * @ORM\OrderBy({"nom" = "ASC"})
      * @Groups({"advancement", "export"})
      */
     private $genes;

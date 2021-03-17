@@ -30,8 +30,14 @@ class UpdateGenesCommand extends Command
     {
         $this
             ->setDescription('Update all genes')
-            // ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            // ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+
+            ->addArgument('name', InputArgument::REQUIRED, '')
+            ->addArgument('new', InputArgument::OPTIONAL, '')
+
+            ->addOption('add', null, InputOption::VALUE_OPTIONAL, 'Add the gene?', false)
+            ->addOption('delete', null, InputOption::VALUE_OPTIONAL, 'Delete the gene?', false)
+            ->addOption('update', null, InputOption::VALUE_OPTIONAL, 'Change the gene name?', false)
+            ->addOption('special', null, InputOption::VALUE_OPTIONAL, 'Change the 2nd gene name?', false)
         ;
     }
 
@@ -39,29 +45,43 @@ class UpdateGenesCommand extends Command
     {
         $em = $this->container->get('doctrine')->getManager();
         $io = new SymfonyStyle($input, $output);
-        // $arg1 = $input->getArgument('arg1');
-
-        // if ($arg1) {
-        //     $io->note(sprintf('You passed an argument: %s', $arg1));
-        // }
-
-        // if ($input->getOption('option1')) {
-        //    
-        // }
+        $name = $input->getArgument('name');
+        $new = $input->getArgument('new');
+        $add = $input->getOption('add');
+        $delete = $input->getOption('delete');
+        $update = $input->getOption('update');
+        $special = $input->getOption('special');
 
         $participants = $em->getRepository(Participant::class)->findAll();
         foreach($participants as $participant) {
-
             $donnee = $participant->getDonnee();
             $genes = $donnee->getGenes();
-            foreach ($genes as $g) {
-                $donnee->removeGene($g);
-            }
-            foreach (FormConstants::GENES as $name) {
+
+            if ($add === null || $add === true) {
                 $gene = new Gene();
                 $gene->setStatut("Non muté");
                 $gene->setNom($name);
                 $donnee->addGene($gene);
+            } elseif ($update === null || $update === true) {
+                foreach ($genes as $g) {
+                    if ($g->getNom() === $name) {
+                        $g->setNom($new);
+                    }
+                 }
+            } elseif ($delete === null || $delete === true) {
+                foreach ($genes as $g) {
+                    if ($g->getNom() === $name) {
+                        $donnee->removeGene($g);
+                    }
+                }
+            } elseif ($special === null || $special === true) {
+                $count = 0;
+                foreach ($genes as $g) {
+                    if ($g->getNom() === $name) {
+                        $count += 1;
+                        if ($count == 2) $g->setNom($new);
+                    }
+                }
             }
 
             $em->flush();
