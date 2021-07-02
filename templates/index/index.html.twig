@@ -34,7 +34,7 @@
                                 <th data-column-id="consentement">Date de consentement</th>
                                 <th data-column-id="evenement">Date de l'événement</th>
                                 <th data-column-id="inclusion">Date de l'inclusion</th>
-                                <th data-column-id="error" data-formatter="error" data-sortable="false" data-width="225px"></th>
+                                <th data-column-id="error" data-formatter="error" data-sortable="false" data-width="261px"></th>
                                 {# <th data-column-id="commands" data-formatter="commands" data-sortable="false" data-width="15%">Actions</th> #}
                                 <th data-column-id="status" data-searchable="false" data-visible="false">Status</th>
                             </tr>
@@ -116,7 +116,7 @@
                 },
                 success: function (json) {
                     let listErr = '';
-                    for (i = 0; i < 6; i++) {
+                    for (i = 0; i < 7; i++) {
                         listErr += '<div class="badge-spe badge-tab badge-' + $.parseJSON(json[i])['state'] + '">' + $.parseJSON(json[i])['number'] + '</div>';
                     };
                     $('#data-grid tr[data-row-id=' + participantId + '] td:nth-child(5)').append(listErr);

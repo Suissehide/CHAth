@@ -7,6 +7,7 @@ use App\Form\VerificationType;
 use App\Form\GeneralType;
 use App\Form\CardiovasculaireType;
 use App\Form\InformationType;
+use App\Form\SuiviType;
 use App\Form\DecesType;
 
 use Symfony\Component\Form\AbstractType;
@@ -57,6 +58,10 @@ class ParticipantType extends AbstractType
                 'label' => 'Information'
             ))
 
+            ->add('suivi', SuiviType::class, array(
+                'label' => 'Suivi à un an'
+            ))
+            
             ->add('deces', DecesType::class, array(
                 'label' => 'Décès'
             ))

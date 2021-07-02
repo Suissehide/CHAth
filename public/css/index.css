@@ -204,12 +204,27 @@ input[readonly], textarea[readonly]:focus, input[readonly]:focus {
 }
 
 .container-form .input {
-    height: 42px;
+    min-height: 42px;
+    height: auto;
     width: 100%;
     position: relative;
     background-color: #e6e6e6;
     border-radius: 3px;
     padding: 0 20px;
+}
+
+.container-form .textarea {
+    resize: none;
+    font-family: Ubuntu-Bold;
+    color: #1a535c;
+    line-height: 1.2;
+    font-size: 18px;
+    height: auto;
+    width: 100%;
+    position: relative;
+    background-color: #e6e6e6;
+    border-radius: 3px;
+    padding: 10px 20px;
 }
 
 .container-form .wrap-input {
@@ -246,15 +261,11 @@ input[readonly], textarea[readonly]:focus, input[readonly]:focus {
 
 .container-form .history-icon {
     z-index: 0;
-    height: 42px;
+    height: 100%;
     background: url(../img/history.svg) center no-repeat;
     background-size: 55%;
     width: 42px;
     transition: cubic-bezier(1, 0, 0, 1);
-}
-
-.container-form .qcm-flex .history-icon {
-    height: 58px;
 }
 
 .container-form .history-icon:hover {
@@ -411,6 +422,7 @@ label, .col-label, .row-label {
 
 .container-form .col-input textarea {
     padding: 10px 20px;
+    height: 42px;
 }
 
 .col-input label {
@@ -616,7 +628,8 @@ label, .col-label, .row-label {
 }
 
 .qcm-row .input {
-    height: 58px;
+    min-height: 58px;
+    height: auto;
     margin-bottom: 0;
 }
 

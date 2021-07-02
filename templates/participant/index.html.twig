@@ -142,6 +142,14 @@
 							<li><a href='#evaluation'>Evaluation cardiovasculaire</a></li>
 						</ul>
 					</li>
+                    <li>
+						<a href='#suivi'>
+							<div class="menu-title">
+								<i class='fa fa-birthday-cake'></i>
+								<div>Suivi à un an</div>
+                            </div>
+						</a>
+					</li>
 					<li>
 						<a href='#deces'>
 							<div class="menu-title">
@@ -459,6 +467,8 @@
                     })
                 }}
 
+                <div class="margin-space"></div>
+
 				{{ form_row(formInformation.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
                 {{ form_row(formInformation._token) }}
@@ -720,6 +730,28 @@
                 {{ form_end(formDonnee, {'render_rest' : false}) }}
 			</section>
 
+			{#========== Suivi ==========#}
+
+			<section class="slide" id="tab-suivi">
+                {{ form_start(formSuivi, {'attr': {'class': 'form validate-form'} }) }}
+                {{ form_errors(formSuivi) }}
+
+                {% form_theme formSuivi 'form-theme.html.twig' %}
+
+				<h1 id="suivi">Suivi à un an</h1>
+
+				{{ form_row(formSuivi.event, {'attr': {'class': 'input radio-row'} }) }}
+				{{ form_row(formSuivi.eventDate, {'attr': {'class': 'input js-datepicker'} }) }}
+				{{ form_row(formSuivi.cause, {'attr': {'class': 'textarea'} }) }}
+
+                <div class="margin-space"></div>
+
+				{{ form_row(formSuivi.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
+
+                {{ form_row(formSuivi._token) }}
+                {{ form_end(formSuivi, {'render_rest' : false}) }}
+			</section>
+
 			{#========== DECES ==========#}
 
 			<section class="slide" id="tab-deces">
@@ -743,6 +775,8 @@
 				<h5>Cause secondaire ayant contribué au décès</h5>
 				{{ form_row(formDeces.causeSecondaire, {'attr': {'class': 'input '} }) }}
 				{{ form_row(formDeces.codageSecondaire, {'attr': {'class': 'input '} }) }}
+
+                <div class="margin-space"></div>
 
 				{{ form_row(formDeces.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
 
@@ -1145,11 +1179,16 @@
             });
         })
 
+        $("textarea").keyup(function(e) {
+            while($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
+                $(this).height($(this).height() + 1);
+            };
+        });
 
         /* On key "ENTER" pressed */
         $(document).keypress(function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
-            if(keycode == '13') {
+            if (keycode == '13' && !$("textarea").is(":focus")) {
                 event.preventDefault();
                 if (validate == false) {
                     $(this).find('.slide-active form').submit();

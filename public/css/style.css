@@ -209,7 +209,7 @@ iframe {
 
 .flex {
     display: flex;
-    align-items: center;
+    align-items: stretch;
 }
 
 .flex-row {
@@ -778,7 +778,7 @@ input[type="radio"]:checked+label span {
 .radio-row {
     display: flex;
     position: relative;
-    flex-flow: row;
+    flex-flow: row wrap;
 }
 
 .radio-container {
@@ -787,11 +787,11 @@ input[type="radio"]:checked+label span {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-right: 15px;
+    margin: 8px 15px 8px 0;
 }
 
 .radio-container:last-child {
-    margin: 0;
+    margin-right: 0;
 }
 
 .radio-container label {

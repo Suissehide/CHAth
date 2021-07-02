@@ -2,22 +2,39 @@
 
 namespace App\Form;
 
-use App\Entity\Deces;
+use App\Entity\Suivi;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class DecesType extends AbstractType
+class SuiviType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', DateType::class, array(
-                'label' => 'Date du décès',
+
+            ->add('event', ChoiceType::class, array(
+                'label' => 'Évènement',
+                'expanded' => false,
+                'multiple' => false,
+                'placeholder' => '',
+                'choices' => array(
+                    'SCA' => 'SCA',
+                    'AVC' => 'AVC',
+                    'Insuffisance cardiaque' => 'Insuffisance cardiaque',
+                    'Revascularisation' => 'Revascularisation',
+                    'Hospitalisation' => 'Hospitalisation',
+                    'Décès' => 'Décès'
+                ),
+                'required' => false,
+            ))
+
+            ->add('eventDate', DateType::class, array(
+                'label' => 'Date de l’événement',
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
                 'attr' => [
@@ -28,21 +45,8 @@ class DecesType extends AbstractType
                 'required' => false,
             ))
 
-            ->add('causePrincipale', TextType::class, array(
+            ->add('cause', TextareaType::class, array(
                 'label' => 'Cause',
-                'required' => false,
-            ))
-            ->add('codagePrincipal', NumberType::class, array(
-                'label' => 'Codage prévu en MedDRA',
-                'required' => false,
-            ))
-
-            ->add('causeSecondaire', TextType::class, array(
-                'label' => 'Cause',
-                'required' => false,
-            ))
-            ->add('codageSecondaire', NumberType::class, array(
-                'label' => 'Codage prévu en MedDRA',
                 'required' => false,
             ))
 
@@ -53,7 +57,7 @@ class DecesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Deces::class,
+            'data_class' => Suivi::class,
         ]);
     }
 }

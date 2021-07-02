@@ -47,6 +47,7 @@ class GeneralType extends AbstractType
                     'data-view' => "months",
                     'data-date-format' => "mm/yyyy",
                     'class' => 'datepicker',
+                    'autocomplete' => 'off'
                 ],
                 'required' => false,
             ))

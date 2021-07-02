@@ -10,15 +10,17 @@ use App\Entity\Pack;
 use App\Entity\Cardiovasculaire;
 use App\Entity\Donnee;
 use App\Entity\Information;
+use App\Entity\Suivi;
 use App\Entity\Erreur;
 
 use App\Form\ParticipantType;
 use App\Form\VerificationType;
 use App\Form\GeneralType;
 use App\Form\CardiovasculaireType;
-use App\Form\DecesType;
 use App\Form\InformationType;
 use App\Form\DonneeType;
+use App\Form\SuiviType;
+use App\Form\DecesType;
 
 use App\Constant\FormConstants;
 
@@ -299,6 +301,7 @@ class ParticipantController extends AbstractController
         $serializer = new Serializer($normalizers, $encoders);
 
         $serialized = $serializer->serialize($data, 'json', [
+            'groups' => 'advancement',
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
             }
@@ -324,13 +327,11 @@ class ParticipantController extends AbstractController
 
     private function searchDiff(Participant $participant, $oldArray, $newArray, $start, $path)
     {
-        // dump($newArray);
         foreach ($newArray as $key => $value) {
-            // dump($key, $value);
-            if (is_array($value) && array_key_exists('timestamp', $value) && $oldArray[$start][$key]['timestamp'] !== $value['timestamp']) {
+            if (is_array($value) && array_key_exists('timestamp', $value)) {
                 if (!isset($oldArray[$start][$key]['timestamp']))
                     $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [(vide)] en [' . date('d/m/Y', $value['timestamp']) . ']', true);
-                else
+                else if ($oldArray[$start][$key]['timestamp'] !== $value['timestamp'])
                     $this->addErreur($participant->getId(), $path . '_' . $this->formatKey($key) , 'notice', 'Modification du champ [' . $path . '_' . $this->formatKey($key) . '] de [' . date('d/m/Y', $oldArray[$start][$key]['timestamp']) . '] en [' . date('d/m/Y', $value['timestamp']) . ']', true);
             }
             else if (is_array($oldArray[$start][$key]) && array_key_exists('timestamp', $oldArray[$start][$key]) && !is_array($value)) {
@@ -354,7 +355,7 @@ class ParticipantController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $erreurs = $em->getRepository(Erreur::class)->getLastErreur($participantId);
-
+    
         foreach ($array[$start] as $key => $value) {
             if (is_array($value) && !array_key_exists('timestamp', $value) && !array_key_exists('reponse', $value) && ('alimentation' !== $key && 'traitementPhaseAigue' !== $key)) {
                 $this->generateErreur($participantId, $form, $array[$start], $key, $path . '_' . $this->formatKey($key));
@@ -444,7 +445,7 @@ class ParticipantController extends AbstractController
                 $generalArray = $this->serializeEntity($formGeneral->getData());
 
                 /* SPECIAL ERROR */
-                if ($generalArray['dateNaissance']['timestamp'] !== $oldArray['general']['dateNaissance']['timestamp'] && 
+                if ((!$oldArray['general']['dateNaissance'] || $generalArray['dateNaissance']['timestamp'] !== $oldArray['general']['dateNaissance']['timestamp']) && 
                     (floor((time() - $generalArray['dateNaissance']['timestamp']) / 31556926) < 75)) {
                         $this->addErreur($participant->getId(), 'general_date_naissance' , 'error', 'Le participant doit avoir un âge >= 75 ans', false);
                 }
@@ -538,6 +539,31 @@ class ParticipantController extends AbstractController
             return $this->redirect($request->getUri());
         }
 
+        $suivi = $participant->getSuivi();
+        $formSuivi = $this->createForm(SuiviType::class, $suivi);
+                        
+        /* GENERATE ERREUR */
+        $this->generateErreur($participant->getId(), $formSuivi, $oldArray, 'suivi', 'suivi');
+
+        $formSuivi->handleRequest($request);
+        if ($formSuivi->isSubmitted() && $formSuivi->isValid()) {
+            if ($participant->getValidation() != true) {
+                                                                                
+                /* SERIALISATION */
+                $suiviArray = $this->serializeEntity($formSuivi->getData());
+
+                /* SPECIAL ERROR */
+
+                /* SEARCH DIFF */
+                $this->searchDiff($participant, $oldArray, $suiviArray, 'suivi', 'suivi');
+
+                $participant = $formSuivi->getData();
+                $em->flush();
+
+                $this->addFlash('notice', 'Vos modifications ont été enregistré avec succès');
+            }
+            return $this->redirect($request->getUri());
+        }
 
         $deces = $participant->getDeces();
         $formDeces = $this->createForm(DecesType::class, $deces);
@@ -573,6 +599,7 @@ class ParticipantController extends AbstractController
             'formCardiovasculaire' => $formCardiovasculaire->createView(),
             'formInformation' => $formInformation->createView(),
             'formDonnee' => $formDonnee->createView(),
+            'formSuivi' => $formSuivi->createView(),
             'formDeces' => $formDeces->createView(),
             'date' => date("d/m/Y"),
         ]);

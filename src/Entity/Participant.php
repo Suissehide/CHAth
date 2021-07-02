@@ -61,6 +61,12 @@ class Participant
     private $donnee;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Suivi", cascade={"persist", "remove"})
+     * @Groups({"advancement", "export"})
+     */
+    private $suivi;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Deces", cascade={"persist", "remove"})
      * @Groups({"advancement", "export"})
      */
@@ -170,6 +176,18 @@ class Participant
     public function setInformation(?Information $information): self
     {
         $this->information = $information;
+
+        return $this;
+    }
+
+    public function getSuivi(): ?Suivi
+    {
+        return $this->suivi;
+    }
+
+    public function setSuivi(?Suivi $suivi): self
+    {
+        $this->suivi = $suivi;
 
         return $this;
     }

@@ -25,6 +25,7 @@ class InformationType extends AbstractType
                 'attr' => [
                     'placeholder' => 'dd/mm/yyyy',
                     'class' => 'datepicker',
+                    'autocomplete' => 'off'
                 ],
                 'required' => false,
             ))

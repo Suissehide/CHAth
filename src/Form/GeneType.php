@@ -37,7 +37,7 @@ class GeneType extends AbstractType
                 'required' => false,
             ))
             
-            ->add('mutation', TextAreaType::class, array(
+            ->add('mutation', TextareaType::class, array(
                 'label' => ' ',
                 'required' => false,
             ))
@@ -64,7 +64,7 @@ class GeneType extends AbstractType
                 'required' => false,
             ))
 
-            ->add('commentaire', TextAreaType::class, array(
+            ->add('commentaire', TextareaType::class, array(
                 'label' => ' ',
                 'required' => false,
             ))

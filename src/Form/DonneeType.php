@@ -25,6 +25,7 @@ class DonneeType extends AbstractType
                 'attr' => [
                     'placeholder' => 'dd/mm/yyyy',
                     'class' => 'datepicker',
+                    'autocomplete' => 'off'
                 ],
                 'required' => false,
             ))
@@ -47,6 +48,7 @@ class DonneeType extends AbstractType
                 'attr' => [
                     'placeholder' => 'dd/mm/yyyy',
                     'class' => 'datepicker',
+                    'autocomplete' => 'off'
                 ],
                 'required' => false,
             ))
