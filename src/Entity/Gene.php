@@ -43,7 +43,6 @@ class Gene
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Pack", inversedBy="genes")
-     * @Groups({"export"})
      */
     private $pack;
 
