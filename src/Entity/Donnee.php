@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DonneeRepository")
@@ -18,136 +19,163 @@ class Donnee
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"export"})
      */
     private $dateVisite;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $recidive;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"export"})
      */
     private $dateSurvenue;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $dyspnee;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $douleur;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $tabac;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $activite;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"export"})
      */
     private $traitement;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"export"})
      */
     private $crp;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $hemoglobine;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $leucocytes;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $pnn;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $plaquettes;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"export"})
      */
     private $cholesterol;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"export"})
      */
     private $ldl;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"export"})
      */
     private $hdl;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $hba1c;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $hematopoiese;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $carotideCommuneDroite;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $carotideCommuneGauche;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $carotideInterneDroite;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $carotideInterneGauche;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $fraction;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"export"})
      */
     private $genes;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"export"})
      */
     private $facteurs;
 
     /**
      * @ORM\Column(type="array", nullable=true)
+     * @Groups({"export"})
      */
     private $alimentation = [];
 

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GeneralRepository")
@@ -18,41 +19,49 @@ class General
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $age;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $sexe;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"export"})
      */
     private $dateNaissance;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $taille;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $poids;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $imc;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $systolique;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $diastolique;
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
@@ -20,6 +21,7 @@ class Participant
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $code;
 
@@ -30,31 +32,37 @@ class Participant
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Verification", cascade={"persist", "remove"}, fetch="EAGER")
+     * @Groups({"export"})
      */
     private $verification;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\General", cascade={"persist", "remove"}, fetch="EAGER")
+     * @Groups({"export"})
      */
     private $general;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", cascade={"persist", "remove"}, fetch="EAGER")
+     * @Groups({"export"})
      */
     private $cardiovasculaire;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Information", cascade={"persist", "remove"}, fetch="EAGER")
+     * @Groups({"export"})
      */
     private $information;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Deces", cascade={"persist", "remove"}, fetch="EAGER")
+     * @Groups({"export"})
      */
     private $deces;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Donnee", cascade={"persist", "remove"}, fetch="EAGER")
+     * @Groups({"export"})
      */
     private $donnee;
 
@@ -65,6 +73,7 @@ class Participant
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"export"})
      */
     private $validation;
 

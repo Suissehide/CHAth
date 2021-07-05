@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InformationRepository")
@@ -18,71 +19,85 @@ class Information
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"export"})
      */
     private $dateSurvenue;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"export"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="array", nullable=true)
+     * @Groups({"export"})
      */
     private $traitementPhaseAigue = [];
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"export"})
      */
     private $complications;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"export"})
      */
     private $crp;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $hemoglobine;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $leucocytes;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $PNN;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $plaquettes;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"export"})
      */
     private $cholesterol;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"export"})
      */
     private $LDLC;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"export"})
      */
     private $HDLC;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $HbA1c;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
+     * @Groups({"export"})
      */
     private $creatininemie;
 

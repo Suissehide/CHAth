@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DecesRepository")
@@ -18,26 +19,31 @@ class Deces
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"export"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $causePrincipale;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $codagePrincipal;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $causeSecondaire;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $codageSecondaire;
 

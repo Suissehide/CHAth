@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GeneRepository")
@@ -18,26 +19,31 @@ class Gene
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $statut;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"export"})
      */
     private $mutation;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
      */
     private $frequence;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Pack", inversedBy="genes")
+     * @Groups({"export"})
      */
     private $pack;
 
