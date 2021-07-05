@@ -66,6 +66,18 @@ class Donnee
     private $activite;
 
     /**
+     * @ORM\Column(type="array", nullable=true)
+     * @Groups({"export"})
+     */
+    private $alimentation = [];
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
+     * @Groups({"export"})
+     */
+    private $facteurs;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
      * @Groups({"export"})
      */
@@ -132,10 +144,10 @@ class Donnee
     private $hematopoiese;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
      * @Groups({"export"})
      */
-    private $carotideCommuneDroite;
+    private $genes;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -147,8 +159,8 @@ class Donnee
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"export"})
      */
-    private $carotideInterneDroite;
-
+    private $carotideCommuneDroite;
+    
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"export"})
@@ -159,25 +171,13 @@ class Donnee
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"export"})
      */
+    private $carotideInterneDroite;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"export"})
+     */
     private $fraction;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
-     * @Groups({"export"})
-     */
-    private $genes;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Pack", cascade={"persist", "remove"})
-     * @Groups({"export"})
-     */
-    private $facteurs;
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     * @Groups({"export"})
-     */
-    private $alimentation = [];
 
     public function getId(): ?int
     {
