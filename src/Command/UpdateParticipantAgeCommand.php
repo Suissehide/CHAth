@@ -49,12 +49,14 @@ class UpdateParticipantAgeCommand extends Command
 
         $participants = $em->getRepository(Participant::class)->findAll();
         foreach($participants as $participant) {
-            $date_naissance = $participant->getGeneral()->getDateNaissance()->format('m/Y');
-            $am = explode('/', $date_naissance);
-            $an = explode('/', date('m/Y'));
-            if ($am[0] < $an[0]) $participant->getGeneral()->setAge($an[1] - $am[1]);
-            else $participant->getGeneral()->setAge($an[1] - $am[1] - 1);
-            $em->flush();
+            if ($participant->getGeneral()->getDateNaissance()) {
+                $date_naissance = $participant->getGeneral()->getDateNaissance()->format('m/Y');
+                $am = explode('/', $date_naissance);
+                $an = explode('/', date('m/Y'));
+                if ($am[0] < $an[0]) $participant->getGeneral()->setAge($an[1] - $am[1]);
+                else $participant->getGeneral()->setAge($an[1] - $am[1] - 1);
+                $em->flush();
+            }
         }
 
         $io->success('Update of participants\' age completed.');
