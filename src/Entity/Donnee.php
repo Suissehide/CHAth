@@ -180,10 +180,20 @@ class Donnee
     private $carotideCommuneDroite;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $carotideCommuneDroiteDone;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"advancement", "export"})
      */
     private $carotideCommuneGauche;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $carotideCommuneGaucheDone;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -192,16 +202,31 @@ class Donnee
     private $carotideInterneDroite;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $carotideInterneDroiteDone;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"advancement", "export"})
      */
     private $carotideInterneGauche;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $carotideInterneGaucheDone;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"advancement", "export"})
      */
     private $fraction;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $fractionDone;
 
     public function __construct()
     {
@@ -557,6 +582,18 @@ class Donnee
         return $this;
     }
 
+    public function getCarotideCommuneDroiteDone(): ?bool
+    {
+        return $this->carotideCommuneDroiteDone;
+    }
+
+    public function setCarotideCommuneDroiteDone(?bool $carotideCommuneDroiteDone): self
+    {
+        $this->carotideCommuneDroiteDone = $carotideCommuneDroiteDone;
+
+        return $this;
+    }
+
     public function getCarotideCommuneGauche(): ?float
     {
         return $this->carotideCommuneGauche;
@@ -565,6 +602,18 @@ class Donnee
     public function setCarotideCommuneGauche(?float $carotideCommuneGauche): self
     {
         $this->carotideCommuneGauche = $carotideCommuneGauche;
+
+        return $this;
+    }
+
+    public function getCarotideCommuneGaucheDone(): ?bool
+    {
+        return $this->carotideCommuneGaucheDone;
+    }
+
+    public function setCarotideCommuneGaucheDone(?bool $carotideCommuneGaucheDone): self
+    {
+        $this->carotideCommuneGaucheDone = $carotideCommuneGaucheDone;
 
         return $this;
     }
@@ -581,6 +630,18 @@ class Donnee
         return $this;
     }
 
+    public function getCarotideInterneDroiteDone(): ?bool
+    {
+        return $this->carotideInterneDroiteDone;
+    }
+
+    public function setCarotideInterneDroiteDone(?bool $carotideInterneDroiteDone): self
+    {
+        $this->carotideInterneDroiteDone = $carotideInterneDroiteDone;
+
+        return $this;
+    }
+
     public function getCarotideInterneGauche(): ?float
     {
         return $this->carotideInterneGauche;
@@ -593,6 +654,18 @@ class Donnee
         return $this;
     }
 
+    public function getCarotideInterneGaucheDone(): ?bool
+    {
+        return $this->carotideInterneGaucheDone;
+    }
+
+    public function setCarotideInterneGaucheDone(?bool $carotideInterneGaucheDone): self
+    {
+        $this->carotideInterneGaucheDone = $carotideInterneGaucheDone;
+
+        return $this;
+    }
+
     public function getFraction(): ?float
     {
         return $this->fraction;
@@ -601,6 +674,18 @@ class Donnee
     public function setFraction(?float $fraction): self
     {
         $this->fraction = $fraction;
+
+        return $this;
+    }
+    
+    public function getFractionDone(): ?bool
+    {
+        return $this->fractionDone;
+    }
+
+    public function setFractionDone(?bool $fractionDone): self
+    {
+        $this->fractionDone = $fractionDone;
 
         return $this;
     }

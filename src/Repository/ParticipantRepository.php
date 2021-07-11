@@ -19,19 +19,12 @@ class ParticipantRepository extends ServiceEntityRepository
         parent::__construct($registry, Participant::class);
     }
 
-    public function test()
-    {
-        $qb = $this->createQueryBuilder('p');
-
-        return $qb->getQuery()->getResult();
-    }
-
     public function getCount()
     {
         return $this->createQueryBuilder('p')
-                    ->select('COUNT(p)')
-                    ->getQuery()
-                    ->getSingleScalarResult();
+            ->select('COUNT(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     public function findByFilter($sort, $searchPhrase)

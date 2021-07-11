@@ -767,11 +767,11 @@ label, .col-label, .row-label {
     transition-delay: 0.2s;
 }
 
-.reduce .toc ul {
+.reduce .toc {
     width: 55px;
 }
 
-.toc ul li a .menu-title > div {
+.toc ul li a .menu-title>div {
     flex: 1;
     overflow: hidden;
     white-space: nowrap;
@@ -788,9 +788,9 @@ label, .col-label, .row-label {
     transition: 0.5s ease;
 }
 
-.toc > ul > li > a, .toc > ul > li > button {
+.toc>ul>li>a, .toc>ul>li>button {
     height: 42px;
- }
+}
 
 .toc ul li button {
     width: 100%;
@@ -804,8 +804,12 @@ label, .col-label, .row-label {
     margin-right: 8px;
 }
 
+.toc ul li a.active  {
+    background: #103A56;
+}
+
 .toc ul li a:hover, .toc ul li button:hover {
-    background: #195781;
+    background: #165179;
 }
 
 .toc ul li a .fa {
@@ -823,7 +827,7 @@ label, .col-label, .row-label {
     justify-content: center;
 }
 
-.reduce .toc ul li a .fa-caret-down, .reduce .toc ul li a .fa-caret-up, .reduce .toc ul li a .menu-title > div {
+.reduce .toc ul li a .fa-caret-down, .reduce .toc ul li a .fa-caret-up, .reduce .toc ul li a .menu-title>div {
     display: none;
 }
 

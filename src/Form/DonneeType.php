@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class DonneeType extends AbstractType
 {
@@ -272,6 +273,11 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
+            ->add('carotideCommuneDroiteDone', CheckboxType::class, array(
+                'label' => '',
+                'required' => false,
+            ))
+
             ->add('carotideCommuneGauche', IntegerType::class, array(
                 'label' => 'Volume athérome carotide commune gauche',
                 'attr' => array(
@@ -281,6 +287,11 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
+            ->add('carotideCommuneGaucheDone', CheckboxType::class, array(
+                'label' => '',
+                'required' => false,
+            ))
+
             ->add('carotideInterneDroite', IntegerType::class, array(
                 'label' => 'Volume athérome carotide interne droite',
                 'attr' => array(
@@ -290,6 +301,11 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
+            ->add('carotideInterneDroiteDone', CheckboxType::class, array(
+                'label' => '',
+                'required' => false,
+            ))
+
             ->add('carotideInterneGauche', IntegerType::class, array(
                 'label' => 'Volume athérome carotide interne gauche',
                 'attr' => array(
@@ -299,6 +315,11 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
+            ->add('carotideInterneGaucheDone', CheckboxType::class, array(
+                'label' => '',
+                'required' => false,
+            ))
+
             ->add('fraction', IntegerType::class, array(
                 'label' => 'Fraction d’éjection ventriculaire gauche',
                 'attr' => array(
@@ -306,6 +327,10 @@ class DonneeType extends AbstractType
                     'data-min' => 0,
                     'data-max' => 100,
                 ),
+                'required' => false,
+            ))
+            ->add('fractionDone', CheckboxType::class, array(
+                'label' => '',
                 'required' => false,
             ))
 

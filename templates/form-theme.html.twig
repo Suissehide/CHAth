@@ -28,13 +28,29 @@
 {% block choice_widget_expanded %}
     <div {{ block('widget_container_attributes') }}>
         {% for child in form %}
-            <div class="radio-container">
+            {# <div class="radio-container"> #}
                 {{ form_widget(child) }}
-                {{ form_label(child, null, {translation_domain: choice_translation_domain}) }}
-            </div>
+                {# {{ form_label(child, null, {translation_domain: choice_translation_domain}) }} #}
+            {# </div> #}
         {% endfor %}
     </div>
 {% endblock choice_widget_expanded %}
+
+{% block checkbox_widget %}
+        <div class="radio-container">
+            <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+                    
+            {{ form_label(form, null) }}
+        </div>
+{% endblock checkbox_widget %}
+
+{% block radio_widget %}
+        <div class="radio-container">
+            <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+                    
+            {{ form_label(form, null) }}
+        </div>
+{% endblock radio_widget %}
 
 {% block form_row %}
     {% set widget_attr = {} %}
@@ -98,7 +114,9 @@
         <div class="form-unity">
             <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}/>
             <span class="focus-input"></span>
-            <div class="unity">{{ attr.unity|default('') }}</div>
+            {% if attr.unity %}
+                <div class="unity">{{ attr.unity|default('') }}</div>
+            {% endif %}
         </div>
     {% endif %}
 {% endblock integer_widget %}
@@ -204,10 +222,7 @@
     <div class="flex">
         <div {{ block('widget_container_attributes') }}>
             {% for child in form %}
-                <div class="radio-container">
-                    {{ form_widget(child) }}
-                    {{ form_label(child, null, {translation_domain: choice_translation_domain}) }}
-                </div>
+                {{ form_widget(child) }}
             {% endfor %}
         </div>
         <button class="history"><div class="history-icon"></div></button>

@@ -20,7 +20,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/index", name="index_participant")
      */
-    public function index(ParticipantRepository $participantRepository, ErreurRepository $erreurRepository, Request $request): Response
+    public function index(ParticipantRepository $participantRepository, Request $request): Response
     {
         if ($request->isXmlHttpRequest()) {
             $current = $request->request->get('current');
