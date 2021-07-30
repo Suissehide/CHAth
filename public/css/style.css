@@ -210,6 +210,12 @@ iframe {
     align-items: center;
 }
 
+.flex-end {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 16px;
+}
+
 .flex-column {
     display: flex;
     flex-flow: column;
@@ -798,18 +804,22 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 .is-done {
     width: 42px !important;
     padding: 0 12px !important;
-    margin-top: 1px;
+    /* margin-top: 1px; */
 }
 
 .is-done .radio-container {
     margin: 0;
 }
 
+.is-done+.wrap-input {
+    margin-bottom: 0;
+}
+
 .is-done input[type="radio"]+label em, .is-done input[type="checkbox"]+label em {
     display: none;
 }
 
-.is-done+.wrap-input > label {
+.is-done+.wrap-input>label {
     margin-left: -42px;
 }
 

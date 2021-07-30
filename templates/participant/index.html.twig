@@ -679,7 +679,7 @@
 				<h3 id="evaluation">Evaluation cardiovasculaire</h3>
 				<div class="form-space">
 					<div class="row">
-						<div class="col-md-6 flex-center">
+						<div class="col-md-6 flex-end">
                             <div class="input radio-row is-done">
                                 {{ form_widget(formDonnee.carotideCommuneGaucheDone) }}
                                 <span class="tooltip">À cocher si donnée manquante</span>
@@ -690,7 +690,7 @@
                                 })
                             }}
 						</div>
-						<div class="col-md-6 flex-center">
+						<div class="col-md-6 flex-end">
                             <div class="input radio-row is-done">
                                 {{ form_widget(formDonnee.carotideCommuneDroiteDone) }}
                                 <span class="tooltip">À cocher si donnée manquante</span>
@@ -703,7 +703,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-6 flex-center">
+						<div class="col-md-6 flex-end">
                             <div class="input radio-row is-done">
                                 {{ form_widget(formDonnee.carotideInterneGaucheDone) }}
                                 <span class="tooltip">À cocher si donnée manquante</span>
@@ -714,7 +714,7 @@
                                 })
                             }}
 						</div>
-						<div class="col-md-6 flex-center">
+						<div class="col-md-6 flex-end">
                             <div class="input radio-row is-done">
                                 {{ form_widget(formDonnee.carotideInterneDroiteDone) }}
                                 <span class="tooltip">À cocher si donnée manquante</span>
@@ -730,7 +730,7 @@
                     <div class="separator-space"></div>
 
 					<div class="row">
-						<div class="col-md-6 flex-center">
+						<div class="col-md-6 flex-end">
                             <div class="input radio-row is-done">
                                 {{ form_widget(formDonnee.fractionDone) }}
                                 <span class="tooltip">À cocher si donnée manquante</span>
@@ -740,6 +740,17 @@
                                     'useStyle': true,
                                 })
                             }}
+						</div>
+					</div>
+
+                    <div class="separator-space"></div>
+
+                    <div class="row">
+                    	<div class="col-md-6">
+							{{ form_row(formDonnee.stenoses, {'attr': {'class': 'input radio-row'} })}}
+						</div>
+						<div class="col-md-6">
+							{{ form_row(formDonnee.ips, {'attr': {'class': 'input radio-row'} })}}
 						</div>
 					</div>
 				</div>

@@ -228,6 +228,18 @@ class Donnee
      */
     private $fractionDone;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $stenoses;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $ips;
+
     public function __construct()
     {
         $this->facteurs = new ArrayCollection();
@@ -686,6 +698,30 @@ class Donnee
     public function setFractionDone(?bool $fractionDone): self
     {
         $this->fractionDone = $fractionDone;
+
+        return $this;
+    }
+    
+    public function getStenoses(): ?string
+    {
+        return $this->stenoses;
+    }
+
+    public function setStenoses(?string $stenoses): self
+    {
+        $this->stenoses = $stenoses;
+
+        return $this;
+    }
+
+    public function getIps(): ?string
+    {
+        return $this->ips;
+    }
+
+    public function setIps(?string $ips): self
+    {
+        $this->ips = $ips;
 
         return $this;
     }

@@ -334,6 +334,30 @@ class DonneeType extends AbstractType
                 'required' => false,
             ))
 
+            ->add('stenoses', ChoiceType::class, array(
+                'label' => 'Sténoses carotidiennes > 50%',
+                'expanded' => true,
+                'multiple' => false,
+                'placeholder' => false,
+                'choices' => array(
+                    'Oui' => 'Oui',
+                    'Non' => 'Non',
+                    'Non précisé' => 'Non précisé',
+                ),
+                'required' => false,
+            ))
+            ->add('ips', ChoiceType::class, array(
+                'label' => 'IPS < 0.9',
+                'expanded' => true,
+                'multiple' => false,
+                'placeholder' => false,
+                'choices' => array(
+                    'Oui' => 'Oui',
+                    'Non' => 'Non',
+                    'Non précisé' => 'Non précisé',
+                ),
+                'required' => false,
+            ))
 
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder'))
         ;
