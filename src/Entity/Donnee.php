@@ -148,6 +148,36 @@ class Donnee
     private $hba1c;
 
     /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $IL1B;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $IL6;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $IL10;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $IL18;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Groups({"advancement", "export"})
+     */
+    private $TNFa;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"advancement", "export"})
      */
@@ -516,6 +546,66 @@ class Donnee
     public function setHba1c(?float $hba1c): self
     {
         $this->hba1c = $hba1c;
+
+        return $this;
+    }
+
+    public function getIL1B(): ?string
+    {
+        return $this->IL1B;
+    }
+
+    public function setIL1B(?string $IL1B): self
+    {
+        $this->IL1B = $IL1B;
+
+        return $this;
+    }
+
+    public function getIL6(): ?string
+    {
+        return $this->IL6;
+    }
+
+    public function setIL6(?string $IL6): self
+    {
+        $this->IL6 = $IL6;
+
+        return $this;
+    }
+
+    public function getIL10(): ?string
+    {
+        return $this->IL10;
+    }
+
+    public function setIL10(?string $IL10): self
+    {
+        $this->IL10 = $IL10;
+
+        return $this;
+    }
+
+    public function getIL18(): ?string
+    {
+        return $this->IL18;
+    }
+
+    public function setIL18(?string $IL18): self
+    {
+        $this->IL18 = $IL18;
+
+        return $this;
+    }
+
+    public function getTNFa(): ?string
+    {
+        return $this->TNFa;
+    }
+
+    public function setTNFa(?string $TNFa): self
+    {
+        $this->TNFa = $TNFa;
 
         return $this;
     }

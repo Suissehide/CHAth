@@ -174,6 +174,64 @@ class DonneeType extends AbstractType
                 ),
                 'required' => false,
             ))
+
+            ->add('IL1B', NumberType::class, array(
+                'label' => 'IL-1β',
+                'scale' => 1,
+                'attr' => array(
+                    'unity' => 'pg/mL',
+                    'data-min' => 0,
+                    'data-max' => 100,
+                    'step' => 0.01,
+                ),
+                'required' => false,
+            ))
+            ->add('IL6', NumberType::class, array(
+                'label' => 'IL6',
+                'scale' => 1,
+                'attr' => array(
+                    'unity' => 'pg/mL',
+                    'data-min' => 0,
+                    'data-max' => 100,
+                    'step' => 0.01,
+                ),
+                'required' => false,
+            ))
+            ->add('IL10', NumberType::class, array(
+                'label' => 'IL10',
+                'scale' => 1,
+                'attr' => array(
+                    'unity' => 'pg/mL',
+                    'data-min' => 0,
+                    'data-max' => 100,
+                    'step' => 0.01,
+                ),
+                'required' => false,
+            ))
+            ->add('IL18', NumberType::class, array(
+                'label' => 'IL18',
+                'scale' => 1,
+                'attr' => array(
+                    'unity' => 'pg/mL',
+                    'data-min' => 0,
+                    'data-max' => 100,
+                    'step' => 0.01,
+                ),
+                'required' => false,
+            ))
+            ->add('TNFa', NumberType::class, array(
+                'label' => 'TNF-α',
+                'scale' => 1,
+                'attr' => array(
+                    'unity' => 'pg/mL',
+                    'data-min' => 0,
+                    'data-max' => 100,
+                    'step' => 0.01,
+                ),
+                'required' => false,
+            ))
+
+
             ->add('plaquettes', NumberType::class, array(
                 'label' => 'Plaquettes',
                 'scale' => 1,
