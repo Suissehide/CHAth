@@ -37,6 +37,11 @@ class Suivi
      */
     private $cause;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $aucunEvenement;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +79,18 @@ class Suivi
     public function setCause(?string $cause): self
     {
         $this->cause = $cause;
+
+        return $this;
+    }
+
+    public function getAucunEvenement(): ?bool
+    {
+        return $this->aucunEvenement;
+    }
+
+    public function setAucunEvenement(?bool $aucunEvenement): self
+    {
+        $this->aucunEvenement = $aucunEvenement;
 
         return $this;
     }

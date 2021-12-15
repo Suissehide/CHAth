@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SuiviType extends AbstractType
@@ -47,6 +48,11 @@ class SuiviType extends AbstractType
 
             ->add('cause', TextareaType::class, array(
                 'label' => 'Cause',
+                'required' => false,
+            ))
+
+            ->add('aucunEvenement', CheckboxType::class, array(
+                'label' => '',
                 'required' => false,
             ))
 

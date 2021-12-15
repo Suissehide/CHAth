@@ -752,7 +752,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 3px;
+    left: 4px;
     font-size: 16px;
     color: #2892D7;
     line-height: 0;
@@ -803,8 +803,7 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 
 .is-done {
     width: 42px !important;
-    padding: 0 12px !important;
-    /* margin-top: 1px; */
+    margin-bottom: 1px;
 }
 
 .is-done .radio-container {
@@ -830,8 +829,8 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
     color: #f4f9f7;
     padding: 8px 15px;
     border-radius: 3px;
-    left: -10px;
-    top: -36px;
+    left: 5px;
+    top: -26px;
     opacity: 0;
     visibility: hidden;
     font-size: 13px;
@@ -855,6 +854,14 @@ input[type="radio"]+label span, input[type="radio"]:checked+label span {
 .is-done:hover .tooltip {
     visibility: visible;
     opacity: 1;
+}
+
+.is-done .radio-row [type="checkbox"]:not(:checked)+label:before, .is-done .radio-row [type="checkbox"]:checked+label:before {
+    left: -8px;
+}
+
+.is-done .radio-row [type="checkbox"]:not(:checked)+label:after, .is-done .radio-row [type="checkbox"]:checked+label:after {
+    left: -4px;
 }
 
 /* ====== */
