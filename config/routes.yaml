@@ -1,6 +1,3 @@
 index:
      path: /login
      controller: App\Controller\UtilisateurController::login
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index

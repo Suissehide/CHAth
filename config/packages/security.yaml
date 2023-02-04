@@ -1,22 +1,21 @@
 security:
-    encoders:
-        App\Entity\Utilisateur:
-            algorithm: auto
+    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+
     role_hierarchy:
         ROLE_GUEST: ROLE_GUEST
         ROLE_USER: [ROLE_USER]
         ROLE_ADMIN: [ROLE_USER, ROLE_ADMIN]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_SUPER_ADMIN]
 
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
         users:
             name: user_provider
             entity:
                 class: App\Entity\Utilisateur
                 property: email
-        in_memory: { memory: ~ }
 
     firewalls:
         dev:
@@ -35,19 +34,15 @@ security:
                 provider: user_provider
                 # default_target_path: index_participant
                 always_use_default_target_path: true
-                csrf_token_generator: security.csrf.token_manager
             logout:
                 path: logout
                 target: login
-            anonymous: true
 
             # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#the-firewall
 
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
@@ -55,10 +50,24 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
 
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/onAuthenticationSuccess, role: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/utilisateur/edit, role: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/register, role: PUBLIC_ACCESS}
+        - { path: ^/login, role: PUBLIC_ACCESS}
+        - { path: ^/onAuthenticationSuccess, role: PUBLIC_ACCESS}
+        - { path: ^/utilisateur/edit, role: PUBLIC_ACCESS}
         - { path: ^/utilisateur/list, role: ROLE_ADMIN}
         - { path: ^/guest, role: ROLE_GUEST}
         - { path: ^/, role: ROLE_USER}
+        
+
+when@test:
+    security:
+        password_hashers:
+            # By default, password hashers are resource intensive and take time. This is
+            # important to generate secure password hashes. In tests however, secure hashes
+            # are not important, waste resources and increase test times. The following
+            # reduces the work factor to the lowest possible values.
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4 # Lowest possible value for bcrypt
+                time_cost: 3 # Lowest possible value for argon
+                memory_cost: 10 # Lowest possible value for argon

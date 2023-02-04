@@ -4,9 +4,8 @@ namespace App\Command;
 
 use App\Entity\Participant;
 use App\Entity\Gene;
-use App\Constant\FormConstants;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,12 +17,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class UpdateGenesCommand extends Command
 {
     protected static $defaultName = 'app:update-genes';
-    private $container;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(private EntityManagerInterface $em)
     {
         parent::__construct();
-        $this->container = $container;
     }
 
     protected function configure()
@@ -43,7 +40,6 @@ class UpdateGenesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $em = $this->container->get('doctrine')->getManager();
         $io = new SymfonyStyle($input, $output);
         $name = $input->getArgument('name');
         $new = $input->getArgument('new');
@@ -52,7 +48,7 @@ class UpdateGenesCommand extends Command
         $update = $input->getOption('update');
         $special = $input->getOption('special');
 
-        $participants = $em->getRepository(Participant::class)->findAll();
+        $participants = $this->em->getRepository(Participant::class)->findAll();
         foreach($participants as $participant) {
             $donnee = $participant->getDonnee();
             $genes = $donnee->getGenes();
@@ -84,7 +80,7 @@ class UpdateGenesCommand extends Command
                 }
             }
 
-            $em->flush();
+            $this->em->flush();
         }
 
 

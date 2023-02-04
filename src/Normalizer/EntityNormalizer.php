@@ -43,22 +43,25 @@ class EntityNormalizer extends ObjectNormalizer
         $this->em = $em;
     }
 
-    public function supportsDenormalization($data, $type, $format = null)
+    public function supportsDenormalization($data, $type, $format = null): bool
     {
-        return strpos($type, 'App\\Entity\\') === 0 && (is_numeric($data) || is_string($data));
+        return str_starts_with($type, 'App\\Entity\\') && (is_numeric($data) || is_string($data));
     }
 
+    /**
+     * @return mixed
+     */
     public function denormalize($data, $class, $format = null, array $context = [])
     {
         return $this->em->find($class, $data);
     }
 
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof \DateTime;
     }
 
-    public function normalize($object, $format = null, array $context = array())
+    public function normalize($object, $format = null, array $context = [])
     {
         return $object->format('d/m/Y');
     }

@@ -2,49 +2,34 @@
 
 namespace App\Entity;
 
+use App\Repository\ErreurRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ErreurRepository")
- */
+#[ORM\Entity(repositoryClass: ErreurRepository::class)]
 class Erreur
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $dateCreation;
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $dateCreation = null;
 
-    /**
-     * @ORM\Column(type="string", length=1023, nullable=true)
-     */
-    private $message;
+    #[ORM\Column(type: 'string', length: 1023, nullable: true)]
+    private ?string $message = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $etat;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $etat = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Participant", inversedBy="erreurs")
-     */
-    private $participant;
+    #[ORM\ManyToOne(targetEntity: \App\Entity\Participant::class, inversedBy: 'erreurs')]
+    private ?\App\Entity\Participant $participant = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $fieldId;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $fieldId = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $utilisateur;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $utilisateur = null;
 
     public function getId(): ?int
     {

@@ -4,40 +4,40 @@ namespace App\Constant;
 
 class FormConstants
 {
-    const INCLUSION = [
+    public const INCLUSION = [
         'Patients (homme ou femme) âgés de plus de 75 ans',
-        'Patient présentant un premier ECV (Infarctus du myocarde - IDM) d’origine athéromateuse datant de 6 mois (+/- 15 jours)',
+        'Patient présentant un premier ECV (Infarctus du myocarde - IDM) d\'origine athéromateuse datant de 6 mois (+/- 15 jours)',
         'Absence de preuve pour une hémopathie maligne avérée (connue ou révélée sur les résultats de NFS)',
-        'Sujet affilié ou bénéficiaire d’un régime de sécurité sociale',
+        'Sujet affilié ou bénéficiaire d\'un régime de sécurité sociale',
         'Signature du consentement éclairé'
     ];
 
-    const NON_INCLUSION = [
-        'Patient ayant présenté un ECV d’origine non-athéromateuse (dissection, embolique, ...)',
+    public const NON_INCLUSION = [
+        'Patient ayant présenté un ECV d\'origine non-athéromateuse (dissection, embolique, ...)',
         'Patient présentant un diabète mal équilibré (HbA1c > 10%)',
-        'Patient ayant présenté un ou plusieurs ECV avant 75 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d’origine athéromateuse',
+        'Patient ayant présenté un ou plusieurs ECV avant 75 ans : IDM, coronaropathie, AOMI, sténose carotidienne significative, accident vasculaire cérébral (AVC) d\'origine athéromateuse',
         'Patient présentant une hémopathie maligne manifeste (connue ou révélée sur les résultats de NFS)',
         'Patient présentant une maladie inflammatoire chronique (cancer, vascularite, rhumatismale, hépato-gastro-intestinales)',
         'Patient traité par anti-inflammatoire au long cours (Corticoïdes, Anti-inflammatoires non stéroïdiens, Aspirine > 325mg/jour, Inhibiteurs de la cyclo-oxygénase II)',
         'Personne placée sous sauvegarde de justice, tutelle ou curatelle',
-        'Personne étant dans l’incapacité de donner son consentement',
+        'Personne étant dans l\'incapacité de donner son consentement',
         'Sujet non coopérant'
     ];
 
-    const FACTEUR = [
+    public const FACTEUR = [
         'Diabète',
         'Hypertension artérielle',
         'Dyslipidémie'
     ];
 
-    const CARDIO_TRAITEMENT = [
+    public const CARDIO_TRAITEMENT = [
         'Hypocholestérolémiant',
         'Antihypertenseur',
         'Antidiabétique',
         'Antiagrégant'
     ];
 
-    const TYPE = [
+    public const TYPE = [
         'Sus-décalage du segment ST',
 
         'Antérieur',
@@ -55,23 +55,23 @@ class FormConstants
         'Tronc commun'
     ];
 
-    const COMPLICATION = [
+    public const COMPLICATION = [
         'Trouble du rythme ventriculaire',
         'Insuffisance cardiaque',
         'Péricardite',
         'Complication mécanique'
     ];
 
-    const DONNEE_TRAITEMENT = [
+    public const DONNEE_TRAITEMENT = [
         'Bêta-bloquant',
         'Aspirine',
         'Inhibiteur du récepteur P2Y12',
         'Statine',
-        'Inhibiteur de l’Enzyme de Conversion',
-        'Antagoniste du récepteur de l’angiotensine 2'
+        'Inhibiteur de l\'Enzyme de Conversion',
+        'Antagoniste du récepteur de l\'angiotensine 2'
     ];
 
-    const GENES = [
+    public const GENES = [
         'ANKRD26',
         'ASXL1',
         'ASXL2',

@@ -4,43 +4,30 @@ namespace App\Entity;
 
 use App\Repository\SuiviRepository;
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass=SuiviRepository::class)
- */
+#[ORM\Entity(repositoryClass: SuiviRepository::class)]
 class Suivi
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $event;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $event = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $eventDate;
+    #[ORM\Column(type: 'date', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?\DateTimeInterface $eventDate = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $cause;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $cause = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $aucunEvenement;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $aucunEvenement = null;
 
     public function getId(): ?int
     {

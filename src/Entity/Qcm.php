@@ -2,31 +2,24 @@
 
 namespace App\Entity;
 
+use App\Repository\QcmRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QcmRepository")
- */
+#[ORM\Entity(repositoryClass: QcmRepository::class)]
 class Qcm
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $question;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $question = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $reponse;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $reponse = null;
 
     public function getId(): ?int
     {

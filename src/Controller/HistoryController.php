@@ -21,22 +21,20 @@ class HistoryController extends AbstractController
         return $formatter->format($date);
     }
 
-    /**
-     * @Route("/participant/{participant}/history/{fieldId}", name="history_list_field")
-     */
+    #[Route(path: '/participant/{participant}/history/{fieldId}', name: 'history_list_field')]
     public function index(ErreurRepository $erreurRepository, Participant $participant, $fieldId, Request $request): Response
     {  
         if ($request->isXmlHttpRequest()) {
-            $current = $request->request->get('current');
-            $rowCount = $request->request->get('rowCount');
-            $searchPhrase = $request->request->get('searchPhrase');
-            $sort = $request->request->get('sort');
-            $participantId = $request->request->get('participantId');
-            $fieldId = $request->request->get('fieldId');
+            $current = $request->get('current');
+            $rowCount = $request->get('rowCount');
+            $searchPhrase = $request->get('searchPhrase');
+            $sort = $request->get('sort');
+            $participantId = $request->get('participantId');
+            $fieldId = $request->get('fieldId');
 
             $erreurs = $erreurRepository->findByFilter($sort, $searchPhrase, $participantId, $fieldId);
             if ($searchPhrase != "")
-                $count = count($erreurs->getQuery()->getResult());
+                $count = is_countable($erreurs->getQuery()->getResult()) ? count($erreurs->getQuery()->getResult()) : 0;
             else
                 $count = $erreurRepository->getCount($participantId, $fieldId);
             if ($rowCount != -1) {
@@ -45,24 +43,13 @@ class HistoryController extends AbstractController
                 $erreurs->setMaxResults($max)->setFirstResult($min);
             }
             $erreurs = $erreurs->getQuery()->getResult();
-            $rows = array();
+            $rows = [];
             foreach ($erreurs as $erreur) {
-                $row = array(
-                    "id" => $erreur->getId(),
-                    "date" => $this->formatDate($erreur->getDateCreation()),
-                    "utilisateur" => $erreur->getUtilisateur(),
-                    "message" => $erreur->getMessage(),
-                    "etat" => $erreur->getEtat(),
-                );
+                $row = ["id" => $erreur->getId(), "date" => $this->formatDate($erreur->getDateCreation()), "utilisateur" => $erreur->getUtilisateur(), "message" => $erreur->getMessage(), "etat" => $erreur->getEtat()];
                 array_push($rows, $row);
             }
 
-            $data = array(
-                "current" => intval($current),
-                "rowCount" => intval($rowCount),
-                "rows" => $rows,
-                "total" => intval($count)
-            );
+            $data = ["current" => intval($current), "rowCount" => intval($rowCount), "rows" => $rows, "total" => intval($count)];
             return new JsonResponse($data);
         }
 

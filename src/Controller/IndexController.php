@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
-use App\Repository\ErreurRepository;
 use App\Repository\ParticipantRepository;
+
+use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,20 +19,22 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class IndexController extends AbstractController
 {
-    /**
-     * @Route("/index", name="index_participant")
-     */
+    public function __construct(private \Doctrine\Persistence\ManagerRegistry $managerRegistry, private \Symfony\Component\Serializer\SerializerInterface $serializer)
+    {
+    }
+
+    #[Route(path: '/index', name: 'index_participant')]
     public function index(ParticipantRepository $participantRepository, Request $request): Response
     {
         if ($request->isXmlHttpRequest()) {
-            $current = $request->request->get('current');
-            $rowCount = $request->request->get('rowCount');
-            $searchPhrase = $request->request->get('searchPhrase');
-            $sort = $request->request->get('sort');
+            $current = $request->get('current');
+            $rowCount = $request->get('rowCount');
+            $searchPhrase = $request->get('searchPhrase');
+            $sort = $request->get('sort');
 
             $participants = $participantRepository->findByFilter($sort, $searchPhrase);
             if ($searchPhrase != "") {
-                $count = count($participants->getQuery()->getResult());
+                $count = is_countable($participants->getQuery()->getResult()) ? count($participants->getQuery()->getResult()) : 0;
             } else {
                 $count = $participantRepository->getCount();
             }
@@ -40,31 +44,31 @@ class IndexController extends AbstractController
                 $participants->setMaxResults($max)->setFirstResult($min);
             }
             $participants = $participants->getQuery()->getResult();
-            $rows = array();
+            $rows = [];
             foreach ($participants as $participant) {
                 $validation = 0;
                 if ($participant->getValidation()) {
                     $validation = 1;
                 }
 
-                $row = array(
+                $row = [
                     "id" => $participant->getId(),
                     "code" => $participant->getCode(),
                     "consentement" => $participant->getVerification()->getDate() ? $participant->getVerification()->getDate()->format('d/m/Y') : '',
                     "evenement" => $participant->getInformation()->getDateSurvenue() ? $participant->getInformation()->getDateSurvenue()->format('d/m/Y') : '',
                     "inclusion" => $participant->getDonnee()->getDateVisite() ? $participant->getDonnee()->getDateVisite()->format('d/m/Y') : '',
-                    "error" => '',
-                    "status" => $validation,
-                );
+                    "error" => '', "status" => $validation
+                ];
                 array_push($rows, $row);
             }
 
-            $data = array(
+            $data = [
                 "current" => intval($current),
                 "rowCount" => intval($rowCount),
                 "rows" => $rows,
-                "total" => intval($count),
-            );
+                "total" => intval($count)
+            ];
+
             return new JsonResponse($data);
         }
 
@@ -73,15 +77,14 @@ class IndexController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/advancement", name="advancement", methods="GET|POST")
-     */
-    public function advancement(Request $request): Response
+    #[Route(path: '/advancement', name: 'advancement', methods: 'GET|POST')]
+    public function advancement(Request $request, PersistenceManagerRegistry $doctrine): Response
     {
+        $conn = $this->managerRegistry->getConnection();
+
         if ($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getManager();
-            $id = $request->request->get('id');
-            $participant = $this->getDoctrine()->getRepository(Participant::class)->find($id);
+            $id = $request->get('id');
+            $participant = $doctrine->getRepository(Participant::class)->find($id);
 
             $RAW_QUERY = 'SELECT f.field_id
             FROM (
@@ -90,15 +93,15 @@ class IndexController extends AbstractController
                 GROUP BY field_id, participant_id
             ) AS x
             INNER JOIN erreur AS f ON f.etat = "error" AND f.field_id = x.field_id AND f.date_creation = x.maxdate AND f.participant_id = ' . $participant->getId() . ';';
-            $statement = $em->getConnection()->prepare($RAW_QUERY);
-            $statement->execute();
-            $errors = $statement->fetchAll();
+            $statement = $conn->prepare($RAW_QUERY);
+            $resultSet = $statement->executeQuery();
+            $errors = $resultSet->fetchAllAssociative();
 
             session_write_close();
 
             $json = $this->serializeEntity($participant);
 
-            $arr = array();
+            $arr = [];
             $iter = 0;
             foreach ($json as $item) {
                 if (($i = $this->isError($iter, $errors)) != 0) {
@@ -125,7 +128,6 @@ class IndexController extends AbstractController
             if (explode('_', $error['field_id'])[0] == $list[$iter]) {
                 $err++;
             }
-
         }
         return $err;
     }
@@ -157,7 +159,7 @@ class IndexController extends AbstractController
 
     private function serializeEntity($data)
     {
-        $res = $this->get('serializer')->normalize(
+        $res = $this->serializer->normalize(
             $data,
             'json',
             ['groups' => ['advancement']]
@@ -165,14 +167,12 @@ class IndexController extends AbstractController
         return $res;
     }
 
-    /**
-     * @Route("/export/csv", name="export_csv", methods="GET")
-     */
+    #[Route(path: '/export/csv', name: 'export_csv', methods: 'GET')]
     public function generateCsvAction(ParticipantRepository $participantRepository)
     {
         $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
 
-        $res = $this->get('serializer')->normalize(
+        $res = $this->serializer->normalize(
             $participantRepository->findAll(),
             'json',
             ['groups' => ['export']]
@@ -182,7 +182,7 @@ class IndexController extends AbstractController
         $data = str_replace(",", ";", $data);
         $fileName = "export_participant_" . date("d_m_Y") . ".csv";
         $response = new Response($data);
-        $response->setStatusCode(200);
+        $response->setStatusCode(Response::HTTP_OK);
         $response->headers->set('Content-Type', 'text/csv; charset=UTF-8; application/excel');
         $response->headers->set('Content-Disposition', 'attachment; filename=' . $fileName);
         echo "\xEF\xBB\xBF"; // UTF-8 with BOM

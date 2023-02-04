@@ -2,68 +2,49 @@
 
 namespace App\Entity;
 
+use App\Repository\GeneralRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\GeneralRepository")
- */
+#[ORM\Entity(repositoryClass: GeneralRepository::class)]
 class General
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $age;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?int $age = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $sexe;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $sexe = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $dateNaissance;
+    #[ORM\Column(type: 'date', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?\DateTimeInterface $dateNaissance = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $taille;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?int $taille = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $poids;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?int $poids = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $imc;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 1, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $imc = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $systolique;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $systolique = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $diastolique;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $diastolique = null;
 
     public function __construct()
     {

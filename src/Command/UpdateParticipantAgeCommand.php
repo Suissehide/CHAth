@@ -4,26 +4,21 @@ namespace App\Command;
 
 use App\Entity\Participant;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class UpdateParticipantAgeCommand extends Command
 {
     protected static $defaultName = 'app:update-participant-age';
-    private $container;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(private EntityManagerInterface $em)
     {
         parent::__construct();
-        $this->container = $container;
     }
-
     protected function configure()
     {
         $this
@@ -35,7 +30,6 @@ class UpdateParticipantAgeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $em = $this->container->get('doctrine')->getManager();
         $io = new SymfonyStyle($input, $output);
         // $arg1 = $input->getArgument('arg1');
 
@@ -47,7 +41,7 @@ class UpdateParticipantAgeCommand extends Command
         //    
         // }
 
-        $participants = $em->getRepository(Participant::class)->findAll();
+        $participants = $this->em->getRepository(Participant::class)->findAll();
         foreach($participants as $participant) {
             if ($participant->getGeneral()->getDateNaissance()) {
                 $date_naissance = $participant->getGeneral()->getDateNaissance()->format('m/Y');
@@ -55,7 +49,7 @@ class UpdateParticipantAgeCommand extends Command
                 $an = explode('/', date('m/Y'));
                 if ($am[0] < $an[0]) $participant->getGeneral()->setAge($an[1] - $am[1]);
                 else $participant->getGeneral()->setAge($an[1] - $am[1] - 1);
-                $em->flush();
+                $this->em->flush();
             }
         }
 

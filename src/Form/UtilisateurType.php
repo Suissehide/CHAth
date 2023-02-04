@@ -15,58 +15,70 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UtilisateurType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(
+        FormBuilderInterface $builder,
+        array $options
+    ) {
         $builder
-            ->add('email', EmailType::class, array(
-                'label' => "Email",
-                'attr' => array(
-                    'placeholder' => 'Email'
-                ),
-            ))
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options' => array(
-                    'label' => 'Mot de Passe',
-                    'attr' => array(
-                        'placeholder' => 'Mot de passe'
-                    ),
-                ),
-                'second_options' => array(
-                    'label' => 'Confirmer Mot de Passe',
-                    'attr' => array(
-                        'placeholder' => 'Confirmer le mot de passe'
-                    ),
-                ),
-            ))
-            ->add('roles', ChoiceType::class, array(
-                'label' => "Rôles",
-                'choices' => array(
-                    'Admin' => 'ROLE_ADMIN',
-                    'User' => 'ROLE_USER',
-                ),
-                'multiple' => true,
-                'attr' => array(
-                    'class' => 'basic-single'
-                )
-            ))
-            ->add('nom', TextType::class, array(
-                'label' => "Nom",
-                'attr' => array(
-                    'placeholder' => 'Nom'
-                ),
-                'required' => false,
-            ))
-            ->add('prenom', TextType::class, array(
-                'label' => "Prénom",
-                'attr' => array(
-                    'placeholder' => 'Prénom'
-                ),
-                'required' => false,
-            ))
-            ->add('save', SubmitType::class, array('label' => 'S\'enregistrer'))
-
-        ;
+            ->add(
+                'email',
+                EmailType::class,
+                [
+                    'label' => "Email",
+                    'attr' => ['placeholder' => 'Email']
+                ]
+            )
+            ->add(
+                'plainPassword',
+                RepeatedType::class,
+                [
+                    'type' => PasswordType::class,
+                    'first_options' => [
+                        'label' => 'Mot de Passe',
+                        'attr' => ['placeholder' => 'Mot de passe']
+                    ],
+                    'second_options' => [
+                        'label' => 'Confirmer Mot de Passe',
+                        'attr' => ['placeholder' => 'Confirmer le mot de passe']
+                    ]
+                ]
+            )
+            ->add(
+                'roles',
+                ChoiceType::class,
+                [
+                    'label' => "Rôles",
+                    'choices' => [
+                        'Admin' => 'ROLE_ADMIN',
+                        'User' => 'ROLE_USER'
+                    ],
+                    'multiple' => true,
+                    'attr' => ['class' => 'basic-single']
+                ]
+            )
+            ->add(
+                'nom',
+                TextType::class,
+                [
+                    'label' => "Nom",
+                    'attr' => ['placeholder' => 'Nom'],
+                    'required' => false
+                ]
+            )
+            ->add(
+                'prenom',
+                TextType::class,
+                [
+                    'label' => "Prénom",
+                    'attr' => ['placeholder' => 'Prénom'],
+                    'required' => false
+                ]
+            )
+            ->add(
+                'save',
+                SubmitType::class,
+                ['label' => 'S\'enregistrer']
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

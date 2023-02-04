@@ -10,22 +10,27 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class QcmType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(
+        FormBuilderInterface $builder,
+        array $options
+    ) {
         $builder
-            ->add('reponse', ChoiceType::class, array(
-                'label' => 'Réponse',
-                'expanded' => true,
-                'multiple' => false,
-                'placeholder' => false,
-                'choices' => array(
-                    'Oui' => 'Oui',
-                    'Non' => 'Non',
-                    'Non précisé' => 'Non précisé',
-                ),
-                'required' => false,
-            ))
-        ;
+            ->add(
+                'reponse',
+                ChoiceType::class,
+                [
+                    'label' => 'Réponse',
+                    'expanded' => true,
+                    'multiple' => false,
+                    'placeholder' => false,
+                    'choices' => [
+                        'Oui' => 'Oui',
+                        'Non' => 'Non',
+                        'Non précisé' => 'Non précisé'
+                    ],
+                    'required' => false
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

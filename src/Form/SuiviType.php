@@ -14,50 +14,72 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SuiviType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(
+        FormBuilderInterface $builder,
+        array $options
+    ) {
         $builder
 
-            ->add('event', ChoiceType::class, array(
-                'label' => 'Évènement',
-                'expanded' => false,
-                'multiple' => false,
-                'placeholder' => '',
-                'choices' => array(
-                    'SCA' => 'SCA',
-                    'AVC' => 'AVC',
-                    'Insuffisance cardiaque' => 'Insuffisance cardiaque',
-                    'Revascularisation' => 'Revascularisation',
-                    'Hospitalisation' => 'Hospitalisation',
-                    'Décès' => 'Décès'
-                ),
-                'required' => false,
-            ))
+            ->add(
+                'event',
+                ChoiceType::class,
+                [
+                    'label' => 'Évènement',
+                    'expanded' => false,
+                    'multiple' => false,
+                    'placeholder' => '',
+                    'choices' => [
+                        'SCA' => 'SCA',
+                        'AVC' => 'AVC',
+                        'Insuffisance cardiaque' => 'Insuffisance cardiaque',
+                        'Revascularisation' => 'Revascularisation',
+                        'Hospitalisation' => 'Hospitalisation',
+                        'Décès' => 'Décès'
+                    ],
+                    'required' => false
+                ]
+            )
 
-            ->add('eventDate', DateType::class, array(
-                'label' => 'Date de l’événement',
-                'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy',
-                'attr' => [
-                    'placeholder' => 'dd/mm/yyyy',
-                    'class' => 'datepicker',
-                    'autocomplete' => 'off'
-                ],
-                'required' => false,
-            ))
+            ->add(
+                'eventDate',
+                DateType::class,
+                [
+                    'label' => 'Date de l\'événement',
+                    'widget' => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'attr' => [
+                        'placeholder' => 'dd/mm/yyyy',
+                        'class' => 'datepicker',
+                        'autocomplete' => 'off'
+                    ],
+                    'html5' => false,
+                    'required' => false
+                ]
+            )
 
-            ->add('cause', TextareaType::class, array(
-                'label' => 'Cause',
-                'required' => false,
-            ))
+            ->add(
+                'cause',
+                TextareaType::class,
+                [
+                    'label' => 'Cause',
+                    'required' => false
+                ]
+            )
 
-            ->add('aucunEvenement', CheckboxType::class, array(
-                'label' => '',
-                'required' => false,
-            ))
+            ->add(
+                'aucunEvenement',
+                CheckboxType::class,
+                [
+                    'label' => '',
+                    'required' => false
+                ]
+            )
 
-            ->add('save', SubmitType::class, array('label' => 'Sauvegarder'))
-        ;
+            ->add(
+                'save',
+                SubmitType::class,
+                ['label' => 'Sauvegarder']
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

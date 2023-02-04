@@ -2,55 +2,40 @@
 
 namespace App\Entity;
 
+use App\Repository\GeneRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\GeneRepository")
- */
+#[ORM\Entity(repositoryClass: GeneRepository::class)]
 class Gene
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $nom;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $nom = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $statut;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $statut = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $mutation;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $mutation = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $frequence;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?int $frequence = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $classification;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $classification = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $commentaire;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $commentaire = null;
 
     public function getId(): ?int
     {

@@ -2,50 +2,37 @@
 
 namespace App\Entity;
 
+use App\Repository\DecesRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\DecesRepository")
- */
+#[ORM\Entity(repositoryClass: DecesRepository::class)]
 class Deces
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $date;
+    #[ORM\Column(type: 'date', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?\DateTimeInterface $date = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $causePrincipale;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $causePrincipale = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $codagePrincipal;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?int $codagePrincipal = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $causeSecondaire;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $causeSecondaire = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $codageSecondaire;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?int $codageSecondaire = null;
 
     public function getId(): ?int
     {

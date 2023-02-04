@@ -106,19 +106,19 @@
 						</a>
 						<ul>
 							<li><a href='#risque'>Facteurs de risque cardiovasculaire</a></li>
-							<li><a href='#traitement'>Traitement au moment de l’évènement</a></li>
+							<li><a href='#traitement'>Traitement au moment de l'évènement</a></li>
 						</ul>
 					</li>
 					<li class='sub-menu'>
 						<a href='#information'>
 							<div class="menu-title">
 								<i class='fa fa-procedures'></i>
-								<div>Informations sur l’évènement cardiovasculaire</div>
+								<div>Informations sur l'évènement cardiovasculaire</div>
                             </div>
 							<i class='fa fa-caret-down right'></i>
 						</a>
 						<ul>
-							<li><a href='#type'>Type d’infarctus du Myocarde</a></li>
+							<li><a href='#type'>Type d'infarctus du Myocarde</a></li>
 							<li><a href='#aigue'>Traitement à la phase aiguë</a></li>
 							<li><a href='#complication'>Complications immédiates</a></li>
 							<li><a href='#biologie1'>Biologie</a></li>
@@ -230,7 +230,7 @@
 					{% endfor %}
 				</div>
 
-				{{ form_row(formVerification.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
+				{{ form_row(formVerification.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation or freezeDatabase} }) }}
 
                 {{ form_row(formVerification._token) }}
                 {{ form_end(formVerification, {'render_rest' : false}) }}
@@ -282,7 +282,7 @@
                     }}
 				</div>
 
-				{{ form_row(formGeneral.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
+				{{ form_row(formGeneral.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation or freezeDatabase } }) }}
 
                 {{ form_row(formGeneral._token) }}
                 {{ form_end(formGeneral, {'render_rest' : false}) }}
@@ -320,7 +320,7 @@
 					{% endfor %}
 				</div>
 
-				<h3 id="traitement">Traitement au moment de l’évènement</h3>
+				<h3 id="traitement">Traitement au moment de l'évènement</h3>
 				<div class="qcm">
 					{% for qcm in formCardiovasculaire.traitement %}
 						<div class="qcm-row">
@@ -336,7 +336,7 @@
 					{% endfor %}
 				</div>
 
-				{{ form_row(formCardiovasculaire.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
+				{{ form_row(formCardiovasculaire.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation or freezeDatabase} }) }}
 
                 {{ form_row(formCardiovasculaire._token) }}
                 {{ form_end(formCardiovasculaire, {'render_rest' : false}) }}
@@ -351,12 +351,12 @@
 
                 {% form_theme formInformation 'form-theme.html.twig' %}
 
-				<h1 id="information">Informations sur l’évènement cardiovasculaire</h1>
+				<h1 id="information">Informations sur l'évènement cardiovasculaire</h1>
 
 				{{ form_row(formInformation.dateSurvenue, {'attr': {'class': 'input js-datepicker'} }) }}
 				<div class="margin-space"></div>
 
-				<h3 id="type">Type d’infarctus du Myocarde</h3>
+				<h3 id="type">Type d'infarctus du Myocarde</h3>
 				<div class="qcm">
 					{% for qcm in formInformation.type %}
 						{% set counter = ( counter | default(0) ) + 1 %}
@@ -469,7 +469,7 @@
 
                 <div class="margin-space"></div>
 
-				{{ form_row(formInformation.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
+				{{ form_row(formInformation.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation or freezeDatabase} }) }}
 
                 {{ form_row(formInformation._token) }}
                 {{ form_end(formInformation, {'render_rest' : false}) }}
@@ -657,7 +657,7 @@
 							Mutation
 						</div>
 						<div class="col-flex-2 col-flex row-label">
-							Fréquence de l’allèle variant
+							Fréquence de l'allèle variant
 						</div>
                         <div class="col-flex-2 col-flex row-label">
 							Classification
@@ -783,7 +783,7 @@
 					</div>
 				</div>
 
-				{{ form_row(formDonnee.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
+				{{ form_row(formDonnee.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation or freezeDatabase} }) }}
 
                 {{ form_row(formDonnee._token) }}
                 {{ form_end(formDonnee, {'render_rest' : false}) }}
@@ -806,7 +806,7 @@
 
                 <div class="margin-space"></div>
 
-				{{ form_row(formSuivi.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
+				{{ form_row(formSuivi.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation or freezeDatabase} }) }}
 
                 {{ form_row(formSuivi._token) }}
                 {{ form_end(formSuivi, {'render_rest' : false}) }}
@@ -826,7 +826,7 @@
 
 				<div class="def">
 					<span>Définition de la cause initiale du décès :
-					</span>maladie ou traumatisme étant à l’origine de la séquence des événements morbides ayant entraîné la mort.</div>
+					</span>maladie ou traumatisme étant à l'origine de la séquence des événements morbides ayant entraîné la mort.</div>
 
 				<h5>Cause principale de décès</h5>
 				{{ form_row(formDeces.causePrincipale, {'attr': {'class': 'input '} }) }}
@@ -838,7 +838,7 @@
 
                 <div class="margin-space"></div>
 
-				{{ form_row(formDeces.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation == true} }) }}
+				{{ form_row(formDeces.save, {'attr': {'class': 'form-btn btn-save', 'disabled': participant.validation or freezeDatabase} }) }}
 
                 {{ form_row(formDeces._token) }}
                 {{ form_end(formDeces, {'render_rest' : false}) }}
@@ -882,7 +882,7 @@
 						</div>
 						<div class="modal-body">
 							<p>&emsp;&emsp;Je, soussigné(e) Pr/Dr
-								<span>{{ app.user.prenom }} {{ app.user.nom }}</span>, confirme que le suivi du participant a eu lieu sous ma responsabilité conformément au protocole d’étude clinique; toutes les données contenues dans ce cahier d’observation sont complètes et exactes.</p>
+								<span>{{ app.user.prenom }} {{ app.user.nom }}</span>, confirme que le suivi du participant a eu lieu sous ma responsabilité conformément au protocole d'étude clinique; toutes les données contenues dans ce cahier d'observation sont complètes et exactes.</p>
 							<div class="flex-row user-data">
 								<div class="date">Date:</br>
 								<span>{{ date }}</span>
@@ -917,7 +917,7 @@
     </script>
 
     <script>
-        var validate = {% if participant.validation == true %} true {% else %} false {% endif %};
+        var validate = {{ participant.validation ? 'true' : 'false' }};
 
         /* Validate */
         $('#cb1').prop('checked', validate);

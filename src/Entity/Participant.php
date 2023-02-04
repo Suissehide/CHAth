@@ -2,86 +2,61 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ParticipantRepository")
- */
+#[ORM\Entity(repositoryClass: ParticipantRepository::class)]
 class Participant
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"export"})
-     */
-    private $code;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['export'])]
+    private ?string $code = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Utilisateur", inversedBy="participants")
-     */
-    private $utilisateurs;
+    #[ORM\ManyToMany(targetEntity: \App\Entity\Utilisateur::class, inversedBy: 'participants')]
+    private Collection|array $utilisateurs;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Verification", cascade={"persist", "remove"})
-     * @Groups({"advancement", "export"})
-     */
-    private $verification;
+    #[ORM\OneToOne(targetEntity: \App\Entity\Verification::class, cascade: ['persist', 'remove'])]
+    #[Groups(['advancement', 'export'])]
+    private ?\App\Entity\Verification $verification = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\General", cascade={"persist", "remove"})
-     * @Groups({"advancement", "export"})
-     */
-    private $general;
+    #[ORM\OneToOne(targetEntity: \App\Entity\General::class, cascade: ['persist', 'remove'])]
+    #[Groups(['advancement', 'export'])]
+    private ?\App\Entity\General $general = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Cardiovasculaire", cascade={"persist", "remove"})
-     * @Groups({"advancement", "export"})
-     */
-    private $cardiovasculaire;
+    #[ORM\OneToOne(targetEntity: \App\Entity\Cardiovasculaire::class, cascade: ['persist', 'remove'])]
+    #[Groups(['advancement', 'export'])]
+    private ?\App\Entity\Cardiovasculaire $cardiovasculaire = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Information", cascade={"persist", "remove"})
-     * @Groups({"advancement", "export"})
-     */
-    private $information;
+    #[ORM\OneToOne(targetEntity: \App\Entity\Information::class, cascade: ['persist', 'remove'])]
+    #[Groups(['advancement', 'export'])]
+    private ?\App\Entity\Information $information = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Donnee", cascade={"persist", "remove"})
-     * @Groups({"advancement", "export"})
-     */
-    private $donnee;
+    #[ORM\OneToOne(targetEntity: \App\Entity\Donnee::class, cascade: ['persist', 'remove'])]
+    #[Groups(['advancement', 'export'])]
+    private ?\App\Entity\Donnee $donnee = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Suivi", cascade={"persist", "remove"})
-     * @Groups({"advancement", "export"})
-     */
-    private $suivi;
+    #[ORM\OneToOne(targetEntity: \App\Entity\Suivi::class, cascade: ['persist', 'remove'])]
+    #[Groups(['advancement', 'export'])]
+    private ?\App\Entity\Suivi $suivi = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Deces", cascade={"persist", "remove"})
-     * @Groups({"advancement", "export"})
-     */
-    private $deces;
+    #[ORM\OneToOne(targetEntity: \App\Entity\Deces::class, cascade: ['persist', 'remove'])]
+    #[Groups(['advancement', 'export'])]
+    private ?\App\Entity\Deces $deces = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Erreur", mappedBy="participant", cascade={"remove"})
-     */
-    private $erreurs;
+    #[ORM\OneToMany(targetEntity: \App\Entity\Erreur::class, mappedBy: 'participant', cascade: ['remove'])]
+    private Collection|array $erreurs;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"export"})
-     */
-    private $validation;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    #[Groups(['export'])]
+    private ?bool $validation = null;
 
     public function __construct()
     {

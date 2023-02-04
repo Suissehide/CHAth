@@ -2,60 +2,45 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\CardiovasculaireRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CardiovasculaireRepository")
- */
+#[ORM\Entity(repositoryClass: CardiovasculaireRepository::class)]
 class Cardiovasculaire
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $tabac;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $tabac = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $activitePhysique;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $activitePhysique = null;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $alimentation = [];
+    #[ORM\Column(type: 'array', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?array $alimentation = [];
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement", "export"})
-     * @ORM\JoinTable(name="cardiovasculaire_qcm_facteurs",
-     *      joinColumns={@ORM\JoinColumn(name="facteurs_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
-     *      )
-     */
-    private $facteurs;
+    #[ORM\JoinTable(name: 'cardiovasculaire_qcm_facteurs')]
+    #[ORM\JoinColumn(name: 'facteurs_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'qcm_id', referencedColumnName: 'id', onDelete: 'CASCADE', unique: true)]
+    #[ORM\ManyToMany(targetEntity: Qcm::class, cascade: ['persist'])]
+    #[Groups(['advancement', 'export'])]
+    private Collection|array $facteurs;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement", "export"})
-     * @ORM\JoinTable(name="cardiovasculaire_qcm_traitement",
-     *      joinColumns={@ORM\JoinColumn(name="traitement_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
-     *      )
-     */
-    private $traitement;
+    #[ORM\JoinTable(name: 'cardiovasculaire_qcm_traitement')]
+    #[ORM\JoinColumn(name: 'traitement_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'qcm_id', referencedColumnName: 'id', onDelete: 'CASCADE', unique: true)]
+    #[ORM\ManyToMany(targetEntity: Qcm::class, cascade: ['persist'])]
+    #[Groups(['advancement', 'export'])]
+    private Collection|array $traitement;
 
     public function __construct()
     {

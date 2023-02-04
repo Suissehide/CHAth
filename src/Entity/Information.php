@@ -2,114 +2,81 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\InformationRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\InformationRepository")
- */
+#[ORM\Entity(repositoryClass: InformationRepository::class)]
 class Information
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $dateSurvenue;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?\DateTimeInterface $dateSurvenue = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement", "export"})
-     * @ORM\JoinTable(name="information_qcm_type",
-     *      joinColumns={@ORM\JoinColumn(name="type_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
-     *      )
-     */
-    private $type;
+    #[ORM\JoinTable(name: 'information_qcm_type')]
+    #[ORM\JoinColumn(name: 'type_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'qcm_id', referencedColumnName: 'id', onDelete: 'CASCADE', unique: true)]
+    #[ORM\ManyToMany(targetEntity: Qcm::class, cascade: ['persist'])]
+    #[Groups(['advancement', 'export'])]
+    private Collection|array $type;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $traitementPhaseAigue = [];
+    #[ORM\Column(type: 'array', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?array $traitementPhaseAigue = [];
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement", "export"})
-     * @ORM\JoinTable(name="information_qcm_complications",
-     *      joinColumns={@ORM\JoinColumn(name="complications_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
-     *      )
-     */
-    private $complications;
+    #[ORM\JoinTable(name: 'information_qcm_complications')]
+    #[ORM\JoinColumn(name: 'complications_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'qcm_id', referencedColumnName: 'id', onDelete: 'CASCADE', unique: true)]
+    #[ORM\ManyToMany(targetEntity: Qcm::class, cascade: ['persist'])]
+    #[Groups(['advancement', 'export'])]
+    private Collection|array $complications;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $crp;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $crp = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $hemoglobine;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 1, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $hemoglobine = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $leucocytes;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $leucocytes = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $PNN;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $PNN = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $plaquettes;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 1, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $plaquettes = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $cholesterol;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $cholesterol = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $LDLC;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $LDLC = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $HDLC;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $HDLC = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $HbA1c;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 1, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $HbA1c = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $creatininemie;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $creatininemie = null;
 
     public function __construct()
     {

@@ -2,273 +2,186 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\DonneeRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\DonneeRepository")
- */
+#[ORM\Entity(repositoryClass: DonneeRepository::class)]
 class Donnee
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $dateVisite;
+    #[ORM\Column(type: 'date', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?\DateTimeInterface $dateVisite = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $recidive;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $recidive = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $dateSurvenue;
+    #[ORM\Column(type: 'date', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?\DateTimeInterface $dateSurvenue = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $type;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $type = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $dyspnee;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?int $dyspnee = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $douleur;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?int $douleur = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $tabac;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $tabac = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $activite;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $activite = null;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $alimentation = [];
+    #[ORM\Column(type: 'array', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?array $alimentation = [];
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement", "export"})
-     * @ORM\JoinTable(name="donnee_qcm_facteurs",
-     *      joinColumns={@ORM\JoinColumn(name="facteurs_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
-     *      )
-     */
-    private $facteurs;
+    #[ORM\JoinTable(name: 'donnee_qcm_facteurs')]
+    #[ORM\JoinColumn(name: 'facteurs_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'qcm_id', referencedColumnName: 'id', onDelete: 'CASCADE', unique: true)]
+    #[ORM\ManyToMany(targetEntity: Qcm::class, cascade: ['persist'])]
+    #[Groups(['advancement', 'export'])]
+    private Collection|array $facteurs;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Qcm::class, cascade={"persist"})
-     * @Groups({"advancement", "export"})
-     * @ORM\JoinTable(name="donnee_qcm_traitement",
-     *      joinColumns={@ORM\JoinColumn(name="traitement_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="qcm_id", referencedColumnName="id", onDelete="CASCADE", unique=true)}
-     *      )
-     */
-    private $traitement;
+    #[ORM\JoinTable(name: 'donnee_qcm_traitement')]
+    #[ORM\JoinColumn(name: 'traitement_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
+    #[ORM\InverseJoinColumn(name: 'qcm_id', referencedColumnName: 'id', onDelete: 'CASCADE', unique: true)]
+    #[ORM\ManyToMany(targetEntity: Qcm::class, cascade: ['persist'])]
+    #[Groups(['advancement', 'export'])]
+    private Collection|array $traitement;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $crp;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $crp = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $hemoglobine;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 1, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $hemoglobine = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $leucocytes;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $leucocytes = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $pnn;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $pnn = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $plaquettes;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 1, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $plaquettes = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $cholesterol;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $cholesterol = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $ldl;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $ldl = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $hdl;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $hdl = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=1, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $hba1c;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 1, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $hba1c = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $IL1B;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $IL1B = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $IL6;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $IL6 = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $IL10;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $IL10 = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $IL18;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $IL18 = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $TNFa;
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $TNFa = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $creatininemie;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $creatininemie = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $hematopoiese;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $hematopoiese = null;
 
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $numberOfMutation;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?int $numberOfMutation = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Gene::class, cascade={"persist"})
-     * @ORM\OrderBy({"nom" = "ASC"})
-     * @Groups({"advancement", "export"})
-     */
-    private $genes;
+    #[ORM\ManyToMany(targetEntity: Gene::class, cascade: ['persist'])]
+    #[ORM\OrderBy(['nom' => 'ASC'])]
+    #[Groups(['advancement', 'export'])]
+    private Collection|array $genes;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $carotideCommuneDroite;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $carotideCommuneDroite = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $carotideCommuneDroiteDone;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $carotideCommuneDroiteDone = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $carotideCommuneGauche;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $carotideCommuneGauche = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $carotideCommuneGaucheDone;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $carotideCommuneGaucheDone = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $carotideInterneDroite;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $carotideInterneDroite = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $carotideInterneDroiteDone;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $carotideInterneDroiteDone = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $carotideInterneGauche;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $carotideInterneGauche = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $carotideInterneGaucheDone;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $carotideInterneGaucheDone = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $fraction;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?float $fraction = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $fractionDone;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $fractionDone = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $stenoses;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $stenoses = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"advancement", "export"})
-     */
-    private $ips;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['advancement', 'export'])]
+    private ?string $ips = null;
 
     public function __construct()
     {
